@@ -30,7 +30,9 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
+import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -67,7 +69,7 @@ import org.lwjgl.glfw.CallbackBridge;
 import java.io.File;
 import java.io.IOException;
 
-public class MainActivity extends BaseActivity implements ControlButtonMenuListener, EditorExitable, ServiceConnection {
+public class MainActivity extends BaseActivity implements ControlButtonMenuListener, EditorExitable, ServiceConnection, Logger.splashListener {
     public static volatile ClipboardManager GLOBAL_CLIPBOARD;
     public static final String INTENT_MINECRAFT_VERSION = "intent_version";
 
@@ -80,6 +82,7 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
     private DrawerLayout drawerLayout;
     private ListView navDrawer;
     private View mDrawerPullButton;
+    private WebView mWebView;
     private GyroControl mGyroControl = null;
     public static ControlLayout mControlLayout;
 
@@ -152,6 +155,11 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
             if(!latestLogFile.exists() && !latestLogFile.createNewFile())
                 throw new IOException("Failed to create a new log file");
             Logger.begin(latestLogFile.getAbsolutePath());
+            Logger.setSplashListener(this);
+            mWebView.loadUrl("file:///android_asset/loading.html");
+            mWebView.setBackgroundColor(Color.TRANSPARENT);
+            mWebView.getSettings().setUseWideViewPort(true);
+            mWebView.getSettings().setLoadWithOverviewMode(true);
             // FIXME: is it safe for multi thread?
             GLOBAL_CLIPBOARD = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
             touchCharInput.setCharacterSender(new LwjglCharSender());
@@ -252,6 +260,7 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
         mControlLayout = findViewById(R.id.main_control_layout);
         touchCharInput = findViewById(R.id.mainTouchCharInput);
         mDrawerPullButton = findViewById(R.id.drawer_button);
+        mWebView = findViewById(R.id.main_image_view);
     }
 
     @Override
@@ -286,6 +295,7 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        Logger.setSplashListener(null);
         CallbackBridge.removeGrabListener(touchpad);
         CallbackBridge.removeGrabListener(minecraftGLView);
         ContextExecutor.clearActivity();
@@ -604,6 +614,44 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
     public void onClickedMenu() {
         drawerLayout.openDrawer(navDrawer);
         navDrawer.requestLayout();
+    }
+
+    @Override
+    public void onSplashEvent() {
+        runOnUiThread(()->{
+            View overlay = findViewById(R.id.mainOverlayView);
+            ((ViewGroup)findViewById(R.id.content_frame)).removeView(overlay);
+            Logger.setSplashListener(null);
+        });
+    }
+
+    @Override
+    public void onStarting() {
+        runOnUiThread(()->{
+            TextView loadingText = findViewById(R.id.loading_text);
+            loadingText.setText(R.string.loading_starting);
+        });
+    }
+    @Override
+    public void onMiddle() {
+        runOnUiThread(()->{
+            TextView loadingText = findViewById(R.id.loading_text);
+            loadingText.setText(R.string.loading_middle);
+        });
+    }
+    @Override
+    public void onComplete() {
+        runOnUiThread(()->{
+            TextView loadingText = findViewById(R.id.loading_text);
+            loadingText.setText(R.string.loading_complete);
+        });
+    }
+    @Override
+    public void onFullComplete() {
+        runOnUiThread(()->{
+            TextView loadingText = findViewById(R.id.loading_text);
+            loadingText.setText(R.string.loading_fullcomplete);
+        });
     }
 
     @Override

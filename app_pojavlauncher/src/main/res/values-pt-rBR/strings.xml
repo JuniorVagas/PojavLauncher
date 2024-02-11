@@ -297,4 +297,10 @@
     <string name="notif_error_occured">Ocorreu um erro</string>
     <string name="notif_error_occured_desc">Clique para mais detalhes</string>
     <string name="fabric_dl_only_stable">Mostrar apenas versões estáveis</string>
+    <string name="loading_game">Carregando 0%</string>
+    <string name="loading_game_warn">Isso pode demorar alguns minutos</string>
+    <string name="loading_starting">Carregando 25%</string>
+    <string name="loading_middle">Carregando 50%</string>
+    <string name="loading_complete">Carregando 75%</string>
+    <string name="loading_fullcomplete">Carregando 100%</string>
 </resources>
