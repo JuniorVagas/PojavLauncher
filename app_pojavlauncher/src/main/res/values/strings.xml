@@ -371,6 +371,12 @@
     <string name="newdl_starting">Reading game metadata…</string>
     <string name="newdl_downloading_metadata">Downloading game metadata (%s)</string>
     <string name="newdl_downloading_game_files">Downloading game files… (%d/%d, %.2f MB)</string>
+    <string name="loading_game">Loading 0%</string>
+    <string name="loading_game_warn">This may take a few minutes</string>
+    <string name="loading_starting">Loading 25%</string>
+    <string name="loading_middle">Loading 50%</string>
+    <string name="loading_complete">Loading 75%</string>
+    <string name="loading_fullcomplete">Loading 100%</string>
     <string name="cropper_title">Select image region</string>
     <string name="cropper_lock_vertical">V. lock</string>
     <string name="cropper_lock_horizontal">H. lock</string>

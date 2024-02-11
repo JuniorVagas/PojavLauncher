@@ -23,7 +23,15 @@ static JavaVM *stdiois_jvm;
 static int pfd[2];
 static pthread_t logger;
 static jmethodID logger_onEventLogged;
+static jmethodID logger_onSplashEvent;
+
+static jmethodID logger_starting;
+static jmethodID logger_middle;
+static jmethodID logger_complete;
+static jmethodID logger_fullcomplete;
+
 static volatile jobject logListener = NULL;
+static volatile jobject splashListener = NULL;
 static int latestlog_fd = -1;
 static _Atomic bool exit_tripped = false;
 
@@ -43,6 +51,14 @@ JNIEXPORT jint JNI_OnLoad(JavaVM* vm, __attribute((unused)) void* reserved) {
     (*vm)->GetEnv(vm, (void**)&env, JNI_VERSION_1_4);
     jclass eventLogListener = (*env)->FindClass(env, "net/kdt/pojavlaunch/Logger$eventLogListener");
     logger_onEventLogged = (*env)->GetMethodID(env, eventLogListener, "onEventLogged", "(Ljava/lang/String;)V");
+    jclass splashListenerClass = (*env)->FindClass(env, "net/kdt/pojavlaunch/Logger$splashListener");
+    logger_onSplashEvent = (*env)->GetMethodID(env, splashListenerClass, "onSplashEvent", "()V");
+
+    logger_starting = (*env)->GetMethodID(env, splashListenerClass, "onStarting", "()V");
+    logger_middle = (*env)->GetMethodID(env, splashListenerClass, "onMiddle", "()V");
+    logger_complete = (*env)->GetMethodID(env, splashListenerClass, "onComplete", "()V");
+    logger_fullcomplete = (*env)->GetMethodID(env, splashListenerClass, "onFullComplete", "()V");
+
     return JNI_VERSION_1_4;
 }
 
@@ -62,6 +78,19 @@ static void *logger_thread() {
             writeString = (*env)->NewStringUTF(env, buf); //send to app without newline
             (*env)->CallVoidMethod(env, logListener, logger_onEventLogged, writeString);
             (*env)->DeleteLocalRef(env, writeString);
+        }
+        if(splashListener != NULL) {
+            if(strstr(buf, "Rk1MUHJlSW5pdGlhbGl6YXRpb25FdmVudA==")){ // 25%
+                (*env)->CallVoidMethod(env, splashListener, logger_starting);
+            } else if(strstr(buf, "Rk1MSW5pdGlhbGl6YXRpb25FdmVudA==")){ // 50%
+                (*env)->CallVoidMethod(env, splashListener, logger_middle);
+            } else if(strstr(buf, "Rk1MUG9zdEluaXRpYWxpemF0aW9uRXZlbnQ=")){ // 75%
+                (*env)->CallVoidMethod(env, splashListener, logger_complete);
+            } else if(strstr(buf, "Rk1MTG9hZENvbXBsZXRlRXZlbnQ=")){ // 100%
+                (*env)->CallVoidMethod(env, splashListener, logger_fullcomplete);
+            } else if(strstr(buf, "R3VpTWFpbk1lbnU=")){ // remove loading
+                (*env)->CallVoidMethod(env, splashListener, logger_onSplashEvent);
+            }
         }
     }
     (*stdiois_jvm)->DetachCurrentThread(stdiois_jvm);
@@ -206,6 +235,17 @@ Java_net_kdt_pojavlaunch_Logger_setLogListener(JNIEnv *env, __attribute((unused)
         logListener = NULL;
     }else{
         logListener = (*env)->NewGlobalRef(env, log_listener);
+    }
+    if(logListenerLocal != NULL) (*env)->DeleteGlobalRef(env, logListenerLocal);
+}
+
+JNIEXPORT void JNICALL
+Java_net_kdt_pojavlaunch_Logger_setSplashListener(JNIEnv *env, jclass clazz, jobject log_listener) {
+    jobject logListenerLocal = splashListener;
+    if(log_listener == NULL) {
+        splashListener = NULL;
+    }else{
+        splashListener = (*env)->NewGlobalRef(env, log_listener);
     }
     if(logListenerLocal != NULL) (*env)->DeleteGlobalRef(env, logListenerLocal);
 }
