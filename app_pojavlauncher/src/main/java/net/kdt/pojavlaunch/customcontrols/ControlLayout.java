@@ -1,7 +1,6 @@
 package net.kdt.pojavlaunch.customcontrols;
 
 import static android.content.Context.INPUT_METHOD_SERVICE;
-import static net.kdt.pojavlaunch.MainActivity.mControlLayout;
 import static net.kdt.pojavlaunch.Tools.currentDisplayMetrics;
 
 import static org.lwjgl.glfw.CallbackBridge.isGrabbing;
@@ -45,6 +44,10 @@ import java.util.List;
 
 public class ControlLayout extends FrameLayout {
 	protected CustomControls mLayout;
+
+	public CustomControls getmLayout(){
+		return mLayout;
+	}
 	/* Accessible when inside the game by ControlInterface implementations, cached for perf. */
 	private MinecraftGLSurface mGameSurface = null;
 
@@ -58,7 +61,7 @@ public class ControlLayout extends FrameLayout {
 	private ControlHandleView mHandleView;
 	private ControlButtonMenuListener mMenuListener;
 	public ActionRow mActionRow = null;
-	public String mLayoutFileName;
+	public String mLayoutFileName, mFilePath;
 
 	public ControlLayout(Context ctx) {
 		super(ctx);
@@ -73,6 +76,7 @@ public class ControlLayout extends FrameLayout {
 		CustomControls layout = LayoutConverter.loadAndConvertIfNecessary(jsonPath);
 		if(layout != null) {
 			loadLayout(layout);
+			mFilePath = jsonPath;
 			updateLoadedFileName(jsonPath);
 			return;
 		}
@@ -99,7 +103,6 @@ public class ControlLayout extends FrameLayout {
 		if (controlLayout == null) return;
 
 		mLayout = controlLayout;
-		
 
 		// Joystick(s) first, to workaround the touch dispatch
 		for(ControlJoystickData joystick : mLayout.mJoystickDataList){
@@ -117,12 +120,46 @@ public class ControlLayout extends FrameLayout {
 			if(mModifiable) drawer.areButtonsVisible = true;
 		}
 
+		processJoystick(mLayout.isJoystickEnabled);
+
 		mLayout.scaledAt = LauncherPreferences.PREF_BUTTONSIZE;
 
 		setModified(false);
 		mButtons = null;
 		getButtonChildren(); // Force refresh
+		processJoystick(mLayout.isJoystickEnabled);
 	} // loadLayout
+
+	public void processJoystick(boolean isJoystickEnabled) {
+		if(isJoystickEnabled) {
+			for(ControlInterface controlInterface : getButtonChildren()) {
+				if(controlInterface.getProperties().joystickHideable) {
+					controlInterface.getControlView().setVisibility(View.GONE);
+				}
+				if(controlInterface.getProperties().name.equals("joystick")){
+					controlInterface.getControlView().setVisibility(View.VISIBLE);
+				}
+			}
+		}else{
+			for(ControlInterface controlInterface : getButtonChildren()) {
+				if(controlInterface.getProperties().joystickHideable) {
+					controlInterface.getControlView().setVisibility(View.VISIBLE);
+				}
+				if(controlInterface.getProperties().name.equals("joystick")){
+					controlInterface.getControlView().setVisibility(View.GONE);
+				}
+			}
+		}
+		mLayout.isJoystickEnabled = isJoystickEnabled;
+
+		try {
+			mLayout.save(mFilePath);
+		} catch (Exception e){}
+	}
+
+	public void toggleJoystick() {
+		processJoystick(!mLayout.isJoystickEnabled);
+	}
 
 	//CONTROL BUTTON
 	public void addControlButton(ControlData controlButton) {
@@ -250,6 +287,11 @@ public class ControlLayout extends FrameLayout {
 		mControlVisible = isVisible;
 		for(ControlInterface button : getButtonChildren()){
 			button.setVisible(((button.getProperties().displayInGame && isGrabbing()) || (button.getProperties().displayInMenu && !isGrabbing())) && isVisible);
+			if(isVisible) {
+				if (mLayout.isJoystickEnabled && button.getProperties().joystickHideable) {
+					button.setVisible(false);
+				}
+			}
 		}
 	}
 

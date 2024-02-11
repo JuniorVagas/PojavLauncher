@@ -377,6 +377,7 @@
     <string name="loading_middle">Loading 50%</string>
     <string name="loading_complete">Loading 75%</string>
     <string name="loading_fullcomplete">Loading 100%</string>
+    <string name="mcl_option_enablejoystick">Toggle Joystick</string>
     <string name="cropper_title">Select image region</string>
     <string name="cropper_lock_vertical">V. lock</string>
     <string name="cropper_lock_horizontal">H. lock</string>

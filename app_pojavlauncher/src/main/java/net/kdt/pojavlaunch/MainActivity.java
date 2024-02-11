@@ -196,6 +196,7 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
                     case 3: adjustMouseSpeedLive(); break;
                     case 4: adjustGyroSensitivityLive(); break;
                     case 5: openCustomControls(); break;
+                    case 6: mControlLayout.toggleJoystick(); break;
                 }
                 drawerLayout.closeDrawers();
             };
