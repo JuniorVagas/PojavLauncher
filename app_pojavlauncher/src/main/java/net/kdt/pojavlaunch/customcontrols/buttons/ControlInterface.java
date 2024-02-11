@@ -66,6 +66,14 @@ public interface ControlInterface extends View.OnLongClickListener, GrabListener
     @Override
     default void onGrabState(boolean isGrabbing) {
         if (getControlLayoutParent() != null && getControlLayoutParent().getModifiable()) return; // Disable when edited
+        if(getControlLayoutParent().getmLayout() != null && getControlLayoutParent().getmLayout().isJoystickEnabled && getProperties().joystickHideable) {
+            setVisible(false);
+            return; // Disable when joystick enabled
+        }
+        if(getControlLayoutParent().getmLayout() != null && !getControlLayoutParent().getmLayout().isJoystickEnabled && getProperties().name.equals("joystick")) {
+            setVisible(false);
+            return; // Disable when joystick disabled
+        }
         setVisible(((getProperties().displayInGame && isGrabbing) || (getProperties().displayInMenu && !isGrabbing)) && getControlLayoutParent().areControlVisible());
     }
 

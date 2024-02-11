@@ -54,6 +54,7 @@ public class ControlData {
      */
     public String dynamicX, dynamicY;
     public boolean isDynamicBtn, isToggle, passThruEnabled;
+    public boolean joystickHideable;
     public String name;
     public int[] keycodes;      //Should store up to 4 keys
     public float opacity;       //Alpha value from 0 to 1;

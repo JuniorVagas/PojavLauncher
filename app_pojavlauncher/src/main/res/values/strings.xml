@@ -377,4 +377,5 @@
     <string name="loading_middle">Loading 50%</string>
     <string name="loading_complete">Loading 75%</string>
     <string name="loading_fullcomplete">Loading 100%</string>
+    <string name="mcl_option_enablejoystick">Toggle Joystick</string>
 </resources>

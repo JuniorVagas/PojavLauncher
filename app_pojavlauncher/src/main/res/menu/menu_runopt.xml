@@ -18,4 +18,7 @@
     <item
         android:id="@+id/nav_customctrl"
         android:title="@string/mcl_option_customcontrol" />
+    <item
+        android:id="@+id/nav_enablejoystick"
+        android:title="@string/mcl_option_enablejoystick" />
 </menu>
