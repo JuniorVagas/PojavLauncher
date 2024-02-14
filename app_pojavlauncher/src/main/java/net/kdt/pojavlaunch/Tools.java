@@ -169,7 +169,7 @@ public final class Tools {
     }
 
     public static void launchMinecraft(final AppCompatActivity activity, MinecraftAccount minecraftAccount,
-                                       MinecraftProfile minecraftProfile, String versionId, int versionJavaRequirement) throws Throwable {
+                                       ServerModpackConfig minecraftProfile, String versionId, int versionJavaRequirement) throws Throwable {
         int freeDeviceMemory = getFreeDeviceMemory(activity);
         if(LauncherPreferences.PREF_RAM_ALLOCATION > freeDeviceMemory) {
             LifecycleAwareAlertDialog.DialogCreator dialogCreator = (dialog, builder) ->
@@ -185,7 +185,7 @@ public final class Tools {
         Runtime runtime = MultiRTUtils.forceReread(Tools.pickRuntime(minecraftProfile, versionJavaRequirement));
         JMinecraftVersionList.Version versionInfo = Tools.getVersionInfo(versionId);
         LauncherProfiles.load();
-        File gamedir = Tools.getGameDirPath(minecraftProfile);
+        File gamedir = new File(Tools.getGameDirPath(minecraftProfile));
 
 
         // Pre-process specific files
@@ -217,21 +217,15 @@ public final class Tools {
         javaArgList.addAll(Arrays.asList(launchArgs));
         // ctx.appendlnToLog("full args: "+javaArgList.toString());
         String args = LauncherPreferences.PREF_CUSTOM_JAVA_ARGS;
-        if(Tools.isValidString(minecraftProfile.javaArgs)) args = minecraftProfile.javaArgs;
+        if(Tools.isValidString(minecraftProfile.getJvmArgs())) args = minecraftProfile.getJvmArgs();
         FFmpegPlugin.discover(activity);
         JREUtils.launchJavaVM(activity, runtime, gamedir, javaArgList, args);
         // If we returned, this means that the JVM exit dialog has been shown and we don't need to be active anymore.
         // We never return otherwise. The process will be killed anyway, and thus we will become inactive
     }
 
-    public static File getGameDirPath(@NonNull MinecraftProfile minecraftProfile){
-        if(minecraftProfile.gameDir != null){
-            if(minecraftProfile.gameDir.startsWith(Tools.LAUNCHERPROFILES_RTPREFIX))
-                return new File(minecraftProfile.gameDir.replace(Tools.LAUNCHERPROFILES_RTPREFIX,Tools.DIR_GAME_HOME+"/"));
-            else
-                return new File(Tools.DIR_GAME_HOME,minecraftProfile.gameDir);
-        }
-        return new File(Tools.DIR_GAME_NEW);
+    public static String getGameDirPath(@NonNull ServerModpackConfig minecraftProfile){
+        return minecraftProfile.getGameDirectory();
     }
 
     public static void buildNotificationChannel(Context context){
@@ -1043,9 +1037,9 @@ public final class Tools {
         return prefixedName.substring(Tools.LAUNCHERPROFILES_RTPREFIX.length());
     }
 
-    public static String getSelectedRuntime(MinecraftProfile minecraftProfile) {
+    public static String getSelectedRuntime(ServerModpackConfig minecraftProfile) {
         String runtime = LauncherPreferences.PREF_DEFAULT_RUNTIME;
-        String profileRuntime = getRuntimeName(minecraftProfile.javaDir);
+        String profileRuntime = minecraftProfile.getJavaRuntime();
         if(profileRuntime != null) {
             if(MultiRTUtils.forceReread(profileRuntime).versionString != null) {
                 runtime = profileRuntime;
@@ -1058,14 +1052,17 @@ public final class Tools {
         MAIN_HANDLER.post(runnable);
     }
 
-    public static @NonNull String pickRuntime(MinecraftProfile minecraftProfile, int targetJavaVersion) {
+    public static @NonNull String pickRuntime(ServerModpackConfig minecraftProfile, int targetJavaVersion) {
         String runtime = getSelectedRuntime(minecraftProfile);
-        String profileRuntime = getRuntimeName(minecraftProfile.javaDir);
+        String profileRuntime = minecraftProfile.getJavaRuntime();
         Runtime pickedRuntime = MultiRTUtils.read(runtime);
         if(runtime == null || pickedRuntime.javaVersion == 0 || pickedRuntime.javaVersion < targetJavaVersion) {
             String preferredRuntime = MultiRTUtils.getNearestJreName(targetJavaVersion);
             if(preferredRuntime == null) throw new RuntimeException("Failed to autopick runtime!");
-            if(profileRuntime != null) minecraftProfile.javaDir = Tools.LAUNCHERPROFILES_RTPREFIX+preferredRuntime;
+            if(profileRuntime != null) {
+                minecraftProfile.setJavaRuntime(preferredRuntime);
+                minecraftProfile.save();
+            }
             runtime = preferredRuntime;
         }
         return runtime;

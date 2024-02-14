@@ -1,6 +1,7 @@
 package net.kdt.pojavlaunch.tasks;
 
 import static net.kdt.pojavlaunch.PojavApplication.sExecutorService;
+import static net.kdt.pojavlaunch.Tools.BYTE_TO_MB;
 
 import android.app.Activity;
 import android.util.Log;
@@ -10,29 +11,37 @@ import androidx.annotation.Nullable;
 
 import com.kdt.mcgui.ProgressLayout;
 
+import net.kdt.pojavlaunch.AtomicMonitor;
 import net.kdt.pojavlaunch.JAssetInfo;
 import net.kdt.pojavlaunch.JAssets;
 import net.kdt.pojavlaunch.JMinecraftVersionList;
 import net.kdt.pojavlaunch.JRE17Util;
 import net.kdt.pojavlaunch.R;
+import net.kdt.pojavlaunch.ServerModpackConfig;
 import net.kdt.pojavlaunch.Tools;
 import net.kdt.pojavlaunch.mirrors.DownloadMirror;
 import net.kdt.pojavlaunch.mirrors.MirrorTamperedException;
 import net.kdt.pojavlaunch.prefs.LauncherPreferences;
+import net.kdt.pojavlaunch.progresskeeper.ProgressKeeper;
 import net.kdt.pojavlaunch.utils.DownloadUtils;
 import net.kdt.pojavlaunch.utils.FileUtils;
 import net.kdt.pojavlaunch.value.DependentLibrary;
 import net.kdt.pojavlaunch.value.MinecraftClientInfo;
 import net.kdt.pojavlaunch.value.MinecraftLibraryArtifact;
+import net.kdt.pojavlaunch.value.ServerFileInfo;
+import net.kdt.pojavlaunch.value.SmallFileComparator;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -47,6 +56,7 @@ public class MinecraftDownloader {
     private File mTargetJarFile; // The destination client JAR to which the source will be copied to.
 
     private static final ThreadLocal<byte[]> sThreadLocalDownloadBuffer = new ThreadLocal<>();
+    private static Thread downloaderThread;
 
     /**
      * Start the game version download process on the global executor service.
@@ -58,7 +68,7 @@ public class MinecraftDownloader {
     public void start(@Nullable Activity activity, @Nullable JMinecraftVersionList.Version version,
                       @NonNull String realVersion, // this was there for a reason
                       @NonNull AsyncMinecraftDownloader.DoneListener listener) {
-        sExecutorService.execute(() -> {
+        downloaderThread = new Thread(() -> {
             try {
                 downloadGame(activity, version, realVersion);
                 listener.onDownloadDone();
@@ -67,6 +77,16 @@ public class MinecraftDownloader {
             }
             ProgressLayout.clearProgress(ProgressLayout.DOWNLOAD_MINECRAFT);
         });
+        downloaderThread.start();
+    }
+
+    public static void interrupt() {
+        downloaderThread.interrupt();
+    }
+
+    public static boolean isR() {
+        if(downloaderThread == null) return false;
+        return downloaderThread.isInterrupted();
     }
 
     /**
@@ -177,7 +197,7 @@ public class MinecraftDownloader {
         });
         return Tools.GLOBAL_GSON.fromJson(Tools.read(targetFile), JAssets.class);
     }
-    
+
     private MinecraftClientInfo getClientInfo(JMinecraftVersionList.Version verInfo) {
         Map<String, MinecraftClientInfo> downloads = verInfo.downloads;
         if(downloads == null) return null;
@@ -193,7 +213,7 @@ public class MinecraftDownloader {
      * @return false if JRE17 installation failed, true otherwise
      * @throws IOException if the download of any of the metadata files fails
      */
-    private boolean downloadAndProcessMetadata(Activity activity, JMinecraftVersionList.Version verInfo, String versionName) throws IOException, MirrorTamperedException {
+    private boolean downloadAndProcessMetadata(Activity activity, JMinecraftVersionList.Version verInfo, String versionName) throws IOException, MirrorTamperedException, DownloaderException {
         File versionJsonFile;
         if(verInfo != null) versionJsonFile = downloadGameJson(verInfo);
         else versionJsonFile = createGameJsonPath(versionName);
@@ -203,8 +223,22 @@ public class MinecraftDownloader {
             throw new IOException("Unable to read Version JSON for version " + versionName);
         }
 
-        if(activity != null && !JRE17Util.installNewJreIfNeeded(activity, verInfo)){
+        verInfo = Tools.getVersionInfo(versionName);
+        final ServerModpackConfig config = ServerModpackConfig.load(versionName);
+        if(activity != null && !JRE17Util.installNewJreIfNeeded(activity, verInfo, config)){
             return false;
+        }
+
+        try {
+            Log.i("Modpack","Downloading modpack files...");
+            downloadModpackFiles(verInfo, new File(config.getGameDirectory()));
+        } catch (DownloaderException e) {
+            ProgressKeeper.submitProgress(ProgressLayout.DOWNLOAD_MINECRAFT, -1, -1);
+            throw e;
+        } catch (Exception e) {
+            e.printStackTrace();
+            ProgressKeeper.submitProgress(ProgressLayout.DOWNLOAD_MINECRAFT, -1, -1);
+            throw new DownloaderException(e);
         }
 
         JAssets assets = downloadAssetsIndex(verInfo);
@@ -224,6 +258,61 @@ public class MinecraftDownloader {
             return downloadAndProcessMetadata(activity, inheritedVersion, verInfo.inheritsFrom);
         }
         return true;
+    }
+
+    public void downloadModpackFiles(JMinecraftVersionList.Version version, File destination) throws IOException, DownloaderException{
+        final ThreadPoolExecutor executor = new ThreadPoolExecutor(5, 5, 500, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>());
+        final AtomicBoolean interrupt = new AtomicBoolean(true);
+        final AtomicLong downloadProgress = new AtomicLong(0);
+        final SmallFileComparator comparator = new SmallFileComparator();
+        long downloadSize = 0;
+        if(version.custom_files != null) {
+            Arrays.sort(version.custom_files, comparator); //Breeze through the small files first, deal with the large ones later
+            for(ServerFileInfo serverFileInfo : version.custom_files) {
+                downloadSize += serverFileInfo.size;
+                serverFileInfo.setDownloaderData(destination, new AtomicMonitor(downloadProgress), interrupt);
+                executor.execute(serverFileInfo);
+            }
+        }
+        if(version.custom_mods != null) {
+            ArrayList<String> modsThatExist = new ArrayList<>(version.custom_mods.length);
+            Arrays.sort(version.custom_mods, comparator);
+            for(ServerFileInfo serverFileInfo : version.custom_mods) {
+                {
+                    String path = serverFileInfo.path;
+                    int slashIndex = path.lastIndexOf('/');
+                    if(slashIndex != -1) modsThatExist.add(path.substring(slashIndex+1));
+                    else modsThatExist.add(path);
+                }
+                downloadSize += serverFileInfo.size;
+                serverFileInfo.setDownloaderData(destination, new AtomicMonitor(downloadProgress), interrupt);
+                executor.execute(serverFileInfo);
+            }
+            File modsFolder = new File(destination, "modstore");
+            if(modsFolder.isDirectory()) {
+                File[] modFiles =  modsFolder.listFiles();
+                if(modFiles != null) for(File mod : modFiles) {
+                    if(mod.isFile() && !modsThatExist.contains(mod.getName())) {
+                        Log.i("ExtraModRemoval", "Found extra mod file: "+mod.getName());
+                        if(!mod.delete()) {
+                            throw new IOException("Failed to delete mod "+mod.getName());
+                        }
+                    }
+                }
+            }
+        }
+        executor.shutdown();
+        try {
+            while (!executor.awaitTermination(150, TimeUnit.MILLISECONDS) && interrupt.get()) {
+                long d = downloadProgress.get();
+                ProgressLayout.setProgress(ProgressLayout.DOWNLOAD_MINECRAFT, (int)(((double)d / downloadSize)*100), R.string.mcl_launch_downloading_progress, "mods", d/BYTE_TO_MB, downloadSize/BYTE_TO_MB);
+            }
+            if(!interrupt.get()) throw new IOException("Failed to download a mod file");
+            executor.shutdownNow();
+        }catch (InterruptedException ignored) {
+            executor.shutdownNow();
+            throw new DownloaderException();
+        }
     }
 
     private void growDownloadList(int addedElementCount) {
@@ -276,7 +365,7 @@ public class MinecraftDownloader {
             );
         }
     }
-    
+
     private void scheduleAssetDownloads(JAssets assets) throws IOException {
         Map<String, JAssetInfo> assetObjects = assets.objects;
         if(assetObjects == null) return;
@@ -375,12 +464,12 @@ public class MinecraftDownloader {
                 verifyFileSha1();
             }else {
                 mTargetSha1 = null; // Nullify SHA1 as DownloadUtils.ensureSha1 only checks for null,
-                                    // not for string validity
+                // not for string validity
                 if(mTargetPath.exists()) finishWithoutDownloading();
                 else downloadFile();
             }
         }
-        
+
         private void verifyFileSha1() throws Exception {
             if(mTargetPath.isFile() && mTargetPath.canRead() && Tools.compareSHA1(mTargetPath, mTargetSha1)) {
                 finishWithoutDownloading();
@@ -390,7 +479,7 @@ public class MinecraftDownloader {
                 downloadFile();
             }
         }
-        
+
         private void downloadFile() throws Exception {
             try {
                 DownloadUtils.ensureSha1(mTargetPath, mTargetSha1, () -> {
@@ -411,8 +500,15 @@ public class MinecraftDownloader {
 
         @Override
         public void updateProgress(int curr, int max) {
-           mDownloadSizeCounter.addAndGet(curr - mLastCurr);
-           mLastCurr = curr;
+            mDownloadSizeCounter.addAndGet(curr - mLastCurr);
+            mLastCurr = curr;
+        }
+    }
+
+    private static class DownloaderException extends Exception {
+        public DownloaderException() {}
+        public DownloaderException(Throwable e) {
+            super(e);
         }
     }
 }
