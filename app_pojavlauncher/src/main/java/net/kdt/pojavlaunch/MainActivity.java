@@ -637,6 +637,8 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
     @Override
     public void onSplashEvent() {
         runOnUiThread(()->{
+            mWebView = null;
+
             View overlay = findViewById(R.id.mainOverlayView);
             ((ViewGroup)findViewById(R.id.content_frame)).removeView(overlay);
             Logger.setSplashListener(null);
