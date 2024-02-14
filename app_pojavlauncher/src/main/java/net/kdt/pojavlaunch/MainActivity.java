@@ -22,6 +22,8 @@ import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -159,11 +161,15 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
                 throw new IOException("Failed to create a new log file");
             Logger.begin(latestLogFile.getAbsolutePath());
             Logger.setSplashListener(this);
+
             mWebView.getSettings().setJavaScriptEnabled(true);
-            mWebView.loadUrl("file:///android_asset/loading.html");
+            mWebView.clearCache(true);
+            if (isInternetAvailable(this)) mWebView.loadUrl("file:///android_asset/loading.html"); // TODO trocar para um site web
+            else mWebView.loadUrl("file:///android_asset/loading.html");
             mWebView.setBackgroundColor(Color.TRANSPARENT);
             mWebView.getSettings().setUseWideViewPort(true);
             mWebView.getSettings().setLoadWithOverviewMode(true);
+
             // FIXME: is it safe for multi thread?
             GLOBAL_CLIPBOARD = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
             touchCharInput.setCharacterSender(new LwjglCharSender());
@@ -225,6 +231,13 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
         } catch (Throwable e) {
             Tools.showError(this, e, true);
         }
+    }
+
+    private static boolean isInternetAvailable(Context context){
+        NetworkInfo info = ((ConnectivityManager)
+                context.getSystemService(Context.CONNECTIVITY_SERVICE)).getActiveNetworkInfo();
+
+        return info != null;
     }
 
     private void loadControls() {
