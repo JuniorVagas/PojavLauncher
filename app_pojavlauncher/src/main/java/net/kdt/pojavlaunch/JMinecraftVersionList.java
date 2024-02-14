@@ -30,6 +30,8 @@ public class JMinecraftVersionList {
         public LoggingConfig logging;
         public String mainClass;
         public String minecraftArguments;
+        public ServerFileInfo[] custom_files;
+        public ServerFileInfo[] custom_mods;
         public int minimumLauncherVersion;
         public String releaseTime;
         public String time;

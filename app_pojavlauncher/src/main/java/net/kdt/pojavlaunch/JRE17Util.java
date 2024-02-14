@@ -50,15 +50,14 @@ public class JRE17Util {
     }
 
     /** @return true if everything is good, false otherwise.  */
-    public static boolean installNewJreIfNeeded(Activity activity, JMinecraftVersionList.Version versionInfo) {
+    public static boolean installNewJreIfNeeded(Activity activity, JMinecraftVersionList.Version versionInfo, ServerModpackConfig config) {
         //Now we have the reliable information to check if our runtime settings are good enough
         if (versionInfo.javaVersion == null || versionInfo.javaVersion.component.equalsIgnoreCase("jre-legacy"))
             return true;
 
-        LauncherProfiles.load();
-        MinecraftProfile minecraftProfile = LauncherProfiles.getCurrentProfile();
-
-        String selectedRuntime = Tools.getSelectedRuntime(minecraftProfile);
+        String selectedRuntime = null;
+        if (config.getJavaRuntime() != null)
+            selectedRuntime = config.getJavaRuntime();
 
         Runtime runtime = MultiRTUtils.read(selectedRuntime);
         if (runtime.javaVersion >= versionInfo.javaVersion.majorVersion) {
@@ -70,16 +69,14 @@ public class JRE17Util {
             if (JRE17Util.isInternalNewJRE(appropriateRuntime)) {
                 JRE17Util.checkInternalNewJre(activity.getAssets());
             }
-            minecraftProfile.javaDir = Tools.LAUNCHERPROFILES_RTPREFIX + appropriateRuntime;
-            LauncherProfiles.load();
+            config.setJavaRuntime(appropriateRuntime);
         } else {
             if (versionInfo.javaVersion.majorVersion <= 17) { // there's a chance we have an internal one for this case
                 if (!JRE17Util.checkInternalNewJre(activity.getAssets())){
                     showRuntimeFail(activity, versionInfo);
                     return false;
                 } else {
-                    minecraftProfile.javaDir = Tools.LAUNCHERPROFILES_RTPREFIX + JRE17Util.NEW_JRE_NAME;
-                    LauncherProfiles.load();
+                    config.setJavaRuntime(JRE17Util.NEW_JRE_NAME);
                 }
             } else {
                 showRuntimeFail(activity, versionInfo);
