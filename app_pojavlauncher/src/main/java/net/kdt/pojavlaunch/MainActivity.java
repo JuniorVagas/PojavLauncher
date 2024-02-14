@@ -9,6 +9,7 @@ import static org.lwjgl.glfw.CallbackBridge.sendKeyPress;
 import static org.lwjgl.glfw.CallbackBridge.windowHeight;
 import static org.lwjgl.glfw.CallbackBridge.windowWidth;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ClipData;
@@ -143,6 +144,7 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
         bindService(gameServiceIntent, this, 0);
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     protected void initLayout(int resId) {
         setContentView(resId);
         bindValues();
@@ -157,6 +159,7 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
                 throw new IOException("Failed to create a new log file");
             Logger.begin(latestLogFile.getAbsolutePath());
             Logger.setSplashListener(this);
+            mWebView.getSettings().setJavaScriptEnabled(true);
             mWebView.loadUrl("file:///android_asset/loading.html");
             mWebView.setBackgroundColor(Color.TRANSPARENT);
             mWebView.getSettings().setUseWideViewPort(true);
@@ -630,29 +633,25 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
     @Override
     public void onStarting() {
         runOnUiThread(()->{
-            TextView loadingText = findViewById(R.id.loading_text);
-            loadingText.setText(R.string.loading_starting);
+            mWebView.evaluateJavascript("document.getElementById('loadingText').textContent = 'Carregando 25%';", null);
         });
     }
     @Override
     public void onMiddle() {
         runOnUiThread(()->{
-            TextView loadingText = findViewById(R.id.loading_text);
-            loadingText.setText(R.string.loading_middle);
+            mWebView.evaluateJavascript("document.getElementById('loadingText').textContent = 'Carregando 50%';", null);
         });
     }
     @Override
     public void onComplete() {
         runOnUiThread(()->{
-            TextView loadingText = findViewById(R.id.loading_text);
-            loadingText.setText(R.string.loading_complete);
+            mWebView.evaluateJavascript("document.getElementById('loadingText').textContent = 'Carregando 75%';", null);
         });
     }
     @Override
     public void onFullComplete() {
         runOnUiThread(()->{
-            TextView loadingText = findViewById(R.id.loading_text);
-            loadingText.setText(R.string.loading_fullcomplete);
+            mWebView.evaluateJavascript("document.getElementById('loadingText').textContent = 'Carregando 100%';", null);
         });
     }
 
