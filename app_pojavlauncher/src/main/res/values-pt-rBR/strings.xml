@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- App name part -->
-    <string name="app_name">PojavLauncher (Minecraft: Java Edition para Android)</string>
-    <string name="app_short_name">PojavLauncher</string>
+    <string name="app_name">PXBR Launcher (Minecraft: Java Edition para Android)</string>
+    <string name="app_short_name">PXBR Launcher</string>
     <!-- Action bar part -->
     <!-- Languages list part -->
     <!-- Login strings -->
@@ -15,7 +15,7 @@
     <!-- AlertDialog title -->
     <string name="alerttitle_installmod">Selecione um instalador de mod</string>
     <!-- Error messages -->
-    <string name="error_fatal">O PojavLauncher parou de funcionar inesperadamente</string>
+    <string name="error_fatal">O PXBR Launcher parou de funcionar inesperadamente</string>
     <string name="error_no_version">Nenhuma versão!</string>
     <string name="error_show_more">Mostrar mais</string>
     <string name="error_show_less">Mostrar menos</string>
@@ -233,7 +233,7 @@
     <string name="preference_gyro_sample_rate_title">Taxa de amostragem Giroscópio</string>
     <string name="preference_gyro_sample_rate_description">Se você tiver problemas de desempenho com os controles de giroscópio, aumente isto.</string>
     <string name="microsoft_login_retry_later">Você fez muitas solicitações. Por favor, tente novamente mais tarde.</string>
-    <string name="storage_required">O PojavLauncher requer que o armazenamento externo seja conectado. Por favor, reconecte-o e reinicie o aplicativo.</string>
+    <string name="storage_required">O PXBR Launcher requer que o armazenamento externo seja conectado. Por favor, reconecte-o e reinicie o aplicativo.</string>
     <string name="mcl_setting_title_buttonallcaps">Use apenas letras maiúsculas nos rótulos do botão</string>
     <string name="mcl_setting_subtitle_buttonallcaps">Desative isso se você quiser usar letras minúsculas em seus controles.</string>
     <string name="create_profile">Criar novo perfil</string>

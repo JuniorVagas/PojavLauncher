@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- App name part -->
-    <string name="app_name">PojavLauncher (Minecraft: Java Edition for Android)</string>
-    <string name="app_short_name">PojavLauncher</string>
+    <string name="app_name">PXBR Launcher (Minecraft: Java Edition for Android)</string>
+    <string name="app_short_name">PXBR Launcher</string>
     <!-- Action bar part -->
     <!-- Languages list part -->
     <!-- Login strings -->
@@ -16,7 +16,7 @@
     <!-- AlertDialog title -->
     <string name="alerttitle_installmod">حدد مشغل مودات للتثبيت</string>
     <!-- Error messages -->
-    <string name="error_fatal">لقد توقف PojavLauncher بشكل غير متوقع</string>
+    <string name="error_fatal">لقد توقف PXBR Launcher بشكل غير متوقع</string>
     <string name="error_no_version">لا يوجد إصدار!</string>
     <string name="error_show_more">اظهر المزيد</string>
     <string name="error_show_less">أظهِر أقل</string>
