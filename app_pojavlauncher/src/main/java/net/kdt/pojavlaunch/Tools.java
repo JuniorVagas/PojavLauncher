@@ -171,7 +171,7 @@ public final class Tools {
     public static void launchMinecraft(final AppCompatActivity activity, MinecraftAccount minecraftAccount,
                                        ServerModpackConfig minecraftProfile, String versionId, int versionJavaRequirement) throws Throwable {
         int freeDeviceMemory = getFreeDeviceMemory(activity);
-        if(LauncherPreferences.PREF_RAM_ALLOCATION > freeDeviceMemory) {
+        if(!LauncherPreferences.PREF_AUTO_RAM_ALLOCATION && LauncherPreferences.PREF_RAM_ALLOCATION > freeDeviceMemory) {
             LifecycleAwareAlertDialog.DialogCreator dialogCreator = (dialog, builder) ->
                 builder.setMessage(activity.getString(R.string.memory_warning_msg, freeDeviceMemory, LauncherPreferences.PREF_RAM_ALLOCATION))
                         .setPositiveButton(android.R.string.ok, (d, w)->{});

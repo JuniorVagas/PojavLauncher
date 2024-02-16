@@ -378,4 +378,6 @@
     <string name="loading_complete">Loading 75%</string>
     <string name="loading_fullcomplete">Loading 100%</string>
     <string name="mcl_option_enablejoystick">Toggle Joystick</string>
+    <string name="mcl_auto_memory_allocation">Auto memory allocation</string>
+    <string name="mcl_auto_memory_allocation_subtitle">Automatically controls how much RAM Minecraft will use</string>
 </resources>

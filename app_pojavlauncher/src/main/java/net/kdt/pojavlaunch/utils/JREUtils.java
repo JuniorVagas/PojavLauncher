@@ -1,6 +1,7 @@
 package net.kdt.pojavlaunch.utils;
 
 import static net.kdt.pojavlaunch.Architecture.ARCH_X86;
+import static net.kdt.pojavlaunch.Architecture.is32BitsDevice;
 import static net.kdt.pojavlaunch.Architecture.is64BitsDevice;
 import static net.kdt.pojavlaunch.Tools.LOCAL_RENDERER;
 import static net.kdt.pojavlaunch.Tools.NATIVE_LIB_DIR;
@@ -295,12 +296,24 @@ public class JREUtils {
         purgeArg(userArgs, "-Dorg.lwjgl.opengl.libname");
 
         //Add automatically generated args
-        userArgs.add("-Xms" + LauncherPreferences.PREF_RAM_ALLOCATION + "M");
-        userArgs.add("-Xmx" + LauncherPreferences.PREF_RAM_ALLOCATION + "M");
+        LauncherPreferences.loadPreferences(activity);
+        ActivityManager.MemoryInfo mi = new ActivityManager.MemoryInfo();
+        ((ActivityManager)activity.getSystemService(Context.ACTIVITY_SERVICE)).getMemoryInfo(mi);
+
+        if(LauncherPreferences.PREF_AUTO_RAM_ALLOCATION){
+            int ramAllocation = autoRam((int) (mi.availMem/1048576L), is32BitsDevice());
+            userArgs.add("-Xmx" + ramAllocation + "M");
+            userArgs.add("-Xms" + ramAllocation + "M");
+            Logger.appendToLog("RAM Allocation: " + autoRam((int) (mi.availMem/1048576L), is32BitsDevice()) + "MB / " + (int) (mi.availMem/1048576L) + "MB");
+        } else {
+            userArgs.add("-Xmx" + LauncherPreferences.PREF_RAM_ALLOCATION + "M");
+            userArgs.add("-Xms" + LauncherPreferences.PREF_RAM_ALLOCATION + "M");
+            Logger.appendToLog("RAM Allocation: " + LauncherPreferences.PREF_RAM_ALLOCATION + "MB / " + (int) (mi.availMem/1048576L) + "MB");
+            activity.runOnUiThread(() -> Toast.makeText(activity, activity.getString(R.string.autoram_info_msg,LauncherPreferences.PREF_RAM_ALLOCATION), Toast.LENGTH_SHORT).show());
+        }
         if(LOCAL_RENDERER != null) userArgs.add("-Dorg.lwjgl.opengl.libname=" + graphicsLib);
 
         userArgs.addAll(JVMArgs);
-        activity.runOnUiThread(() -> Toast.makeText(activity, activity.getString(R.string.autoram_info_msg,LauncherPreferences.PREF_RAM_ALLOCATION), Toast.LENGTH_SHORT).show());
         System.out.println(JVMArgs);
 
         initJavaRuntime(runtimeHome);
@@ -318,6 +331,14 @@ public class JREUtils {
             LifecycleAwareAlertDialog.haltOnDialog(activity.getLifecycle(), activity, dialogCreator);
         }
         MainActivity.fullyExit();
+    }
+
+    private static int autoRam(int free, boolean is32bit){
+        int maxRAM = (int) Math.min(1000, free * 0.8);
+        if(!is32bit) maxRAM = (int) Math.min(2048, free * 0.8);
+        if(!is32bit && free > 4000) maxRAM = (int) Math.min(4096, free * 0.8);
+
+        return maxRAM;
     }
 
     /**

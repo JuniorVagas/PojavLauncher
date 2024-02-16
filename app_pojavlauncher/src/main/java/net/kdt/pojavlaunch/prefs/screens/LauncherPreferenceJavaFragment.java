@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.preference.EditTextPreference;
+import androidx.preference.SwitchPreferenceCompat;
 
 import net.kdt.pojavlaunch.R;
 import net.kdt.pojavlaunch.Tools;
@@ -47,6 +48,15 @@ public class LauncherPreferenceJavaFragment extends LauncherPreferenceFragment {
         if (editJVMArgs != null) {
             editJVMArgs.setOnBindEditTextListener(TextView::setSingleLine);
         }
+
+        SwitchPreferenceCompat autoAllocation = findPreference("autoAllocation");
+        autoAllocation.setOnPreferenceChangeListener((v1, v2) -> {
+            boolean checked = (boolean) v2;
+            seek7.setEnabled(!checked);
+            return true;
+        });
+
+        seek7.setEnabled(!autoAllocation.isChecked());
 
         requirePreference("install_jre").setOnPreferenceClickListener(preference->{
             openMultiRTDialog();
