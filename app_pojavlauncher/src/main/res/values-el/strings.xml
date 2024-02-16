@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- App name part -->
-    <string name="app_name">PojavLauncher (Minecraft: Java Edition για Android)</string>
-    <string name="app_short_name">PojavLauncher</string>
+    <string name="app_name">PXBR Launcher (Minecraft: Java Edition για Android)</string>
+    <string name="app_short_name">PXBR Launcher</string>
     <!-- Action bar part -->
     <!-- Languages list part -->
     <!-- Login strings -->
@@ -15,7 +15,7 @@
     <!-- AlertDialog title -->
     <string name="alerttitle_installmod">Επιλέξτε ένα πρόγραμμα εγκατάστασης mod</string>
     <!-- Error messages -->
-    <string name="error_fatal">Ο PojavLauncher κατέρρευσε απροσδόκητα</string>
+    <string name="error_fatal">Ο PXBR Launcher κατέρρευσε απροσδόκητα</string>
     <string name="error_no_version">Καμία έκδοση!</string>
     <string name="error_show_more">Εμφάνιση περισσότερων</string>
     <string name="error_show_less">Εμφάνιση λιγότερων</string>

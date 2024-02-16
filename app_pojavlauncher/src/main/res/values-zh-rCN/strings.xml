@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- App name part -->
-    <string name="app_name">PojavLauncher（适用于 Android 的《Minecraft：Java版》）</string>
-    <string name="app_short_name">PojavLauncher</string>
+    <string name="app_name">PXBR Launcher（适用于 Android 的《Minecraft：Java版》）</string>
+    <string name="app_short_name">PXBR Launcher</string>
     <!-- Action bar part -->
     <!-- Languages list part -->
     <!-- Login strings -->
@@ -15,7 +15,7 @@
     <!-- AlertDialog title -->
     <string name="alerttitle_installmod">选择模组安装器</string>
     <!-- Error messages -->
-    <string name="error_fatal">PojavLauncher 意外崩溃</string>
+    <string name="error_fatal">PXBR Launcher 意外崩溃</string>
     <string name="error_no_version">无版本！</string>
     <string name="error_show_more">显示细节</string>
     <string name="error_show_less">隐藏细节</string>
@@ -233,7 +233,7 @@
     <string name="preference_gyro_sample_rate_title">陀螺仪采样率</string>
     <string name="preference_gyro_sample_rate_description">如果您在陀螺仪控制上遇到性能问题，请增加此值。</string>
     <string name="microsoft_login_retry_later">您的操作过于频繁，请稍后再试</string>
-    <string name="storage_required">PojavLauncher 需要连接外部存储。请重新连接并重启应用。</string>
+    <string name="storage_required">PXBR Launcher 需要连接外部存储。请重新连接并重启应用。</string>
     <string name="mcl_setting_title_buttonallcaps">在按钮标签中仅使用大写字母</string>
     <string name="mcl_setting_subtitle_buttonallcaps">如果您想在控制键中使用小写字母，请禁用此功能。</string>
     <string name="create_profile">创建新配置</string>
