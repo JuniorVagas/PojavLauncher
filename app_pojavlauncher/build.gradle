@@ -2,8 +2,6 @@ plugins {
     id 'com.android.application' version '7.4.2'
 }
 
-static def getDate() { return new Date().format('yyyyMMdd') }
-
 static def getDateSeconds() {
     if (System.getenv("GITHUB_ACTIONS") == "true") {
         return 9934841 + Integer.parseInt(System.getenv("GITHUB_RUN_NUMBER"))
@@ -13,60 +11,7 @@ static def getDateSeconds() {
 }
 
 def getVersionName = {
-    // Get the last version tag, as well as the short head of the last commit
-    ByteArrayOutputStream TAG = new ByteArrayOutputStream()
-    ByteArrayOutputStream BRANCH = new ByteArrayOutputStream()
-    // Used by the fallback for github actions
-    ByteArrayOutputStream TAG_PART_COMMIT = new ByteArrayOutputStream()
-    String TAG_STRING
-
-    exec {
-        try {
-            commandLine 'git', 'describe', '--tags'
-            ignoreExitValue true
-            standardOutput = TAG
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    if (TAG.toString() == "") {
-        exec {
-            // Fallback for action builds
-            try {
-                commandLine 'git', 'describe', '--always', '--tags'
-                ignoreExitValue true
-                standardOutput = TAG_PART_COMMIT
-            } catch (Exception e) {
-            }
-        }
-    }
-
-
-    if(TAG.toString() != ""){
-        TAG_STRING = TAG.toString()
-    }else {
-        if(TAG_PART_COMMIT.toString().trim() == ""){
-             //Fallback no repo
-            return ("LOCAL-" + "${getDate()}")
-        }else {
-            // Used by github actions
-            TAG_STRING =  'edelweiss-' + "${getDate()}" + "-" + TAG_PART_COMMIT.toString().trim()
-        }
-
-    }
-
-    exec {
-        try {
-            commandLine 'git', 'branch', '--show-current'
-            ignoreExitValue true
-            standardOutput = BRANCH
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    return TAG_STRING.trim().replace("-g", "-") + "-" + BRANCH.toString().trim()
+    return "1.0.0"
 }
 
 def getCFApiKey = {
@@ -112,7 +57,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "net.kdt.pojavlaunch"
+        applicationId "br.com.pxbrlauncher"
         minSdkVersion 21
         targetSdkVersion 33
         versionCode getDateSeconds()
@@ -128,9 +73,9 @@ android {
             shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.customDebug
-            resValue 'string', 'application_package', 'net.kdt.pojavlaunch.debug'
-            resValue 'string', 'storageProviderAuthorities', 'net.kdt.pojavlaunch.scoped.gamefolder.debug'
-            resValue 'string', 'shareProviderAuthority', 'net.kdt.pojavlaunch.scoped.controlfolder.debug'
+            resValue 'string', 'application_package', 'br.com.pxbrlauncher.debug'
+            resValue 'string', 'storageProviderAuthorities', 'br.com.pxbrlauncher.scoped.gamefolder.debug'
+            resValue 'string', 'shareProviderAuthority', 'br.com.pxbrlauncher.scoped.controlfolder.debug'
         }
         proguard {
             initWith debug
@@ -145,8 +90,8 @@ android {
             // defaultConfig already set
             // multiDexEnabled = true
             // debuggable = true
-            resValue 'string', 'storageProviderAuthorities', 'net.kdt.pojavlaunch.scoped.gamefolder'
-            resValue 'string', 'application_package', 'net.kdt.pojavlaunch'
+            resValue 'string', 'storageProviderAuthorities', 'br.com.pxbrlauncher.scoped.gamefolder'
+            resValue 'string', 'application_package', 'br.com.pxbrlauncher'
         }
         gplay {
             initWith release
