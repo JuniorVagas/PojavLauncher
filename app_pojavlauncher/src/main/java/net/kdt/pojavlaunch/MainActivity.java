@@ -85,7 +85,7 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
     private DrawerLayout drawerLayout;
     private ListView navDrawer;
     private View mDrawerPullButton;
-    private WebView mWebView;
+    private WebView mWebView, wikiView;
     private GyroControl mGyroControl = null;
     public static ControlLayout mControlLayout;
 
@@ -170,6 +170,18 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
             mWebView.getSettings().setUseWideViewPort(true);
             mWebView.getSettings().setLoadWithOverviewMode(true);
 
+            findViewById(R.id.main_closeButton).setOnClickListener((v) -> {
+                runOnUiThread(()->{
+                    wikiView.clearCache(true);
+                    wikiView.clearHistory();
+                    wikiView.setVisibility(View.GONE);
+                    wikiView.destroy();
+                    wikiView = null;
+                    //wikiView.loadUrl("about:blank");
+                    v.setVisibility(View.GONE);
+                });
+            });
+
             // FIXME: is it safe for multi thread?
             GLOBAL_CLIPBOARD = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
             touchCharInput.setCharacterSender(new LwjglCharSender());
@@ -207,6 +219,7 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
                     case 4: adjustGyroSensitivityLive(); break;
                     case 5: openCustomControls(); break;
                     case 6: mControlLayout.toggleJoystick(); break;
+                    case 7: openWiki(); break;
                 }
                 drawerLayout.closeDrawers();
             };
@@ -231,6 +244,21 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
         } catch (Throwable e) {
             Tools.showError(this, e, true);
         }
+    }
+
+    private void openWiki(){
+        runOnUiThread(()->{
+            wikiView = new WebView(this);
+            wikiView.setLayoutParams(new ViewGroup.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.MATCH_PARENT
+            ));
+            ((ViewGroup)findViewById(R.id.content_frame)).addView(wikiView);
+            wikiView.setVisibility(View.VISIBLE);
+
+            wikiView.loadUrl("https://pixelmonmod.com/wiki/Main_Page");
+            findViewById(R.id.main_closeButton).setVisibility(View.VISIBLE);
+        });
     }
 
     private static boolean isInternetAvailable(Context context){
@@ -279,6 +307,7 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
         touchCharInput = findViewById(R.id.mainTouchCharInput);
         mDrawerPullButton = findViewById(R.id.drawer_button);
         mWebView = findViewById(R.id.main_image_view);
+        //wikiView = findViewById(R.id.main_wiki_view);
     }
 
     @Override

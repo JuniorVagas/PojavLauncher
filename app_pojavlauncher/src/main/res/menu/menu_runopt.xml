@@ -21,4 +21,7 @@
     <item
         android:id="@+id/nav_enablejoystick"
         android:title="@string/mcl_option_enablejoystick" />
+    <item
+        android:id="@+id/nav_wiki"
+        android:title="Wiki" />
 </menu>
