@@ -1,5 +1,5 @@
 plugins {
-    id 'com.android.application' version '7.4.2'
+    id 'com.android.library' version '7.4.2'
 }
 
 static def getDateSeconds() {
@@ -57,30 +57,21 @@ android {
     }
 
     defaultConfig {
-        applicationId "br.com.pxbrlauncher"
         minSdkVersion 21
         targetSdkVersion 33
         versionCode getDateSeconds()
         versionName getVersionName()
         multiDexEnabled true //important
-        resValue 'string', 'curseforge_api_key', getCFApiKey()
     }
 
     buildTypes {
         debug {
-            applicationIdSuffix '.debug'
             minifyEnabled false
             shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.customDebug
             resValue 'string', 'application_package', 'br.com.pxbrlauncher.debug'
-            resValue 'string', 'storageProviderAuthorities', 'br.com.pxbrlauncher.scoped.gamefolder.debug'
-            resValue 'string', 'shareProviderAuthority', 'br.com.pxbrlauncher.scoped.controlfolder.debug'
-        }
-        proguard {
-            initWith debug
-            minifyEnabled true
-            shrinkResources true
+            resValue 'string', 'storageProviderAuthorities', 'net.kdt.pojavlaunch.scoped.gamefolder.debug.pxbrlauncher'
         }
 
         release {
@@ -90,11 +81,13 @@ android {
             // defaultConfig already set
             // multiDexEnabled = true
             // debuggable = true
-            resValue 'string', 'storageProviderAuthorities', 'br.com.pxbrlauncher.scoped.gamefolder'
-            resValue 'string', 'application_package', 'br.com.pxbrlauncher'
+            resValue 'string', 'storageProviderAuthorities', 'net.kdt.pojavlaunch.scoped.gamefolder.pxbrlauncher.rel'
+            resValue 'string', 'application_package', 'br.com.pxbrlauncher.rel'
         }
         gplay {
             initWith release
+            resValue 'string', 'storageProviderAuthorities', 'net.kdt.pojavlaunch.scoped.gamefolder.pxbrlauncher'
+            resValue 'string', 'application_package', 'br.com.pxbrlauncher'
             signingConfig signingConfigs.googlePlayBuild
         }
     }
@@ -111,18 +104,16 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-
-    bundle {
+    /*bundle {
         language {
             enableSplit = false
         }
-    }
+    }*/
 
     packagingOptions {
         jniLibs {
             useLegacyPackaging = true
         }
-        pickFirst '**/libbytehook.so'
     }
 
     buildFeatures {

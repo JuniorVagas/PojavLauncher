@@ -66,6 +66,8 @@ public class AsyncAssetManager {
                 Tools.copyAssetFile(ctx, "options.txt", Tools.DIR_GAME_NEW, false);
                 Tools.copyAssetFile(ctx, "default.json", Tools.CTRLMAP_PATH, false);
 
+                Tools.copyAssetFile(ctx, "pixelmonreforged.json", Tools.DIR_GAME_NEW + "/versions/pixelmonreforged", false);
+
                 Tools.copyAssetFile(ctx, "launcher_profiles.json", Tools.DIR_GAME_NEW, false);
                 Tools.copyAssetFile(ctx,"resolv.conf",Tools.DIR_DATA, false);
             } catch (IOException e) {

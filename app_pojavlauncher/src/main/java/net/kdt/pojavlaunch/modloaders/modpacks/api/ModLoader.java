@@ -3,7 +3,6 @@ package net.kdt.pojavlaunch.modloaders.modpacks.api;
 import android.content.Context;
 import android.content.Intent;
 
-import net.kdt.pojavlaunch.JavaGUILauncherActivity;
 import net.kdt.pojavlaunch.modloaders.FabriclikeDownloadTask;
 import net.kdt.pojavlaunch.modloaders.FabriclikeUtils;
 import net.kdt.pojavlaunch.modloaders.ForgeDownloadTask;
@@ -72,11 +71,8 @@ public class ModLoader {
      * @return the Intent which the launcher needs to start in order to install the mod loader
      */
     public Intent getInstallationIntent(Context context, File modInstallerJar) {
-        Intent baseIntent = new Intent(context, JavaGUILauncherActivity.class);
         switch (modLoaderType) {
             case MOD_LOADER_FORGE:
-                ForgeUtils.addAutoInstallArgs(baseIntent, modInstallerJar, getVersionId());
-                return baseIntent;
             case MOD_LOADER_QUILT:
             case MOD_LOADER_FABRIC:
             default:
