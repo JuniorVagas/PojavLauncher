@@ -1,3 +1,3 @@
-[submodule "cubix-ui-shim"]
+[submodule "pxbrlauncher_bridge"]
 	path = pxbrlauncher_bridge
 	url = https://github.com/JuniorVagas/PXBRLauncher-bridge
