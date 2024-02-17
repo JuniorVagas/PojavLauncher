@@ -7,7 +7,6 @@ import android.widget.ExpandableListAdapter;
 
 import androidx.annotation.NonNull;
 
-import net.kdt.pojavlaunch.JavaGUILauncherActivity;
 import net.kdt.pojavlaunch.R;
 import net.kdt.pojavlaunch.Tools;
 import net.kdt.pojavlaunch.modloaders.ForgeDownloadTask;
@@ -64,8 +63,5 @@ public class ForgeInstallFragment extends ModVersionListFragment<List<String>> {
 
     @Override
     public void onDownloadFinished(Context context, File downloadedFile) {
-        Intent modInstallerStartIntent = new Intent(context, JavaGUILauncherActivity.class);
-        ForgeUtils.addAutoInstallArgs(modInstallerStartIntent, downloadedFile, true);
-        context.startActivity(modInstallerStartIntent);
     }
 }
