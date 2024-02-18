@@ -81,7 +81,7 @@ public class LauncherPreferences {
         PREF_MOUSESCALE = DEFAULT_PREF.getInt("mousescale", 100);
 		PREF_MOUSESPEED = ((float)DEFAULT_PREF.getInt("mousespeed",100))/100f;
 		PREF_HIDE_SIDEBAR = DEFAULT_PREF.getBoolean("hideSidebar", false);
-		PREF_IGNORE_NOTCH = DEFAULT_PREF.getBoolean("ignoreNotch", false);
+		PREF_IGNORE_NOTCH = DEFAULT_PREF.getBoolean("ignoreNotch", true);
 		PREF_VERTYPE_RELEASE = DEFAULT_PREF.getBoolean("vertype_release", true);
 		PREF_VERTYPE_SNAPSHOT = DEFAULT_PREF.getBoolean("vertype_snapshot", false);
 		PREF_VERTYPE_OLDALPHA = DEFAULT_PREF.getBoolean("vertype_oldalpha", false);
