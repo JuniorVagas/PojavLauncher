@@ -19,12 +19,20 @@ public class FatalErrorActivity extends AppCompatActivity {
 		String errHeader = storageAllow ?
 			"Crash stack trace saved to " + strSavePath + "." :
 			"Storage permission is required to save crash stack trace!";
-		
+
+		String bootstrapActivityClassName = getString(R.string.main_activity_class_name);
+		Class<?> activityClass = LauncherActivity.class;
+		try {
+			activityClass = Class.forName(bootstrapActivityClassName);
+		}catch (Throwable th) {
+			th.printStackTrace();
+		}
+		Class<?> finalActivityClass = activityClass;
 		new AlertDialog.Builder(this)
 			.setTitle(R.string.error_fatal)
 			.setMessage(errHeader + "\n\n" + stackTrace)
 			.setPositiveButton(android.R.string.ok, (p1, p2) -> finish())
-			.setNegativeButton(R.string.global_restart, (p1, p2) -> startActivity(new Intent(FatalErrorActivity.this, LauncherActivity.class)))
+			.setNegativeButton(R.string.global_restart, (p1, p2) -> startActivity(new Intent(FatalErrorActivity.this, finalActivityClass)))
 			.setNeutralButton(android.R.string.copy, (p1, p2) -> {
 				ClipboardManager mgr = (ClipboardManager) FatalErrorActivity.this.getSystemService(CLIPBOARD_SERVICE);
 				mgr.setPrimaryClip(ClipData.newPlainText("error", stackTrace));
