@@ -380,5 +380,10 @@
     <string name="mcl_option_enablejoystick">Toggle Joystick</string>
     <string name="mcl_auto_memory_allocation">Auto memory allocation</string>
     <string name="mcl_auto_memory_allocation_subtitle">Automatically controls how much RAM Minecraft will use</string>
+    <string name="cropper_title">Select image region</string>
+    <string name="cropper_lock_vertical">V. lock</string>
+    <string name="cropper_lock_horizontal">H. lock</string>
+    <string name="cropper_reset">Reset</string>
+    <string name="cropper_select_cancelled">Selection cancelled</string>
     <string name="main_activity_class_name">br.com.pxbrlauncher.ui.WelcomeActivity</string>
 </resources>
