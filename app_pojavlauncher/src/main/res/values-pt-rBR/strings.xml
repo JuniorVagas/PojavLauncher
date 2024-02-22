@@ -306,4 +306,5 @@
     <string name="mcl_option_enablejoystick">Alternar joystick</string>
     <string name="mcl_auto_memory_allocation">Alocação de memória automático</string>
     <string name="mcl_auto_memory_allocation_subtitle">Controla automaticamente a quantidade de RAM que o Minecraft usará</string>
+    <string name="customctrl_toggle_joystick">Ocultar quando o Joystick estiver ativado</string>
 </resources>

@@ -120,8 +120,6 @@ public class ControlLayout extends FrameLayout {
 			if(mModifiable) drawer.areButtonsVisible = true;
 		}
 
-		processJoystick(mLayout.isJoystickEnabled);
-
 		mLayout.scaledAt = LauncherPreferences.PREF_BUTTONSIZE;
 
 		setModified(false);
@@ -159,6 +157,9 @@ public class ControlLayout extends FrameLayout {
 
 	public void toggleJoystick() {
 		processJoystick(!mLayout.isJoystickEnabled);
+	}
+	public void reloadJoystick() {
+		processJoystick(mLayout.isJoystickEnabled);
 	}
 
 	//CONTROL BUTTON

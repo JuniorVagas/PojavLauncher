@@ -74,7 +74,7 @@ public class EditControlPopup {
     };
     protected EditText mNameEditText, mWidthEditText, mHeightEditText;
     @SuppressLint("UseSwitchCompatOrMaterialCode")
-    protected Switch mToggleSwitch, mPassthroughSwitch, mSwipeableSwitch, mForwardLockSwitch, mAbsoluteTrackingSwitch;
+    protected Switch mToggleSwitch, mToggleJoystickSwitch, mPassthroughSwitch, mSwipeableSwitch, mForwardLockSwitch, mAbsoluteTrackingSwitch;
     protected Spinner mOrientationSpinner;
     protected TextView[] mKeycodeTextviews = new TextView[4];
     protected SeekBar mStrokeWidthSeekbar, mCornerRadiusSeekbar, mAlphaSeekbar;
@@ -288,6 +288,7 @@ public class EditControlPopup {
         setPercentageText(mCornerRadiusPercentTextView, (int) data.cornerRadius);
 
         mToggleSwitch.setChecked(data.isToggle);
+        mToggleJoystickSwitch.setChecked(data.joystickHideable);
         mPassthroughSwitch.setChecked(data.passThruEnabled);
         mSwipeableSwitch.setChecked(data.isSwipeable);
 
@@ -324,6 +325,7 @@ public class EditControlPopup {
         mSwipeableSwitch.setVisibility(View.GONE);
         mPassthroughSwitch.setVisibility(View.GONE);
         mToggleSwitch.setVisibility(View.GONE);
+        mToggleJoystickSwitch.setVisibility(GONE);
     }
 
     /**
@@ -348,6 +350,7 @@ public class EditControlPopup {
         mSwipeableSwitch.setVisibility(View.GONE);
         mPassthroughSwitch.setVisibility(View.GONE);
         mToggleSwitch.setVisibility(View.GONE);
+        mToggleJoystickSwitch.setVisibility(GONE);
 
         mForwardLockSwitch.setVisibility(VISIBLE);
         mForwardLockSwitch.setChecked(data.forwardLock);
@@ -383,6 +386,7 @@ public class EditControlPopup {
         mWidthEditText = mScrollView.findViewById(R.id.editSize_editTextX);
         mHeightEditText = mScrollView.findViewById(R.id.editSize_editTextY);
         mToggleSwitch = mScrollView.findViewById(R.id.checkboxToggle);
+        mToggleJoystickSwitch = mScrollView.findViewById(R.id.checkboxToggleJoystick);
         mPassthroughSwitch = mScrollView.findViewById(R.id.checkboxPassThrough);
         mSwipeableSwitch = mScrollView.findViewById(R.id.checkboxSwipeable);
         mForwardLockSwitch = mScrollView.findViewById(R.id.checkboxForwardLock);
@@ -491,6 +495,10 @@ public class EditControlPopup {
         mToggleSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (internalChanges) return;
             mCurrentlyEditedButton.getProperties().isToggle = isChecked;
+        });
+        mToggleJoystickSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (internalChanges) return;
+            mCurrentlyEditedButton.getProperties().joystickHideable = isChecked;
         });
         mPassthroughSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (internalChanges) return;
