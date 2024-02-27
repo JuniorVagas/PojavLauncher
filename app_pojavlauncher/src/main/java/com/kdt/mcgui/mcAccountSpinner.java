@@ -2,6 +2,7 @@ package com.kdt.mcgui;
 
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -95,6 +96,7 @@ public class mcAccountSpinner extends AppCompatSpinner implements AdapterView.On
         invalidate();
         mAccountList.add(account.username);
         reloadAccounts(false, mAccountList.size() -1);
+        ((Activity) getContext()).finish();
     };
 
     private final ErrorListener mErrorListener = errorMessage -> {

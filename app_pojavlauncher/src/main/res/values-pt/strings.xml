@@ -6,7 +6,7 @@
     <!-- Action bar part -->
     <!-- Languages list part -->
     <!-- Login strings -->
-    <string name="login_online_username_hint">E-mail ou nome de utilizador</string>
+    <string name="login_online_username_hint">Nome de utilizador</string>
     <string name="login_online_login_label">Iniciar sessão</string>
     <!-- Hint -->
     <string name="hint_control_mapping">"Toque no ícone de engrenagem central superior para abrir o menu de contexto ⚙\nToque num botão para personalizar: edite, redimensione, exclua ou personalize o seu atalho de teclado."</string>

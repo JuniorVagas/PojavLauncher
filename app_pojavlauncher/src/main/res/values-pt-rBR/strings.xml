@@ -6,7 +6,7 @@
     <!-- Action bar part -->
     <!-- Languages list part -->
     <!-- Login strings -->
-    <string name="login_online_username_hint">Email ou nome de usuário</string>
+    <string name="login_online_username_hint">Nome de usuário</string>
     <string name="login_online_login_label">Iniciar sessão</string>
     <!-- Hint -->
     <string name="hint_control_mapping">"Toque na engrenagem no topo e centro para abrir as opções ⚙\nToque em um botão para customizar: editar, redimensionar, deletar, ou customizar o mapeamento."</string>
@@ -307,4 +307,7 @@
     <string name="mcl_auto_memory_allocation">Alocação de memória automático</string>
     <string name="mcl_auto_memory_allocation_subtitle">Controla automaticamente a quantidade de RAM que o Minecraft usará</string>
     <string name="customctrl_toggle_joystick">Ocultar quando o Joystick estiver ativado</string>
+    <string name="microsoft_login_started">Login iniciado!</string>
+    <string name="microsoft_account">Logar com Microsoft\n(Minecraft Java Edition)</string>
+    <string name="local_account">Continuar sem Logar</string>
 </resources>

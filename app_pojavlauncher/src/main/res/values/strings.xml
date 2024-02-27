@@ -387,4 +387,7 @@
     <string name="cropper_select_cancelled">Selection cancelled</string>
     <string name="main_activity_class_name" translatable="false">br.com.pxbrlauncher.ui.MainActivity</string>
     <string name="customctrl_toggle_joystick">Hide when Joystick is activated</string>
+    <string name="microsoft_login_started">Login started!</string>
+    <string name="microsoft_account">Microsoft Account\n(Minecraft Java Edition)</string>
+    <string name="local_account">Local Account</string>
 </resources>

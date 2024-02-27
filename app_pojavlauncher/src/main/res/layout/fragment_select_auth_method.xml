@@ -1,33 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
-    android:background="@color/background_app"
     android:gravity="center"
+    android:background="#0c0c0c"
     android:orientation="vertical"
     android:paddingHorizontal="@dimen/fragment_padding_medium">
 
-    <View
-        android:id="@+id/login_menu"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_200sdp"
 
-        android:background="@drawable/background_card"
-        android:translationZ="-1dp"
-
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
-    <com.kdt.mcgui.MineButton
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/button_microsoft_authentication"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Microsoft Account"
+        android:layout_height="@dimen/_50sdp"
+        android:background="@drawable/pxbr_button_background"
+        android:text="@string/microsoft_account"
+        android:textColor="#000"
+        android:textAllCaps="false"
+        android:fontFamily="@font/montserrat_bold"
+        android:textStyle="bold"
+        android:gravity="center"
         android:textSize="@dimen/_12ssp"
         android:layout_marginHorizontal="@dimen/_25sdp"
         android:layout_marginBottom="@dimen/_20sdp"
@@ -39,11 +33,17 @@
         app:layout_constraintVertical_chainStyle="packed"
         />
 
-    <com.kdt.mcgui.MineButton
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/button_local_authentication"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Local account"
+        android:layout_height="@dimen/_50sdp"
+        android:background="@drawable/pxbr_button_background"
+        android:text="@string/local_account"
+        android:textColor="#000"
+        android:textAllCaps="false"
+        android:fontFamily="@font/montserrat_bold"
+        android:textStyle="bold"
+        android:gravity="center"
         android:textSize="@dimen/_12ssp"
         android:layout_marginHorizontal="@dimen/_25sdp"
         app:layout_constraintBottom_toBottomOf="@id/login_menu"
@@ -52,4 +52,4 @@
         app:layout_constraintStart_toStartOf="@+id/login_menu"
         app:layout_constraintTop_toBottomOf="@+id/button_microsoft_authentication" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
