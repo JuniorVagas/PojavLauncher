@@ -274,7 +274,7 @@ public class JREUtils {
         // return ldLibraryPath;
     }
 
-    public static void launchJavaVM(final AppCompatActivity activity, final Runtime runtime, File gameDirectory, final List<String> JVMArgs, final String userArgsString) throws Throwable {
+    public static void launchJavaVM(final AppCompatActivity activity, final Runtime runtime, File gameDirectory, final List<String> JVMArgs, final String userArgsString, String versionID) throws Throwable {
         String runtimeHome = MultiRTUtils.getRuntimeHome(runtime.name).getAbsolutePath();
 
         JREUtils.relocateLibPath(runtime, runtimeHome);
@@ -314,6 +314,7 @@ public class JREUtils {
         if(LOCAL_RENDERER != null) userArgs.add("-Dorg.lwjgl.opengl.libname=" + graphicsLib);
 
         userArgs.addAll(JVMArgs);
+        userArgs.add(Tools.getOptionalModsArgs(versionID));
         System.out.println(JVMArgs);
 
         initJavaRuntime(runtimeHome);

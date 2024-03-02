@@ -64,6 +64,7 @@ import net.kdt.pojavlaunch.utils.OldVersionsUtils;
 import net.kdt.pojavlaunch.value.DependentLibrary;
 import net.kdt.pojavlaunch.value.MinecraftAccount;
 import net.kdt.pojavlaunch.value.MinecraftLibraryArtifact;
+import net.kdt.pojavlaunch.value.OptionalModsSettings;
 import net.kdt.pojavlaunch.value.launcherprofiles.LauncherProfiles;
 import net.kdt.pojavlaunch.value.launcherprofiles.MinecraftProfile;
 
@@ -219,13 +220,28 @@ public final class Tools {
         String args = LauncherPreferences.PREF_CUSTOM_JAVA_ARGS;
         if(Tools.isValidString(minecraftProfile.getJvmArgs())) args = minecraftProfile.getJvmArgs();
         FFmpegPlugin.discover(activity);
-        JREUtils.launchJavaVM(activity, runtime, gamedir, javaArgList, args);
+        JREUtils.launchJavaVM(activity, runtime, gamedir, javaArgList, args, versionId);
         // If we returned, this means that the JVM exit dialog has been shown and we don't need to be active anymore.
         // We never return otherwise. The process will be killed anyway, and thus we will become inactive
     }
 
     public static String getGameDirPath(@NonNull ServerModpackConfig minecraftProfile){
         return minecraftProfile.getGameDirectory();
+    }
+
+    public static String getOptionalModsArgs(String versionID){
+        StringBuilder modsBuilder = new StringBuilder("--mods=");
+        try {
+            OptionalModsSettings optionalModsSettings = new Gson().fromJson(read(DIR_HOME_VERSION + "/" + versionID + "/" + versionID + "_selected_mods.json"), OptionalModsSettings.class);
+            for(OptionalModsSettings.OptionalModInfo modInfo: optionalModsSettings.optionalMods.values()){
+                if(modInfo.selected || !modInfo.optional) modsBuilder.append(".").append(modInfo.path).append(",");
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        modsBuilder.deleteCharAt(modsBuilder.length() - 1);
+        return modsBuilder.toString();
     }
 
     public static void buildNotificationChannel(Context context){
