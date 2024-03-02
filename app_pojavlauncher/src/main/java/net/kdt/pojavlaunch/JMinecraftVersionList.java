@@ -31,7 +31,7 @@ public class JMinecraftVersionList {
         public String mainClass;
         public String minecraftArguments;
         public ServerFileInfo[] custom_files;
-        public ServerFileInfo[] custom_mods;
+        public HashMap<String, ServerFileInfo> custom_mods;
         public int minimumLauncherVersion;
         public String releaseTime;
         public String time;

@@ -1,7 +1,5 @@
 package net.kdt.pojavlaunch.value;
 
-import android.util.Log;
-
 import net.kdt.pojavlaunch.Tools;
 import net.kdt.pojavlaunch.utils.DownloadUtils;
 
@@ -16,8 +14,11 @@ public class ServerFileInfo implements Runnable {
     public String path;
     public String sha1;
     public String url;
+    public String name;
     public long size;
     public boolean check = true;
+    public boolean optional = false;
+    public boolean performance = false;
 
     public void setDownloaderData(File path, Tools.DownloaderFeedback monitor, AtomicBoolean interrupt) {
         this.destinationPath = path;

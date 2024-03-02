@@ -275,9 +275,9 @@ public class MinecraftDownloader {
             }
         }
         if(version.custom_mods != null) {
-            ArrayList<String> modsThatExist = new ArrayList<>(version.custom_mods.length);
-            Arrays.sort(version.custom_mods, comparator);
-            for(ServerFileInfo serverFileInfo : version.custom_mods) {
+            ArrayList<String> modsThatExist = new ArrayList<>(version.custom_mods.size());
+            Arrays.sort(version.custom_mods.values().toArray(new ServerFileInfo[0]), comparator);
+            for(ServerFileInfo serverFileInfo : version.custom_mods.values()) {
                 {
                     String path = serverFileInfo.path;
                     int slashIndex = path.lastIndexOf('/');
