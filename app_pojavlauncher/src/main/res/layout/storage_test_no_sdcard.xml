@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#0c0c0c">
 
     <ImageView
         android:layout_width="@dimen/_128sdp"
@@ -20,5 +21,6 @@
         android:paddingTop="@dimen/_10sdp"
         android:paddingEnd="@dimen/_8sdp"
         android:text="@string/storage_required"
+        android:textColor="#fff"
         android:gravity="center"/>
 </LinearLayout>
