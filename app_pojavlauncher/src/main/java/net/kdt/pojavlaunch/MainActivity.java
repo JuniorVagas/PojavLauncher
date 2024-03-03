@@ -170,6 +170,7 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
             mWebView.setBackgroundColor(Color.TRANSPARENT);
             mWebView.getSettings().setUseWideViewPort(true);
             mWebView.getSettings().setLoadWithOverviewMode(true);
+            setupText();
 
             // FIXME: is it safe for multi thread?
             GLOBAL_CLIPBOARD = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
@@ -647,6 +648,12 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
         });
     }
 
+    public void setupText() {
+        runOnUiThread(()->{
+            mWebView.evaluateJavascript("document.getElementById('loadingText').textContent = 'Carregando 0%';" +
+                    "document.getElementById('desc').textContent = 'Isso pode demorar alguns minutos';", null);
+        });
+    }
     @Override
     public void onStarting() {
         runOnUiThread(()->{
