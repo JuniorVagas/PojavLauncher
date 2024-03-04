@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- App name part -->
-    <string name="app_name">PXBR Launcher (Minecraft: Java Edition untuk Android)</string>
-    <string name="app_short_name">PXBR Launcher</string>
+    <string name="app_name">Pixelmon Brasil Launcher (Minecraft: Java Edition untuk Android)</string>
+    <string name="app_short_name">Pixelmon Brasil</string>
     <!-- Action bar part -->
     <!-- Languages list part -->
     <!-- Login strings -->
@@ -15,7 +15,7 @@
     <!-- AlertDialog title -->
     <string name="alerttitle_installmod">Pilih sebuah instaler mod</string>
     <!-- Error messages -->
-    <string name="error_fatal">PXBR Launcher tiba-tiba crash tanpa diduga</string>
+    <string name="error_fatal">Pixelmon Brasil Launcher tiba-tiba crash tanpa diduga</string>
     <string name="error_no_version">Versi tidak ada!</string>
     <string name="error_show_more">Selengkapnya</string>
     <string name="error_show_less">Tampilkan Sedikit</string>

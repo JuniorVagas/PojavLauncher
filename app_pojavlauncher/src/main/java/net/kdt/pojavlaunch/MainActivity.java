@@ -36,6 +36,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -163,6 +164,12 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
             Logger.begin(latestLogFile.getAbsolutePath());
             Logger.setSplashListener(this);
 
+            mWebView.setWebViewClient(new WebViewClient(){
+                @Override
+                public void onPageFinished(WebView view, String url) {
+                    setupText();
+                }
+            });
             mWebView.getSettings().setJavaScriptEnabled(true);
             mWebView.clearCache(true);
             if (isInternetAvailable(this)) mWebView.loadUrl("file:///android_asset/loading.html"); // TODO trocar para um site web
@@ -170,7 +177,6 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
             mWebView.setBackgroundColor(Color.TRANSPARENT);
             mWebView.getSettings().setUseWideViewPort(true);
             mWebView.getSettings().setLoadWithOverviewMode(true);
-            setupText();
 
             // FIXME: is it safe for multi thread?
             GLOBAL_CLIPBOARD = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- App name part -->
-    <string name="app_name">PXBR Launcher (Minecraft: Java Edition dla Androida)</string>
-    <string name="app_short_name">PXBR Launcher</string>
+    <string name="app_name">Pixelmon Brasil Launcher (Minecraft: Java Edition dla Androida)</string>
+    <string name="app_short_name">Pixelmon Brasil</string>
     <!-- Action bar part -->
     <!-- Languages list part -->
     <!-- Login strings -->
@@ -15,7 +15,7 @@
     <!-- AlertDialog title -->
     <string name="alerttitle_installmod">Wybierz instalator modyfikacji</string>
     <!-- Error messages -->
-    <string name="error_fatal">PXBR Launcher uległ nieoczekiwanej awarii</string>
+    <string name="error_fatal">Pixelmon Brasil Launcher uległ nieoczekiwanej awarii</string>
     <string name="error_no_version">Brak wersji!</string>
     <string name="error_show_more">Pokaż więcej</string>
     <string name="error_show_less">Pokaż mniej</string>

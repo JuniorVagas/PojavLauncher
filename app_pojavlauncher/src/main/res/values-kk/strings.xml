@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- App name part -->
-    <string name="app_name">PXBR Launcher (Android-ке арналған Minecraft: Java Edition)</string>
-    <string name="app_short_name">PXBR Launcher</string>
+    <string name="app_name">Pixelmon Brasil Launcher (Android-ке арналған Minecraft: Java Edition)</string>
+    <string name="app_short_name">Pixelmon Brasil</string>
     <!-- Action bar part -->
     <!-- Languages list part -->
     <!-- Login strings -->
@@ -14,7 +14,7 @@
     <!-- AlertDialog title -->
     <string name="alerttitle_installmod">Мод орнатқыш таңдау</string>
     <!-- Error messages -->
-    <string name="error_fatal">PXBR Launcher кенет іркілді</string>
+    <string name="error_fatal">Pixelmon Brasil Launcher кенет іркілді</string>
     <string name="error_no_version">Нұсқа жоқ!</string>
     <string name="error_show_more">Көрсету</string>
     <string name="error_show_less">Жасыру</string>

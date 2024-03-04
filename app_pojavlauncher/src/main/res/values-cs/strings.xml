@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- App name part -->
-    <string name="app_name">PXBR Launcher (Minecraft: Java Edition pro Android)</string>
-    <string name="app_short_name">PXBR Launcher</string>
+    <string name="app_name">Pixelmon Brasil Launcher (Minecraft: Java Edition pro Android)</string>
+    <string name="app_short_name">Pixelmon Brasil</string>
     <!-- Action bar part -->
     <!-- Languages list part -->
     <!-- Login strings -->
@@ -15,7 +15,7 @@
     <!-- AlertDialog title -->
     <string name="alerttitle_installmod">Vyber instalatér módu</string>
     <!-- Error messages -->
-    <string name="error_fatal">PXBR Launcher neočekávaně spadl</string>
+    <string name="error_fatal">Pixelmon Brasil Launcher neočekávaně spadl</string>
     <string name="error_no_version">Žádná verze!</string>
     <string name="error_show_more">Zobrazit více</string>
     <string name="error_show_less">Zobrazit méně</string>
@@ -233,7 +233,7 @@
     <string name="preference_gyro_sample_rate_title">Vzorkovací kmitočet gyroskopu</string>
     <string name="preference_gyro_sample_rate_description">Pokud máte problémy s výkonem užívajíce gyroskopové ovládání, zvyšte toto.</string>
     <string name="microsoft_login_retry_later">Příliš mnoho požadavků, zkuste to znovu později.</string>
-    <string name="storage_required">PXBR Launcher vyžaduje přípojené externí úložiště. Připojte jej prosím znovu a restartujte tuto aplikaci.</string>
+    <string name="storage_required">Pixelmon Brasil Launcher vyžaduje přípojené externí úložiště. Připojte jej prosím znovu a restartujte tuto aplikaci.</string>
     <string name="mcl_setting_title_buttonallcaps">Zobrazovat pouze velká písmena na popiscích tlačítek</string>
     <string name="mcl_setting_subtitle_buttonallcaps">Vypněte toto, chcete-li užívat malá písmena ve vlastních ovládání.</string>
     <string name="create_profile">Vytvořit nový profil</string>
