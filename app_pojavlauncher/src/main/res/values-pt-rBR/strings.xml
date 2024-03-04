@@ -310,4 +310,5 @@
     <string name="microsoft_login_started">Login iniciado!</string>
     <string name="microsoft_account">Logar com Microsoft\n(Minecraft Java Edition)</string>
     <string name="local_account">Continuar sem Logar</string>
+    <string name="newdl_downloading_game_files">Baixando arquivos do jogo… (%d/%d, %.2f MB)</string>
 </resources>
