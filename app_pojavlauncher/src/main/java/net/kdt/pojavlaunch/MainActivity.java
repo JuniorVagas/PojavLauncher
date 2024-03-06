@@ -12,6 +12,7 @@ import static org.lwjgl.glfw.CallbackBridge.windowWidth;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.NotificationManager;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.ComponentName;
@@ -98,6 +99,8 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ((NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE)).cancelAll();
+
         String version = getIntent().getStringExtra(INTENT_MINECRAFT_VERSION);
         minecraftProfile = ServerModpackConfig.load(version);
         MCOptionUtils.load(Tools.getGameDirPath(minecraftProfile));
