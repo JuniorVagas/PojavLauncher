@@ -22,8 +22,6 @@ import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -66,7 +64,6 @@ import net.kdt.pojavlaunch.utils.JREUtils;
 import net.kdt.pojavlaunch.utils.MCOptionUtils;
 import net.kdt.pojavlaunch.value.MinecraftAccount;
 import net.kdt.pojavlaunch.value.launcherprofiles.LauncherProfiles;
-import net.kdt.pojavlaunch.value.launcherprofiles.MinecraftProfile;
 
 import org.lwjgl.glfw.CallbackBridge;
 
@@ -172,8 +169,7 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
             });
             mWebView.getSettings().setJavaScriptEnabled(true);
             mWebView.clearCache(true);
-            if (isInternetAvailable(this)) mWebView.loadUrl("file:///android_asset/loading.html"); // TODO trocar para um site web
-            else mWebView.loadUrl("file:///android_asset/loading.html");
+            mWebView.loadUrl("file:///android_asset/loading.html");
             mWebView.setBackgroundColor(Color.TRANSPARENT);
             mWebView.getSettings().setUseWideViewPort(true);
             mWebView.getSettings().setLoadWithOverviewMode(true);
@@ -239,13 +235,6 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
         } catch (Throwable e) {
             Tools.showError(this, e, true);
         }
-    }
-
-    private static boolean isInternetAvailable(Context context){
-        NetworkInfo info = ((ConnectivityManager)
-                context.getSystemService(Context.CONNECTIVITY_SERVICE)).getActiveNetworkInfo();
-
-        return info != null;
     }
 
     private void loadControls() {
