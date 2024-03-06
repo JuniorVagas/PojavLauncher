@@ -306,9 +306,43 @@
     <string name="mcl_option_enablejoystick">Alternar joystick</string>
     <string name="mcl_auto_memory_allocation">Alocação de memória automático</string>
     <string name="mcl_auto_memory_allocation_subtitle">Controla automaticamente a quantidade de RAM que o Minecraft usará</string>
+    <string name="cropper_title">Selecionar região de imagem</string>
+    <string name="cropper_reset">Resetar</string>
+    <string name="cropper_select_cancelled">Seleção cancelada</string>
     <string name="customctrl_toggle_joystick">Ocultar quando o Joystick estiver ativado</string>
     <string name="microsoft_login_started">Login iniciado!</string>
     <string name="microsoft_account">Logar com Microsoft\n(Minecraft Java Edition)</string>
     <string name="local_account">Continuar sem Logar</string>
+    <string name="dl_tampered_manifest_title">Erro de verificação de arquivo</string>
+    <string name="dl_turn_off_manifest_checks">Desativar checagem de manifesto</string>
+    <string name="dl_switch_to_official_site">Trocar para site oficial</string>
+    <string name="preference_download_source_title">Origem de download do jogo</string>
+    <string name="preference_download_source_description">Selecionar uma origem de download em vez do oficial</string>
+    <string name="preference_verify_manifest_title">Verificar versão do jogo pelo manifesto</string>
+    <string name="notif_download_finished">O jogo está pronto para iniciar</string>
+    <string name="notif_download_finished_desc">Clique aqui para iniciar!</string>
+    <string name="preference_category_gestures">Gestos</string>
+    <string name="preference_category_buttons">Botões</string>
+    <string name="preference_category_experimental_settings">Opções experimentais</string>
+    <string name="preference_category_java_tweaks">Ajustes do java</string>
+    <string name="preference_category_main_categories">Categorias</string>
+    <string name="preference_verify_manifest_description">Quando ativado, o inicializador verificará o manifesto da versão do jogo junto com as bibliotecas.</string>
+    <string name="preference_category_miscellaneous">Configurações diversas</string>
+    <string name="preference_category_video">Configurações de vídeo</string>
+    <string name="notification_permission_dialog_title">Pedido de permissão</string>
+    <string name="notification_permission_dialog_text">O Pixelmon Brasil requer uma permissão para publicar notificações para evitar que os downloads de jogos/modgets sejam interrompidos quando você sair do aplicativo. Sem essa permissão, o Android pode encerrar seus downloads quando você colocar o Pixelmon Brasil em modo de segundo plano.</string>
+    <string name="notification_permission_toast">Você sempre pode mudar de ideia mais tarde, acessando Configurações</string>
+    <string name="preference_ask_for_notification_title">Permitir notificações</string>
+    <string name="preference_ask_for_notification_description">Clique para solicitar novamente a permissão de notificação, necessária para que os downloads em segundo plano de jogos/modgets funcionem corretamente.</string>
+    <string name="preference_vsync_in_zink_title">Permite V-Sync com Zink</string>
+    <string name="preference_vsync_in_zink_description">Permite que o inicializador use APIs internas do sistema para ativar o V-Sync para o Zink. Desative essa opção se o inicializador travar repentinamente com o Zink após uma atualização do sistema.</string>
+    <string name="exception_failed_to_unpack_jre17">Falha ao instalar JRE 17</string>
+    <string name="newdl_starting">Lendo metadados do jogo…</string>
+    <string name="newdl_downloading_metadata">Baixando metadados do jogo (%s)</string>
     <string name="newdl_downloading_game_files">Baixando arquivos do jogo… (%d/%d, %.2f MB)</string>
+    <string name="dl_tampered_manifest"><![CDATA[O manifesto da versão do jogo no endereço não corresponde ao manifesto da versão oficial da Mojang, o que significa que ele pode ter sido adulterado.<br/>
+        <b>Isso não é seguro. Suas informações pessoais podem estar em risco se você continuar.</b><br/>
+        Se você ainda quiser usar o endereço, pressione \"Desativar checagem de manifesto\" e inicie o download novamente.<br/>
+        Se você quiser usar a fonte oficial de download, pressione \"Trocar para site oficial\" e inicie o download novamente.<br/>]]>
+    </string>
 </resources>
