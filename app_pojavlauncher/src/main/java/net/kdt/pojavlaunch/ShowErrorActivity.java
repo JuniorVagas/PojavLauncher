@@ -54,6 +54,11 @@ public class ShowErrorActivity extends Activity {
         }
 
         @Override
+        public void executeWithApplication(Context context, Activity activity) {
+            executeWithApplication(context);
+        }
+
+        @Override
         public void executeWithApplication(Context context) {
             Intent showErrorIntent = new Intent(context, ShowErrorActivity.class);
             showErrorIntent.putExtra(ERROR_ACTIVITY_REMOTE_TASK, this);

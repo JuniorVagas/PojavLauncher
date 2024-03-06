@@ -23,6 +23,9 @@ public class MirrorTamperedException extends Exception implements ContextExecuto
         builder.show();
     }
 
+    @Override
+    public void executeWithApplication(Context context, Activity activity) {}
+
     private void addButtons(AlertDialog.Builder builder) {
         builder.setPositiveButton(R.string.dl_switch_to_official_site,(d,w)->{
             LauncherPreferences.DEFAULT_PREF.edit().putString("downloadSource", "default").apply();

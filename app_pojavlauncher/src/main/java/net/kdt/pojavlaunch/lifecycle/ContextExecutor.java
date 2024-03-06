@@ -10,6 +10,7 @@ import java.lang.ref.WeakReference;
 public class ContextExecutor {
     private static WeakReference<Application> sApplication;
     private static WeakReference<Activity> sActivity;
+    private static boolean sUseActivity = true;
 
 
     /**
@@ -23,12 +24,14 @@ public class ContextExecutor {
 
     private static void executeOnUiThread(ContextExecutorTask contextExecutorTask) {
         Activity activity = Tools.getWeakReference(sActivity);
-        if(activity != null) {
+        if(activity != null && sUseActivity) {
             contextExecutorTask.executeWithActivity(activity);
             return;
         }
         Application application = Tools.getWeakReference(sApplication);
-        if(application != null) {
+        if(application != null && activity != null) {
+            contextExecutorTask.executeWithApplication(application, activity);
+        } else if(application != null) {
             contextExecutorTask.executeWithApplication(application);
         }else {
             throw new RuntimeException("ContextExecutor.execute() called before Application.onCreate!");
@@ -41,6 +44,7 @@ public class ContextExecutor {
      */
     public static void setActivity(Activity activity) {
         sActivity = new WeakReference<>(activity);
+        sUseActivity = true;
     }
 
     /**
@@ -49,6 +53,10 @@ public class ContextExecutor {
     public static void clearActivity() {
         if(sActivity != null)
             sActivity.clear();
+    }
+
+    public static void setUseActivity(boolean toggle){
+        sUseActivity = toggle;
     }
 
     /**

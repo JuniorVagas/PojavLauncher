@@ -21,5 +21,6 @@ public interface ContextExecutorTask {
      * is still running.
      * @param context the application context
      */
+    void executeWithApplication(Context context, Activity activity);
     void executeWithApplication(Context context);
 }

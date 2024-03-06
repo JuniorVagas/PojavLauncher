@@ -54,7 +54,17 @@ public class ContextAwareDoneListener implements AsyncMinecraftDownloader.DoneLi
     }
 
     @Override
+    public void executeWithApplication(Context context, Activity activity) {
+        activity.finish();
+        sendNotification(context);
+    }
+
+    @Override
     public void executeWithApplication(Context context) {
+        sendNotification(context);
+    }
+
+    private void sendNotification(Context context){
         Intent gameStartIntent = createGameStartIntent(context);
         // Since the game is a separate process anyway, it does not matter if it gets invoked
         // from somewhere other than the launcher activity.
@@ -69,5 +79,7 @@ public class ContextAwareDoneListener implements AsyncMinecraftDownloader.DoneLi
         );
         // You should keep yourself safe, NOW!
         // otherwise android does weird things...
+
+        android.os.Process.killProcess(android.os.Process.myPid());
     }
 }
