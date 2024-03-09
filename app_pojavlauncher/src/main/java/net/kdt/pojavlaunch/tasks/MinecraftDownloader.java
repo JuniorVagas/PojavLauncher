@@ -57,6 +57,7 @@ public class MinecraftDownloader {
 
     private static final ThreadLocal<byte[]> sThreadLocalDownloadBuffer = new ThreadLocal<>();
     private static Thread downloaderThread;
+    private static boolean mInterruptDownload = false;
 
     /**
      * Start the game version download process on the global executor service.
@@ -71,17 +72,26 @@ public class MinecraftDownloader {
         downloaderThread = new Thread(() -> {
             try {
                 downloadGame(activity, version, realVersion);
-                listener.onDownloadDone();
-            }catch (Exception e) {
-                listener.onDownloadFailed(e);
+                if (!mInterruptDownload) {
+                    listener.onDownloadDone();
+                }
+            } catch (Exception e) {
+                if (!mInterruptDownload) {
+                    listener.onDownloadFailed(e);
+                }
+            } finally {
+                mInterruptDownload = false;
+                ProgressLayout.clearProgress(ProgressLayout.DOWNLOAD_MINECRAFT);
             }
-            ProgressLayout.clearProgress(ProgressLayout.DOWNLOAD_MINECRAFT);
         });
         downloaderThread.start();
     }
 
     public static void interrupt() {
-        downloaderThread.interrupt();
+        mInterruptDownload = true;
+        if(downloaderThread != null) {
+            downloaderThread.interrupt();
+        }
     }
 
     public static boolean isR() {
