@@ -88,7 +88,10 @@ static void *logger_thread() {
                 (*env)->CallVoidMethod(env, splashListener, logger_complete);
             } else if(strstr(buf, "Rk1MTG9hZENvbXBsZXRlRXZlbnQ=")){ // 100%
                 (*env)->CallVoidMethod(env, splashListener, logger_fullcomplete);
-            } else if(strstr(buf, "R3VpTWFpbk1lbnU=")){ // remove loading
+            } else if(strstr(buf, "R3VpTWFpbk1lbnU=") ||
+                    strstr(buf, "net.minecraftforge.fml.common.DuplicateModsFoundException") ||
+                    strstr(buf, "net.minecraftforge.fml.common.MissingModsException") ||
+                    strstr(buf, "---- Minecraft Crash Report ----")){ // remove loading
                 (*env)->CallVoidMethod(env, splashListener, logger_onSplashEvent);
             }
         }
