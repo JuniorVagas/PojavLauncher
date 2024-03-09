@@ -289,7 +289,7 @@ public class ControlLayout extends FrameLayout {
 		for(ControlInterface button : getButtonChildren()){
 			button.setVisible(((button.getProperties().displayInGame && isGrabbing()) || (button.getProperties().displayInMenu && !isGrabbing())) && isVisible);
 			if(isVisible) {
-				if (mLayout.isJoystickEnabled && button.getProperties().joystickHideable) {
+				if ((mLayout.isJoystickEnabled && button.getProperties().joystickHideable) || (!mLayout.isJoystickEnabled && button.getProperties().name.equalsIgnoreCase("joystick"))) {
 					button.setVisible(false);
 				}
 			}
