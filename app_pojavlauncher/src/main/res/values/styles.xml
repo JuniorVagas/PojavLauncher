@@ -12,6 +12,8 @@
 
         <item name="android:textSize">@dimen/_12ssp</item>
 
+        <item name="fontFamily">@font/montserrat</item>
+        <item name="font">@font/montserrat</item>
     </style>
 
 
