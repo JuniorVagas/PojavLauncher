@@ -13,7 +13,7 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/button_microsoft_authentication"
-        android:layout_width="match_parent"
+        android:layout_width="@dimen/_220sdp"
         android:layout_height="@dimen/_50sdp"
         android:background="@drawable/pxbr_button_background"
         android:text="@string/microsoft_account"
@@ -35,7 +35,7 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/button_local_authentication"
-        android:layout_width="match_parent"
+        android:layout_width="@dimen/_220sdp"
         android:layout_height="@dimen/_50sdp"
         android:background="@drawable/pxbr_button_background"
         android:text="@string/local_account"
