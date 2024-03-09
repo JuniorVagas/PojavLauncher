@@ -64,7 +64,7 @@ public class DownloadUtils {
 
     public static void downloadFileMonitored(String urlInput, File outputFile, @Nullable byte[] buffer,
                                              Tools.DownloaderFeedback monitor) throws IOException {
-        FileUtils.ensureParentDirectory(outputFile);
+        FileUtils.ensureParentDirectorySilently(outputFile);
 
         HttpURLConnection conn = (HttpURLConnection) new URL(urlInput).openConnection();
         InputStream readStr = conn.getInputStream();
