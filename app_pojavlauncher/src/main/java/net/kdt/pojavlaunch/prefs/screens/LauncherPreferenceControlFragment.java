@@ -1,6 +1,7 @@
 package net.kdt.pojavlaunch.prefs.screens;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
@@ -8,6 +9,7 @@ import android.os.Bundle;
 
 import androidx.preference.PreferenceCategory;
 
+import net.kdt.pojavlaunch.CustomControlsActivity;
 import net.kdt.pojavlaunch.R;
 import net.kdt.pojavlaunch.prefs.CustomSeekBarPreference;
 import net.kdt.pojavlaunch.prefs.LauncherPreferences;
@@ -28,6 +30,12 @@ public class LauncherPreferenceControlFragment extends LauncherPreferenceFragmen
 
         //Triggers a write for some reason which resets the value
         addPreferencesFromResource(R.xml.pref_control);
+
+        requirePreference("edit_controls").setOnPreferenceClickListener(preference -> {
+            requireActivity().startActivity(new Intent(requireActivity(), CustomControlsActivity.class));
+
+            return true;
+        });
 
         CustomSeekBarPreference seek2 = requirePreference("timeLongPressTrigger",
                 CustomSeekBarPreference.class);
