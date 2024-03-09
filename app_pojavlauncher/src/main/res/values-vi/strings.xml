@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- App name part -->
-    <string name="app_name">Pixelmon Brasil Launcher</string>
     <string name="app_short_name">Pixelmon Brasil</string>
     <!-- Action bar part -->
     <!-- Languages list part -->
