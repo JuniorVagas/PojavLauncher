@@ -248,7 +248,7 @@ public class MinecraftDownloader {
         } catch (Exception e) {
             e.printStackTrace();
             ProgressKeeper.submitProgress(ProgressLayout.DOWNLOAD_MINECRAFT, -1, -1);
-            throw new DownloaderException(e);
+            if(!Tools.DOWNLOADED.exists()) throw new DownloaderException(e);
         }
 
         JAssets assets = downloadAssetsIndex(verInfo);
@@ -506,6 +506,16 @@ public class MinecraftDownloader {
         private void finishWithoutDownloading() {
             mDownloadFileCounter.incrementAndGet();
             mDownloadSizeCounter.addAndGet(mDownloadSize);
+
+            if (mDownloadFileCounter.get() == mDownloadFileCount) {
+                generateFileAfterDownload();
+            }
+        }
+
+        private void generateFileAfterDownload() {
+            try {
+                Tools.DOWNLOADED.createNewFile();
+            } catch (IOException e){}
         }
 
         @Override

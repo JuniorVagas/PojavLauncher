@@ -102,7 +102,7 @@ public final class Tools {
     public static final String URL_HOME = "https://pojavlauncherteam.github.io";
     public static String NATIVE_LIB_DIR;
     public static String DIR_DATA; //Initialized later to get context
-    public static File DIR_CACHE;
+    public static File DIR_CACHE, DOWNLOADED;
     public static String MULTIRT_HOME;
     public static String LOCAL_RENDERER = null;
     public static int DEVICE_ARCHITECTURE;
