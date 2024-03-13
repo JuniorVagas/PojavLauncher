@@ -133,12 +133,15 @@ public class MinecraftDownloader {
 
         try {
             while (mDownloaderThreadException.get() == null &&
-                    !downloaderPool.awaitTermination(33, TimeUnit.MILLISECONDS)) {
+                    !downloaderPool.awaitTermination(33, TimeUnit.MILLISECONDS) && !mInterruptDownload) {
                 long dlFileCounter = mDownloadFileCounter.get();
                 int progress = (int)((dlFileCounter * 100L) / mDownloadFileCount);
                 ProgressLayout.setProgress(ProgressLayout.DOWNLOAD_MINECRAFT, progress,
                         R.string.newdl_downloading_game_files, dlFileCounter,
                         mDownloadFileCount, (double)mDownloadSizeCounter.get() / (1024d * 1024d));
+            }
+            if(mInterruptDownload) {
+                throw new InterruptedException("Download was cancelled.");
             }
             Exception thrownException = mDownloaderThreadException.get();
             if(thrownException != null) {
@@ -146,10 +149,14 @@ public class MinecraftDownloader {
             } else {
                 ensureJarFileCopy();
             }
-        }catch (InterruptedException e) {
+        } catch (InterruptedException e) {
             // Interrupted while waiting, which means that the download was cancelled.
             // Kill all downloading threads immediately, and ignore any exceptions thrown by them
             downloaderPool.shutdownNow();
+        } finally {
+            // Limpeza adequada
+            mInterruptDownload = false;
+            ProgressLayout.clearProgress(ProgressLayout.DOWNLOAD_MINECRAFT);
         }
     }
 
