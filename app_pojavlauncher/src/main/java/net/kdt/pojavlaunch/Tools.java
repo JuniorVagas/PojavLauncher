@@ -234,7 +234,14 @@ public final class Tools {
         try {
             OptionalModsSettings optionalModsSettings = new Gson().fromJson(read(DIR_HOME_VERSION + "/" + versionID + "/" + versionID + "_selected_mods.json"), OptionalModsSettings.class);
             for(OptionalModsSettings.OptionalModInfo modInfo: optionalModsSettings.optionalMods.values()){
-                if(modInfo.selected || !modInfo.optional) {
+                if((modInfo.selected || !modInfo.optional) && !modInfo.library) {
+                    for(String dependID: modInfo.depends){
+                        OptionalModsSettings.OptionalModInfo dependInfo = optionalModsSettings.optionalMods.get(dependID);
+
+                        if(!dependInfo.path.startsWith("/")) modsBuilder.append(".").append("/").append(dependInfo.path).append(",");
+                        else modsBuilder.append(".").append(dependInfo.path).append(",");
+                    }
+
                     if(!modInfo.path.startsWith("/")) modsBuilder.append(".").append("/").append(modInfo.path).append(",");
                     else modsBuilder.append(".").append(modInfo.path).append(",");
                 }
