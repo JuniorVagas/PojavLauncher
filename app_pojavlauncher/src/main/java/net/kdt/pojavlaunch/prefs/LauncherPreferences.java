@@ -70,6 +70,7 @@ public class LauncherPreferences {
     public static boolean PREF_VSYNC_IN_ZINK = true;
 
     public static boolean PREF_AUTO_RAM_ALLOCATION = true;
+    public static boolean PREF_DISABLE_LOADING_SCREEN = false;
 
 
     public static void loadPreferences(Context ctx) {
@@ -118,6 +119,7 @@ public class LauncherPreferences {
         PREF_VSYNC_IN_ZINK = DEFAULT_PREF.getBoolean("vsync_in_zink", true);
 
         PREF_AUTO_RAM_ALLOCATION = DEFAULT_PREF.getBoolean("autoAllocation", true);
+        PREF_DISABLE_LOADING_SCREEN = DEFAULT_PREF.getBoolean("disableLoadingScreen", false);
 
         String argLwjglLibname = "-Dorg.lwjgl.opengl.libname=";
         for (String arg : JREUtils.parseJavaArguments(PREF_CUSTOM_JAVA_ARGS)) {

@@ -344,4 +344,6 @@
         Se você ainda quiser usar o endereço, pressione \"Desativar checagem de manifesto\" e inicie o download novamente.<br/>
         Se você quiser usar a fonte oficial de download, pressione \"Trocar para site oficial\" e inicie o download novamente.<br/>]]>
     </string>
+    <string name="preference_disable_loading_screen">Desativar tela de carregamento</string>
+    <string name="preference_disable_loading_screen_desc">Isso desativa a animação de carregamento enquanto o jogo inicia</string>
 </resources>

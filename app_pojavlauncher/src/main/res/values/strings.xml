@@ -389,4 +389,6 @@
     <string name="microsoft_login_started">Login started!</string>
     <string name="microsoft_account">Microsoft Account\n(Minecraft Java Edition)</string>
     <string name="local_account">Local Account</string>
+    <string name="preference_disable_loading_screen">Disable Loading Screen</string>
+    <string name="preference_disable_loading_screen_desc">This disables the loading animation while the game starts</string>
 </resources>

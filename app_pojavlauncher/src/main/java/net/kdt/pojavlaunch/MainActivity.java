@@ -164,18 +164,22 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
             Logger.begin(latestLogFile.getAbsolutePath());
             Logger.setSplashListener(this);
 
-            mWebView.setWebViewClient(new WebViewClient(){
-                @Override
-                public void onPageFinished(WebView view, String url) {
-                    setupText();
-                }
-            });
-            mWebView.getSettings().setJavaScriptEnabled(true);
-            mWebView.clearCache(true);
-            mWebView.loadUrl("file:///android_asset/loading.html");
-            mWebView.setBackgroundColor(Color.TRANSPARENT);
-            mWebView.getSettings().setUseWideViewPort(true);
-            mWebView.getSettings().setLoadWithOverviewMode(true);
+            if(LauncherPreferences.PREF_DISABLE_LOADING_SCREEN){
+                onSplashEvent();
+            } else {
+                mWebView.setWebViewClient(new WebViewClient() {
+                    @Override
+                    public void onPageFinished(WebView view, String url) {
+                        setupText();
+                    }
+                });
+                mWebView.getSettings().setJavaScriptEnabled(true);
+                mWebView.clearCache(true);
+                mWebView.loadUrl("file:///android_asset/loading.html");
+                mWebView.setBackgroundColor(Color.TRANSPARENT);
+                mWebView.getSettings().setUseWideViewPort(true);
+                mWebView.getSettings().setLoadWithOverviewMode(true);
+            }
 
             // FIXME: is it safe for multi thread?
             GLOBAL_CLIPBOARD = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
