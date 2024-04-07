@@ -305,11 +305,11 @@ public class JREUtils {
         if(LauncherPreferences.PREF_AUTO_RAM_ALLOCATION){
             int ramAllocation = autoRam((int) (mi.availMem/1048576L), is32BitsDevice());
             userArgs.add("-Xmx" + ramAllocation + "M");
-            userArgs.add("-Xms" + ramAllocation + "M");
-            Logger.appendToLog("RAM Allocation: " + autoRam((int) (mi.availMem/1048576L), is32BitsDevice()) + "MB / " + (int) (mi.availMem/1048576L) + "MB");
+            userArgs.add("-Xms" + (ramAllocation / 2) + "M");
+            Logger.appendToLog("RAM Allocation: " + ramAllocation + "MB / " + (int) (mi.availMem/1048576L) + "MB");
         } else {
             userArgs.add("-Xmx" + LauncherPreferences.PREF_RAM_ALLOCATION + "M");
-            userArgs.add("-Xms" + LauncherPreferences.PREF_RAM_ALLOCATION + "M");
+            userArgs.add("-Xms" + (LauncherPreferences.PREF_RAM_ALLOCATION / 2) + "M");
             Logger.appendToLog("RAM Allocation: " + LauncherPreferences.PREF_RAM_ALLOCATION + "MB / " + (int) (mi.availMem/1048576L) + "MB");
             activity.runOnUiThread(() -> Toast.makeText(activity, activity.getString(R.string.autoram_info_msg,LauncherPreferences.PREF_RAM_ALLOCATION), Toast.LENGTH_SHORT).show());
         }
