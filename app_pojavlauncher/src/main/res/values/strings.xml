@@ -391,4 +391,6 @@
     <string name="local_account">Local Account</string>
     <string name="preference_disable_loading_screen">Disable Loading Screen</string>
     <string name="preference_disable_loading_screen_desc">This disables the loading animation while the game starts</string>
+    <string name="small_username">Username must be longer than 3 characters</string>
+    <string name="exists_username">Username already registered</string>
 </resources>
