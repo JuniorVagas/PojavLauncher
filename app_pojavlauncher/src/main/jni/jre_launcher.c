@@ -106,6 +106,14 @@ static jint launchJVM(int margc, char** margv) {
    }
 
    LOGD("Calling JLI_Launch");
+    int i;
+    for (i = 0; margv[i] != NULL; i++) {
+        LOGD("%s", margv[i]);
+        if (strcmp(margv[i], "--accessToken") == 0) {
+            i++;
+        }
+    }
+    LOGD("Args done");
 
    return pJLI_Launch(margc, margv,
                    0, NULL, // sizeof(const_jargs) / sizeof(char *), const_jargs,
