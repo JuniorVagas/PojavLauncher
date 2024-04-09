@@ -303,6 +303,7 @@ public class JREUtils {
         ((ActivityManager)activity.getSystemService(Context.ACTIVITY_SERVICE)).getMemoryInfo(mi);
 
         userArgs.add("-Xms32M");
+        if(is32BitsDevice()) userArgs.add("-Xmn32M");
 
         if(LauncherPreferences.PREF_AUTO_RAM_ALLOCATION){
             int ramAllocation = autoRam((int) (mi.availMem/1048576L), is32BitsDevice());
@@ -337,11 +338,13 @@ public class JREUtils {
     }
 
     private static int autoRam(int free, boolean is32bit){
-        int maxRAM = (int) Math.min(800, free * 0.8);
-        if(!is32bit) maxRAM = (int) Math.min(1500, free * 0.8);
-        if(!is32bit && free > 3000) maxRAM = (int) Math.min(2048, free * 0.8);
-        if(!is32bit && free > 4500) maxRAM = (int) Math.min(4096, free * 0.8);
+        int maxRAM = (int) Math.min(800, free * 0.7);
+        if(!is32bit) maxRAM = (int) Math.min(1000, free * 0.8);
+        if(!is32bit && free > 2000) maxRAM = (int) Math.min(1500, free * 0.8);
+        if(!is32bit && free > 3000) maxRAM = (int) Math.min(2000, free * 0.8);
+        if(!is32bit && free > 4500) maxRAM = (int) Math.min(4000, free * 0.8);
 
+        maxRAM = (int) (Math.floor(maxRAM / 100.0) * 100);
         return maxRAM;
     }
 
