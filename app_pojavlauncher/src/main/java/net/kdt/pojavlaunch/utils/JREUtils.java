@@ -338,13 +338,12 @@ public class JREUtils {
     }
 
     private static int autoRam(int free, boolean is32bit){
-        int maxRAM = (int) Math.min(800, free * 0.7);
-        if(!is32bit) maxRAM = (int) Math.min(1000, free * 0.8);
-        if(!is32bit && free > 2000) maxRAM = (int) Math.min(1500, free * 0.8);
+        int maxRAM = (int) Math.min(800, free * 0.8);
+        if(!is32bit) maxRAM = (int) Math.min(1500, free * 0.8);
         if(!is32bit && free > 3000) maxRAM = (int) Math.min(2000, free * 0.8);
         if(!is32bit && free > 4500) maxRAM = (int) Math.min(4000, free * 0.8);
 
-        maxRAM = (int) (Math.floor(maxRAM / 100.0) * 100);
+        if(is32bit) maxRAM = (int) (Math.floor(maxRAM / 50.0) * 50);
         return maxRAM;
     }
 
