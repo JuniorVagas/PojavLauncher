@@ -302,14 +302,15 @@ public class JREUtils {
         ActivityManager.MemoryInfo mi = new ActivityManager.MemoryInfo();
         ((ActivityManager)activity.getSystemService(Context.ACTIVITY_SERVICE)).getMemoryInfo(mi);
 
-        userArgs.add("-Xms32M");
-        if(is32BitsDevice()) userArgs.add("-Xmn32M");
+        if(is32BitsDevice()) userArgs.add("-Xms32M");
 
         if(LauncherPreferences.PREF_AUTO_RAM_ALLOCATION){
             int ramAllocation = autoRam((int) (mi.availMem/1048576L), is32BitsDevice());
+            if(!is32BitsDevice()) userArgs.add("-Xms" + ramAllocation + "M");
             userArgs.add("-Xmx" + ramAllocation + "M");
             Logger.appendToLog("RAM Allocation: " + ramAllocation + "MB / " + (int) (mi.availMem/1048576L) + "MB");
         } else {
+            if(!is32BitsDevice()) userArgs.add("-Xms" + LauncherPreferences.PREF_RAM_ALLOCATION + "M");
             userArgs.add("-Xmx" + LauncherPreferences.PREF_RAM_ALLOCATION + "M");
             Logger.appendToLog("RAM Allocation: " + LauncherPreferences.PREF_RAM_ALLOCATION + "MB / " + (int) (mi.availMem/1048576L) + "MB");
             activity.runOnUiThread(() -> Toast.makeText(activity, activity.getString(R.string.autoram_info_msg,LauncherPreferences.PREF_RAM_ALLOCATION), Toast.LENGTH_SHORT).show());
