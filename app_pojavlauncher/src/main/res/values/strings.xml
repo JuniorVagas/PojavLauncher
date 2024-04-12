@@ -384,6 +384,11 @@
     <string name="cropper_lock_horizontal">H. lock</string>
     <string name="cropper_reset">Reset</string>
     <string name="cropper_select_cancelled">Selection cancelled</string>
+    <string name="log_view_button_scroll_off">Autoscroll\nOFF</string>
+    <string name="log_view_button_scroll_on">Autoscroll\nON</string>
+    <string name="log_view_button_output_off">Output\nOFF</string>
+    <string name="log_view_button_output_on">Output\nON</string>
+    <string name="log_view_label_log_output">Log output:</string>
     <string name="main_activity_class_name" translatable="false">br.com.pixelmonbrasil.ui.MainActivity</string>
     <string name="customctrl_toggle_joystick">Hide when Joystick is activated</string>
     <string name="microsoft_login_started">Login started!</string>
