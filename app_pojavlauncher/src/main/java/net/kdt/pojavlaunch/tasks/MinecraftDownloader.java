@@ -109,7 +109,7 @@ public class MinecraftDownloader {
     private void downloadGame(Activity activity, JMinecraftVersionList.Version verInfo, String versionName) throws Exception {
         // Put up a dummy progress line, for the activity to start the service and do all the other necessary
         // work to keep the launcher alive. We will replace this line when we will start downloading stuff.
-        //ProgressLayout.setProgress(ProgressLayout.DOWNLOAD_MINECRAFT, 0, R.string.newdl_starting);
+        ProgressLayout.setProgress(ProgressLayout.DOWNLOAD_MINECRAFT, 0, R.string.newdl_starting);
 
         mTargetJarFile = createGameJarPath(versionName);
         mScheduledDownloadTasks = new ArrayList<>();
