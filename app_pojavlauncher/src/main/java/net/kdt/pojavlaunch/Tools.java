@@ -128,7 +128,7 @@ public final class Tools {
     private static RenderersList sCompatibleRenderers;
 
 
-    private static File getPojavStorageRoot(Context ctx) {
+    public static File getPojavStorageRoot(Context ctx) {
         if(SDK_INT >= 29) {
             return ctx.getExternalFilesDir(null);
         }else{
