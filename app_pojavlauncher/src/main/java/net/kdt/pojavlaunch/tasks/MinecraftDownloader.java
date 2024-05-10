@@ -16,6 +16,7 @@ import net.kdt.pojavlaunch.JAssetInfo;
 import net.kdt.pojavlaunch.JAssets;
 import net.kdt.pojavlaunch.JMinecraftVersionList;
 import net.kdt.pojavlaunch.JRE17Util;
+import net.kdt.pojavlaunch.Logger;
 import net.kdt.pojavlaunch.R;
 import net.kdt.pojavlaunch.ServerModpackConfig;
 import net.kdt.pojavlaunch.Tools;
@@ -69,17 +70,21 @@ public class MinecraftDownloader {
     public void start(@Nullable Activity activity, @Nullable JMinecraftVersionList.Version version,
                       @NonNull String realVersion, // this was there for a reason
                       @NonNull AsyncMinecraftDownloader.DoneListener listener) {
+        Logger.appendToLog("MinecraftDownloader: iniciando");
         downloaderThread = new Thread(() -> {
             try {
+                Logger.appendToLog("MinecraftDownloader: iniciando donwload");
                 downloadGame(activity, version, realVersion);
                 if (!mInterruptDownload) {
                     listener.onDownloadDone();
                 }
             } catch (Exception e) {
+                Logger.appendToLog("MinecraftDownloader: erro de exeption no downloadGame()");
                 if (!mInterruptDownload) {
                     listener.onDownloadFailed(e);
                 }
             } finally {
+                Logger.appendToLog("MinecraftDownloader: limpando progresso");
                 mInterruptDownload = false;
                 ProgressLayout.clearProgress(ProgressLayout.DOWNLOAD_MINECRAFT);
             }
@@ -109,6 +114,7 @@ public class MinecraftDownloader {
     private void downloadGame(Activity activity, JMinecraftVersionList.Version verInfo, String versionName) throws Exception {
         // Put up a dummy progress line, for the activity to start the service and do all the other necessary
         // work to keep the launcher alive. We will replace this line when we will start downloading stuff.
+        Logger.appendToLog("MinecraftDownloader: iniciando variáveis para o processamento do download");
         ProgressLayout.setProgress(ProgressLayout.DOWNLOAD_MINECRAFT, 0, R.string.newdl_starting);
 
         mTargetJarFile = createGameJarPath(versionName);
@@ -131,6 +137,7 @@ public class MinecraftDownloader {
         for(DownloaderTask scheduledTask : mScheduledDownloadTasks) downloaderPool.execute(scheduledTask);
         downloaderPool.shutdown();
 
+        Logger.appendToLog("MinecraftDownloader: iniciando download de arquivos do jogo");
         try {
             while (mDownloaderThreadException.get() == null &&
                     !downloaderPool.awaitTermination(33, TimeUnit.MILLISECONDS) && !mInterruptDownload) {
@@ -141,19 +148,23 @@ public class MinecraftDownloader {
                         mDownloadFileCount, (double)mDownloadSizeCounter.get() / (1024d * 1024d));
             }
             if(mInterruptDownload) {
+                Logger.appendToLog("MinecraftDownloader: download do jogo cancelado");
                 throw new InterruptedException("Download was cancelled.");
             }
             Exception thrownException = mDownloaderThreadException.get();
             if(thrownException != null) {
+                Logger.appendToLog("MinecraftDownloader: erro de download");
                 throw thrownException;
             } else {
                 ensureJarFileCopy();
             }
         } catch (InterruptedException e) {
+            Logger.appendToLog("MinecraftDownloader: download interrompido");
             // Interrupted while waiting, which means that the download was cancelled.
             // Kill all downloading threads immediately, and ignore any exceptions thrown by them
             downloaderPool.shutdownNow();
         } finally {
+            Logger.appendToLog("MinecraftDownloader: limpeza do progresso");
             // Limpeza adequada
             mInterruptDownload = false;
             ProgressLayout.clearProgress(ProgressLayout.DOWNLOAD_MINECRAFT);
@@ -231,6 +242,7 @@ public class MinecraftDownloader {
      * @throws IOException if the download of any of the metadata files fails
      */
     private boolean downloadAndProcessMetadata(Activity activity, JMinecraftVersionList.Version verInfo, String versionName) throws IOException, MirrorTamperedException, DownloaderException {
+        Logger.appendToLog("MinecraftDownloader: iniciando download do modpack");
         File versionJsonFile = createGameJsonPath(versionName);
         //if(verInfo != null) versionJsonFile = downloadGameJson(verInfo);
         //else versionJsonFile = createGameJsonPath(versionName);
@@ -247,12 +259,15 @@ public class MinecraftDownloader {
         }
 
         try {
+            Logger.appendToLog("MinecraftDownloader: baixando modpack");
             Log.i("Modpack","Downloading modpack files...");
             downloadModpackFiles(verInfo, new File(config.getGameDirectory()));
         } catch (DownloaderException e) {
+            Logger.appendToLog("MinecraftDownloader: erro ao baixar modpack");
             ProgressKeeper.submitProgress(ProgressLayout.DOWNLOAD_MINECRAFT, -1, -1);
             throw e;
         } catch (Exception e) {
+            Logger.appendToLog("MinecraftDownloader: erro ao baixar modpack");
             e.printStackTrace();
             ProgressKeeper.submitProgress(ProgressLayout.DOWNLOAD_MINECRAFT, -1, -1);
             if(!Tools.DOWNLOADED.exists()) throw new DownloaderException(e);
