@@ -348,4 +348,5 @@
     <string name="preference_disable_loading_screen_desc">Isso desativa a animação de carregamento enquanto o jogo inicia</string>
     <string name="small_username">O nome de usuário deve ter mais de 3 caracteres</string>
     <string name="exists_username">Nome de usuário já registrado</string>
+    <string name="mcl_setting_renderer_vulkan_zink_standard">Zink Alternativo (Caso o outro não funcione)</string>
 </resources>
