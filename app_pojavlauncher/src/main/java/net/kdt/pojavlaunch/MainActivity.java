@@ -176,7 +176,6 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
                 mWebView.getSettings().setJavaScriptEnabled(true);
                 mWebView.clearCache(true);
                 mWebView.loadUrl("file:///android_asset/loading.html");
-                mWebView.setBackgroundColor(Color.TRANSPARENT);
                 mWebView.getSettings().setUseWideViewPort(true);
                 mWebView.getSettings().setLoadWithOverviewMode(true);
             }
