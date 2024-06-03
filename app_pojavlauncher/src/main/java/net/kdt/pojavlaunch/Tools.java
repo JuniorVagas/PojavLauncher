@@ -240,6 +240,7 @@ public final class Tools {
                     for(String dependID: modInfo.depends){
                         OptionalModsSettings.OptionalModInfo dependInfo = optionalModsSettings.optionalMods.get(dependID);
 
+                        if(dependInfo == null) continue;
                         if(!dependInfo.path.startsWith("/")) modsBuilder.append(".").append("/").append(dependInfo.path).append(",");
                         else modsBuilder.append(".").append(dependInfo.path).append(",");
                     }
