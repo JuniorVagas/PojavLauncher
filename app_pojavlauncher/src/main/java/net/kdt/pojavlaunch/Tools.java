@@ -234,9 +234,6 @@ public final class Tools {
             OptionalModsSettings optionalModsSettings = new Gson().fromJson(read(DIR_HOME_VERSION + "/" + versionID + "/" + versionID + "_selected_mods.json"), OptionalModsSettings.class);
             for(OptionalModsSettings.OptionalModInfo modInfo: optionalModsSettings.optionalMods.values()){
                 if((modInfo.selected || !modInfo.optional) && !modInfo.library) {
-                    if(LOCAL_RENDERER != null && LOCAL_RENDERER.contains("vulkan_zink")){
-                        if(modInfo.name.equals("Renderlib") || modInfo.depends.contains("renderlib")) continue; // crash with zink
-                    }
                     for(String dependID: modInfo.depends){
                         OptionalModsSettings.OptionalModInfo dependInfo = optionalModsSettings.optionalMods.get(dependID);
 
