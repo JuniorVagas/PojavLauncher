@@ -349,4 +349,5 @@
     <string name="small_username">O nome de usuário deve ter mais de 3 caracteres</string>
     <string name="exists_username">Nome de usuário já registrado</string>
     <string name="mcl_setting_renderer_vulkan_zink_standard">Zink Alternativo (Caso o outro não funcione)</string>
+    <string name="microsoft_login_retry_later_2">Não foi possível autenticar, tente novamente mais tarde.</string>
 </resources>

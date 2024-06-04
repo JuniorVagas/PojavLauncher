@@ -348,6 +348,6 @@ public class MicrosoftBackgroundLogin {
         if(conn.getResponseCode() == 429) {
             return new PresentedException(R.string.microsoft_login_retry_later);
         }
-        return new RuntimeException(conn.getResponseMessage());
+        return new PresentedException(R.string.microsoft_login_retry_later_2);
     }
 }
