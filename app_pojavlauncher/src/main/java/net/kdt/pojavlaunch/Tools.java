@@ -676,11 +676,14 @@ public final class Tools {
     }
 
     public static void dialog(final Context context, final CharSequence title, final CharSequence message) {
-        new AlertDialog.Builder(context)
-                .setTitle(title)
-                .setMessage(message)
-                .setPositiveButton(android.R.string.ok, null)
-                .show();
+        try {
+            new AlertDialog.Builder(context)
+                    .setTitle(title)
+                    .setMessage(message)
+                    .setPositiveButton(android.R.string.ok, null)
+                    .show();
+        } catch (Exception ignore) {
+        }
     }
 
     public static void openURL(Activity act, String url) {
