@@ -18,6 +18,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -96,12 +97,18 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
     public AdapterView.OnItemClickListener ingameControlsEditorListener;
     private GameService.LocalBinder mServiceBinder;
 
+    private static String KEY_ELAPSED_TIME;
+    private static boolean CONTINUE_ELAPSED_TIME = true;
+    private static SharedPreferences elapsedTimeSaved;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        elapsedTimeSaved = this.getSharedPreferences("pxbr_extract", MODE_PRIVATE);
         ((NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE)).cancelAll();
 
         String version = getIntent().getStringExtra(INTENT_MINECRAFT_VERSION);
+        KEY_ELAPSED_TIME = version;
         minecraftProfile = ServerModpackConfig.load(version);
         MCOptionUtils.load(Tools.getGameDirPath(minecraftProfile));
 
@@ -320,6 +327,7 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
         CallbackBridge.removeGrabListener(touchpad);
         CallbackBridge.removeGrabListener(minecraftGLView);
         ContextExecutor.clearActivity();
+        CONTINUE_ELAPSED_TIME = false;
     }
 
     @Override
@@ -637,6 +645,16 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
             ((ViewGroup)findViewById(R.id.content_frame)).removeView(overlay);
             Logger.setSplashListener(null);
         });
+
+        new Thread(() -> {
+            while(CONTINUE_ELAPSED_TIME){
+                try {
+                    Thread.sleep(1000);
+                    elapsedTimeSaved.edit().putInt(KEY_ELAPSED_TIME, elapsedTimeSaved.getInt(KEY_ELAPSED_TIME, 0) + 1).apply();
+                } catch (InterruptedException ignore){
+                }
+            }
+        }).start();
     }
 
     public void setupText() {
