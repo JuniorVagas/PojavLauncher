@@ -80,13 +80,11 @@ public class AsyncAssetManager {
         sExecutorService.execute(() -> {
             try {
                 unpackComponent(ctx, "caciocavallo", false);
-                unpackComponent(ctx, "caciocavallo17", false);
                 // Since the Java module system doesn't allow multiple JARs to declare the same module,
                 // we repack them to a single file here
                 unpackComponent(ctx, "lwjgl3", false);
                 unpackComponent(ctx, "security", true);
                 unpackComponent(ctx, "arc_dns_injector", true);
-                unpackComponent(ctx, "forge_installer", true);
             } catch (IOException e) {
                 Log.e("AsyncAssetManager", "Failed o unpack components !",e );
             }
