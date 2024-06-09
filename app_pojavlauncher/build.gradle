@@ -11,7 +11,7 @@ static def getDateSeconds() {
 }
 
 def getVersionName = {
-    return "2.0.11"
+    return "2.0.12"
 }
 
 def getCFApiKey = {
