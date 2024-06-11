@@ -645,16 +645,6 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
             ((ViewGroup)findViewById(R.id.content_frame)).removeView(overlay);
             Logger.setSplashListener(null);
         });
-
-        new Thread(() -> {
-            while(CONTINUE_ELAPSED_TIME){
-                try {
-                    Thread.sleep(1000);
-                    elapsedTimeSaved.edit().putInt(KEY_ELAPSED_TIME, elapsedTimeSaved.getInt(KEY_ELAPSED_TIME, 0) + 1).apply();
-                } catch (InterruptedException ignore){
-                }
-            }
-        }).start();
     }
 
     public void setupText() {
@@ -686,6 +676,16 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
         runOnUiThread(()->{
             mWebView.evaluateJavascript("document.getElementById('loadingText').textContent = 'Carregando 100%';", null);
         });
+
+        new Thread(() -> {
+            while(CONTINUE_ELAPSED_TIME){
+                try {
+                    Thread.sleep(1000);
+                    elapsedTimeSaved.edit().putInt(KEY_ELAPSED_TIME, elapsedTimeSaved.getInt(KEY_ELAPSED_TIME, 0) + 1).apply();
+                } catch (InterruptedException ignore){
+                }
+            }
+        }).start();
     }
 
     @Override
