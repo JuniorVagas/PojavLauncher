@@ -138,8 +138,7 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
                 case 3: mControlLayout.openLoadDialog(); break;
                 case 4: mControlLayout.openSaveDialog(this); break;
                 case 5: mControlLayout.openSetDefaultDialog(); break;
-                case 6: mControlLayout.toggleJoystick(); break;
-                case 7: mControlLayout.openExitDialog(this);
+                case 6: mControlLayout.openExitDialog(this);
             }
         };
 
@@ -223,7 +222,6 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
                     case 3: adjustMouseSpeedLive(); break;
                     case 4: adjustGyroSensitivityLive(); break;
                     case 5: openCustomControls(); break;
-                    case 6: mControlLayout.toggleJoystick(); break;
                 }
                 drawerLayout.closeDrawers();
             };
@@ -418,7 +416,6 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
         navDrawer.setOnItemClickListener(ingameControlsEditorListener);
         mDrawerPullButton.setVisibility(View.VISIBLE);
         isInEditor = true;
-        mControlLayout.reloadJoystick();
     }
 
     private void openLogOutput() {

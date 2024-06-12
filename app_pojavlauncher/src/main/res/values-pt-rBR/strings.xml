@@ -302,7 +302,6 @@
     <string name="loading_middle">Carregando 50%</string>
     <string name="loading_complete">Carregando 75%</string>
     <string name="loading_fullcomplete">Carregando 100%</string>
-    <string name="mcl_option_enablejoystick">Alternar joystick</string>
     <string name="mcl_auto_memory_allocation">Alocação de memória automático</string>
     <string name="mcl_auto_memory_allocation_subtitle">Controla automaticamente a quantidade de RAM que o Minecraft usará</string>
     <string name="cropper_title">Selecionar região de imagem</string>

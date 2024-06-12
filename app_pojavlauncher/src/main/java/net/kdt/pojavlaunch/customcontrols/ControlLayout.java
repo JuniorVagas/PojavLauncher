@@ -44,10 +44,6 @@ import java.util.List;
 
 public class ControlLayout extends FrameLayout {
 	protected CustomControls mLayout;
-
-	public CustomControls getmLayout(){
-		return mLayout;
-	}
 	/* Accessible when inside the game by ControlInterface implementations, cached for perf. */
 	private MinecraftGLSurface mGameSurface = null;
 
@@ -61,7 +57,7 @@ public class ControlLayout extends FrameLayout {
 	private ControlHandleView mHandleView;
 	private ControlButtonMenuListener mMenuListener;
 	public ActionRow mActionRow = null;
-	public String mLayoutFileName, mFilePath;
+	public String mLayoutFileName;
 
 	public ControlLayout(Context ctx) {
 		super(ctx);
@@ -76,7 +72,6 @@ public class ControlLayout extends FrameLayout {
 		CustomControls layout = LayoutConverter.loadAndConvertIfNecessary(jsonPath);
 		if(layout != null) {
 			loadLayout(layout);
-			mFilePath = jsonPath;
 			updateLoadedFileName(jsonPath);
 			return;
 		}
@@ -125,42 +120,7 @@ public class ControlLayout extends FrameLayout {
 		setModified(false);
 		mButtons = null;
 		getButtonChildren(); // Force refresh
-		processJoystick(mLayout.isJoystickEnabled);
 	} // loadLayout
-
-	public void processJoystick(boolean isJoystickEnabled) {
-		if(isJoystickEnabled) {
-			for(ControlInterface controlInterface : getButtonChildren()) {
-				if(controlInterface.getProperties().joystickHideable) {
-					controlInterface.getControlView().setVisibility(View.GONE);
-				}
-				if(controlInterface.getProperties().name.equals("joystick")){
-					controlInterface.getControlView().setVisibility(View.VISIBLE);
-				}
-			}
-		}else{
-			for(ControlInterface controlInterface : getButtonChildren()) {
-				if(controlInterface.getProperties().joystickHideable) {
-					controlInterface.getControlView().setVisibility(View.VISIBLE);
-				}
-				if(controlInterface.getProperties().name.equals("joystick")){
-					controlInterface.getControlView().setVisibility(View.GONE);
-				}
-			}
-		}
-		mLayout.isJoystickEnabled = isJoystickEnabled;
-
-		try {
-			mLayout.save(mFilePath);
-		} catch (Exception e){}
-	}
-
-	public void toggleJoystick() {
-		processJoystick(!mLayout.isJoystickEnabled);
-	}
-	public void reloadJoystick() {
-		processJoystick(mLayout.isJoystickEnabled);
-	}
 
 	//CONTROL BUTTON
 	public void addControlButton(ControlData controlButton) {
@@ -288,11 +248,6 @@ public class ControlLayout extends FrameLayout {
 		mControlVisible = isVisible;
 		for(ControlInterface button : getButtonChildren()){
 			button.setVisible(((button.getProperties().displayInGame && isGrabbing()) || (button.getProperties().displayInMenu && !isGrabbing())) && isVisible);
-			if(isVisible) {
-				if ((mLayout.isJoystickEnabled && button.getProperties().joystickHideable) || (!mLayout.isJoystickEnabled && button.getProperties().name.equalsIgnoreCase("joystick"))) {
-					button.setVisible(false);
-				}
-			}
 		}
 	}
 
@@ -337,16 +292,16 @@ public class ControlLayout extends FrameLayout {
 		}
 	}
 
-    @Override
-    public void onViewRemoved(View child) {
-        super.onViewRemoved(child);
-        if(child instanceof ControlInterface && mControlPopup != null){
-            mControlPopup.disappearColor();
-            mControlPopup.disappear();
-        }
-    }
+	@Override
+	public void onViewRemoved(View child) {
+		super.onViewRemoved(child);
+		if(child instanceof ControlInterface && mControlPopup != null){
+			mControlPopup.disappearColor();
+			mControlPopup.disappear();
+		}
+	}
 
-    /**
+	/**
 	 * Load the layout if needed, and pass down the burden of filling values
 	 * to the button at hand.
 	 */

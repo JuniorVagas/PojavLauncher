@@ -297,17 +297,6 @@
             app:layout_constraintTop_toBottomOf="@id/editOrientation_spinner"
             tools:ignore="UseSwitchCompatOrMaterialXml" />
 
-        <!-- DISABLED WITH JOYSTICK -->
-        <Switch
-            android:id="@+id/checkboxToggleJoystick"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_36sdp"
-            android:text="@string/customctrl_toggle_joystick"
-
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/checkboxToggle"
-            tools:ignore="UseSwitchCompatOrMaterialXml" />
-
         <!-- MOUSE PASS THROUGH SECTION -->
         <Switch
             android:id="@+id/checkboxPassThrough"
@@ -316,7 +305,7 @@
             android:text="@string/customctrl_passthru"
 
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/checkboxToggleJoystick"
+            app:layout_constraintTop_toBottomOf="@id/checkboxToggle"
             tools:ignore="UseSwitchCompatOrMaterialXml" />
 
         <!-- SWIPEABLE BUTTON SECTION -->

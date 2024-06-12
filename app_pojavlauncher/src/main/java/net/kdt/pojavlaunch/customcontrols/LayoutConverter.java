@@ -12,6 +12,7 @@ import org.lwjgl.glfw.CallbackBridge;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class LayoutConverter {
     public static CustomControls loadAndConvertIfNecessary(String jsonPath) throws IOException, JsonSyntaxException {
@@ -19,6 +20,12 @@ public class LayoutConverter {
         String jsonLayoutData = Tools.read(jsonPath);
         try {
             JSONObject layoutJobj = new JSONObject(jsonLayoutData);
+
+            if(layoutJobj.has("isJoystickEnabled")){
+                CustomControls layout = convertJoystickToggleable(layoutJobj);
+                layout.save(jsonPath);
+                return layout;
+            }
 
             if (!layoutJobj.has("version")) { //v1 layout
                 CustomControls layout = LayoutConverter.convertV1Layout(layoutJobj);
@@ -36,6 +43,29 @@ public class LayoutConverter {
                 return null;
             }
         } catch (JSONException e) {
+            throw new JsonSyntaxException("Failed to load", e);
+        }
+    }
+
+    public static CustomControls convertJoystickToggleable(JSONObject oldLayoutJson) {
+        try {
+            boolean enabled = oldLayoutJson.getBoolean("isJoystickEnabled");
+            oldLayoutJson.remove("isJoystickEnabled");
+
+            CustomControls layout = Tools.GLOBAL_GSON.fromJson(oldLayoutJson.toString(), CustomControls.class);
+
+            if(enabled) {
+                List<ControlData> newControlDataList = new ArrayList<>();
+                for (ControlData controlData : layout.mControlDataList) {
+                    if (!controlData.joystickHideable) newControlDataList.add(controlData);
+                }
+                layout.mControlDataList = newControlDataList;
+            } else {
+                layout.mJoystickDataList.clear();
+            }
+
+            return layout;
+        } catch (JSONException e){
             throw new JsonSyntaxException("Failed to load", e);
         }
     }
