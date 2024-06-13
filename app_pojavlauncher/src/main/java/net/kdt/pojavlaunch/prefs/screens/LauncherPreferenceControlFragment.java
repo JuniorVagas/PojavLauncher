@@ -10,6 +10,7 @@ import android.os.Bundle;
 import androidx.preference.PreferenceCategory;
 
 import net.kdt.pojavlaunch.CustomControlsActivity;
+import net.kdt.pojavlaunch.LauncherActivity;
 import net.kdt.pojavlaunch.R;
 import net.kdt.pojavlaunch.prefs.CustomSeekBarPreference;
 import net.kdt.pojavlaunch.prefs.LauncherPreferences;
@@ -33,6 +34,17 @@ public class LauncherPreferenceControlFragment extends LauncherPreferenceFragmen
 
         requirePreference("edit_controls").setOnPreferenceClickListener(preference -> {
             requireActivity().startActivity(new Intent(requireActivity(), CustomControlsActivity.class));
+
+            return true;
+        });
+
+        requirePreference("reset_controls").setOnPreferenceClickListener(preference -> {
+            try {
+                Class<?> activityClass = Class.forName("br.com.pixelmonbrasil.ui.FavoriteControlActivity");
+                Intent intent =  new Intent(getContext(), activityClass);
+                intent.putExtra("resetingcontrols", true);
+                startActivity(intent);
+            }catch (Throwable ignore) {}
 
             return true;
         });

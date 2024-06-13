@@ -10,6 +10,12 @@
         app2:icon="@drawable/ic_menu_custom_controls">
     </Preference>
 
+    <Preference
+        android:key="reset_controls"
+        android:title="@string/reset_control_settings_title"
+        android:summary="@string/reset_control_settings_summary">
+    </Preference>
+
     <PreferenceCategory
         android:title="@string/preference_category_gestures">
 
