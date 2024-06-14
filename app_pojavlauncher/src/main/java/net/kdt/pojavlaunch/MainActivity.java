@@ -44,6 +44,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -171,22 +172,6 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
             Logger.begin(latestLogFile.getAbsolutePath());
             Logger.setSplashListener(this);
 
-            if(LauncherPreferences.PREF_DISABLE_LOADING_SCREEN){
-                onSplashEvent();
-            } else {
-                mWebView.setWebViewClient(new WebViewClient() {
-                    @Override
-                    public void onPageFinished(WebView view, String url) {
-                        setupText();
-                    }
-                });
-                mWebView.getSettings().setJavaScriptEnabled(true);
-                mWebView.clearCache(true);
-                mWebView.loadUrl("file:///android_asset/loading.html");
-                mWebView.getSettings().setUseWideViewPort(true);
-                mWebView.getSettings().setLoadWithOverviewMode(true);
-            }
-
             // FIXME: is it safe for multi thread?
             GLOBAL_CLIPBOARD = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
             touchCharInput.setCharacterSender(new LwjglCharSender());
@@ -287,7 +272,6 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
         mControlLayout = findViewById(R.id.main_control_layout);
         touchCharInput = findViewById(R.id.mainTouchCharInput);
         mDrawerPullButton = findViewById(R.id.drawer_button);
-        mWebView = findViewById(R.id.main_image_view);
     }
 
     @Override
@@ -637,6 +621,10 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
     @Override
     public void onSplashEvent() {
         runOnUiThread(()->{
+            mWebView.setTag(null);
+            mWebView.clearHistory();
+            mWebView.removeAllViews();
+            mWebView.destroy();
             mWebView = null;
 
             View overlay = findViewById(R.id.mainOverlayView);
@@ -651,6 +639,36 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
                     "document.getElementById('desc').textContent = 'Isso pode demorar alguns minutos';", null);
         });
     }
+
+    @SuppressLint("SetJavaScriptEnabled")
+    @Override
+    public void onGameLoadingClass(){
+        runOnUiThread(() -> {
+            if(LauncherPreferences.PREF_DISABLE_LOADING_SCREEN){
+                onSplashEvent();
+            } else {
+                mWebView = new WebView(this);
+                mWebView.setLayoutParams(new ConstraintLayout.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.MATCH_PARENT
+                ));
+                mWebView.setWebViewClient(new WebViewClient() {
+                    @Override
+                    public void onPageFinished(WebView view, String url) {
+                        setupText();
+                    }
+                });
+                mWebView.getSettings().setJavaScriptEnabled(true);
+                mWebView.clearCache(true);
+                mWebView.loadUrl("file:///android_asset/loading.html");
+                mWebView.getSettings().setUseWideViewPort(true);
+                mWebView.getSettings().setLoadWithOverviewMode(true);
+
+                ((ConstraintLayout) findViewById(R.id.mainOverlayView)).addView(mWebView);
+            }
+        });
+    }
+
     @Override
     public void onStarting() {
         runOnUiThread(()->{

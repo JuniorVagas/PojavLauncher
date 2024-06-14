@@ -25,6 +25,7 @@ static pthread_t logger;
 static jmethodID logger_onEventLogged;
 static jmethodID logger_onSplashEvent;
 
+static jmethodID logger_gameLoadingClass;
 static jmethodID logger_starting;
 static jmethodID logger_middle;
 static jmethodID logger_complete;
@@ -54,6 +55,7 @@ JNIEXPORT jint JNI_OnLoad(JavaVM* vm, __attribute((unused)) void* reserved) {
     jclass splashListenerClass = (*env)->FindClass(env, "net/kdt/pojavlaunch/Logger$splashListener");
     logger_onSplashEvent = (*env)->GetMethodID(env, splashListenerClass, "onSplashEvent", "()V");
 
+    logger_gameLoadingClass = (*env)->GetMethodID(env, splashListenerClass, "onGameLoadingClass", "()V");
     logger_starting = (*env)->GetMethodID(env, splashListenerClass, "onStarting", "()V");
     logger_middle = (*env)->GetMethodID(env, splashListenerClass, "onMiddle", "()V");
     logger_complete = (*env)->GetMethodID(env, splashListenerClass, "onComplete", "()V");
@@ -80,7 +82,9 @@ static void *logger_thread() {
             (*env)->DeleteLocalRef(env, writeString);
         }
         if(splashListener != NULL) {
-            if(strstr(buf, "Rk1MUHJlSW5pdGlhbGl6YXRpb25FdmVudA==")){ // 25%
+            if(strstr(buf, "Loading tweak class name net.minecraftforge.fml.common.launcher.FMLTweaker")) {
+                (*env)->CallVoidMethod(env, splashListener, logger_gameLoadingClass);
+            } else if(strstr(buf, "Rk1MUHJlSW5pdGlhbGl6YXRpb25FdmVudA==")){ // 25%
                 (*env)->CallVoidMethod(env, splashListener, logger_starting);
             } else if(strstr(buf, "Rk1MSW5pdGlhbGl6YXRpb25FdmVudA==")){ // 50%
                 (*env)->CallVoidMethod(env, splashListener, logger_middle);

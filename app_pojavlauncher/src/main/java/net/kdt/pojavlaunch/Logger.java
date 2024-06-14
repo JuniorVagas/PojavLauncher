@@ -19,6 +19,7 @@ public class Logger {
     }
 
     public interface splashListener {
+        void onGameLoadingClass();
         void onSplashEvent();
         void onStarting();
         void onMiddle();
