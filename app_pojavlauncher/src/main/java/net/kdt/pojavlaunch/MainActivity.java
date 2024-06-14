@@ -19,6 +19,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
+import android.content.res.AssetManager;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -716,5 +717,10 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
     @Override
     public void onServiceDisconnected(ComponentName name) {
 
+    }
+
+    @Override
+    public AssetManager getAssets() {
+        return getResources().getAssets();
     }
 }
