@@ -20,5 +20,5 @@
     android:paddingStart="?android:attr/listPreferredItemPaddingStart"
     android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
     
-    tools:text="PXBR Launcher version: 2.0.12"
+    tools:text="PXBR Launcher version: 2.1.0"
     />
