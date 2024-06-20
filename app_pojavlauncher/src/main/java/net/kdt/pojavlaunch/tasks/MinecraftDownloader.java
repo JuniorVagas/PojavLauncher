@@ -15,7 +15,7 @@ import net.kdt.pojavlaunch.AtomicMonitor;
 import net.kdt.pojavlaunch.JAssetInfo;
 import net.kdt.pojavlaunch.JAssets;
 import net.kdt.pojavlaunch.JMinecraftVersionList;
-import net.kdt.pojavlaunch.JRE17Util;
+import net.kdt.pojavlaunch.NewJREUtil;
 import net.kdt.pojavlaunch.Logger;
 import net.kdt.pojavlaunch.R;
 import net.kdt.pojavlaunch.ServerModpackConfig;
@@ -254,7 +254,7 @@ public class MinecraftDownloader {
 
         verInfo = Tools.getVersionInfo(versionName);
         final ServerModpackConfig config = ServerModpackConfig.load(versionName);
-        if(activity != null && !JRE17Util.installNewJreIfNeeded(activity, verInfo, config)){
+        if(activity != null && !NewJREUtil.installNewJreIfNeeded(activity, verInfo, config)){
             return false;
         }
 
