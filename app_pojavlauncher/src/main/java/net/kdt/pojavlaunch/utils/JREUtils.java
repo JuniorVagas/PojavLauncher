@@ -27,6 +27,8 @@ import net.kdt.pojavlaunch.*;
 import net.kdt.pojavlaunch.extra.ExtraConstants;
 import net.kdt.pojavlaunch.extra.ExtraCore;
 import net.kdt.pojavlaunch.lifecycle.LifecycleAwareAlertDialog;
+import net.kdt.pojavlaunch.memory.MemoryHoleFinder;
+import net.kdt.pojavlaunch.memory.SelfMapsParser;
 import net.kdt.pojavlaunch.multirt.MultiRTUtils;
 import net.kdt.pojavlaunch.multirt.Runtime;
 import net.kdt.pojavlaunch.plugins.FFmpegPlugin;
@@ -342,6 +344,11 @@ public class JREUtils {
     }
 
     private static int autoRam(int free, boolean is32bit){
+        if(is32bit){
+            int freeAddressable = getMaxContinuousAddressSpaceSize();
+            if(freeAddressable != -1) free = freeAddressable;
+        }
+
         int maxRAM = (int) Math.min(800, free * 0.9);
         if(!is32bit) maxRAM = (int) Math.min(1500, free * 0.8);
         if(!is32bit && free > 3000) maxRAM = (int) Math.min(2000, free * 0.8);
@@ -349,6 +356,23 @@ public class JREUtils {
 
         if(is32bit) maxRAM = (int) (Math.floor(maxRAM / 50.0) * 50);
         return maxRAM;
+    }
+
+    private static int internalGetMaxContinuousAddressSpaceSize() throws Exception{
+        MemoryHoleFinder memoryHoleFinder = new MemoryHoleFinder();
+        new SelfMapsParser(memoryHoleFinder).run();
+        long largestHole = memoryHoleFinder.getLargestHole();
+        if(largestHole == -1) return -1;
+        else return (int)(largestHole / 1048576L);
+    }
+
+    public static int getMaxContinuousAddressSpaceSize() {
+        try {
+            return internalGetMaxContinuousAddressSpaceSize();
+        }catch (Exception e){
+            Log.w("Tools", "Failed to find the largest uninterrupted address space");
+            return -1;
+        }
     }
 
     /**
