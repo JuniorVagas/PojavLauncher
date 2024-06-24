@@ -138,8 +138,8 @@ public class LauncherPreferences {
         if(DEFAULT_PREF.contains("defaultRuntime")) {
             PREF_DEFAULT_RUNTIME = DEFAULT_PREF.getString("defaultRuntime","");
         }else{
-            if(MultiRTUtils.getRuntimes().size() < 1) {
-                PREF_DEFAULT_RUNTIME = "";
+            if(MultiRTUtils.getRuntimes().isEmpty()) {
+                PREF_DEFAULT_RUNTIME = "Internal";
                 return;
             }
             PREF_DEFAULT_RUNTIME = MultiRTUtils.getRuntimes().get(0).name;

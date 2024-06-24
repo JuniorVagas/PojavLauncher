@@ -254,9 +254,6 @@ public class MinecraftDownloader {
 
         verInfo = Tools.getVersionInfo(versionName);
         final ServerModpackConfig config = ServerModpackConfig.load(versionName);
-        if(activity != null && !NewJREUtil.installNewJreIfNeeded(activity, verInfo, config)){
-            return false;
-        }
 
         try {
             Logger.appendToLog("MinecraftDownloader: baixando modpack");

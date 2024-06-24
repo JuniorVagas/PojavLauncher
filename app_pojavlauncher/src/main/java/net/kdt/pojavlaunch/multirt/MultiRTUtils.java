@@ -37,16 +37,15 @@ public class MultiRTUtils {
     private static final String OS_ARCH_STR = "OS_ARCH=\"";
 
     public static List<Runtime> getRuntimes() {
+        ArrayList<Runtime> runtimes = new ArrayList<>();
         if(!RUNTIME_FOLDER.exists() && !RUNTIME_FOLDER.mkdirs()) {
-            throw new RuntimeException("Failed to create runtime directory");
+            return runtimes;
         }
 
-        ArrayList<Runtime> runtimes = new ArrayList<>();
         File[] files = RUNTIME_FOLDER.listFiles();
         if(files != null) for(File f : files) {
             runtimes.add(read(f.getName()));
         }
-        else throw new RuntimeException("The runtime directory does not exist");
 
         return runtimes;
     }
