@@ -100,7 +100,6 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
     public AdapterView.OnItemClickListener ingameControlsEditorListener;
     private GameService.LocalBinder mServiceBinder;
 
-    private static String KEY_ELAPSED_TIME;
     private static boolean CONTINUE_ELAPSED_TIME = true;
     private static SharedPreferences elapsedTimeSaved;
 
@@ -120,7 +119,6 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
         ((NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE)).cancelAll();
 
         String version = getIntent().getStringExtra(INTENT_MINECRAFT_VERSION);
-        KEY_ELAPSED_TIME = version;
         minecraftProfile = ServerModpackConfig.load(version);
         MCOptionUtils.load(Tools.getGameDirPath(minecraftProfile));
 
@@ -708,7 +706,7 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
             while(CONTINUE_ELAPSED_TIME){
                 try {
                     Thread.sleep(1000);
-                    elapsedTimeSaved.edit().putInt(KEY_ELAPSED_TIME, elapsedTimeSaved.getInt(KEY_ELAPSED_TIME, 0) + 1).apply();
+                    elapsedTimeSaved.edit().putInt("playingtime", elapsedTimeSaved.getInt("playingtime", 0) + 1).apply();
                 } catch (InterruptedException ignore){
                 }
             }
