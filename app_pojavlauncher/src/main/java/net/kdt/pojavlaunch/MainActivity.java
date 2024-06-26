@@ -1,5 +1,6 @@
 package net.kdt.pojavlaunch;
 
+import static android.app.Application.getProcessName;
 import static net.kdt.pojavlaunch.Tools.currentDisplayMetrics;
 import static net.kdt.pojavlaunch.prefs.LauncherPreferences.PREF_SUSTAINED_PERFORMANCE;
 import static net.kdt.pojavlaunch.prefs.LauncherPreferences.PREF_USE_ALTERNATE_SURFACE;
@@ -106,6 +107,13 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            String process = getProcessName();
+            String packageName = getPackageName();
+            if (!packageName.equals(process)) WebView.setDataDirectorySuffix(process);
+        }
+
         elapsedTimeSaved = this.getSharedPreferences("pxbr_extract", MODE_PRIVATE);
         ((NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE)).cancelAll();
 
