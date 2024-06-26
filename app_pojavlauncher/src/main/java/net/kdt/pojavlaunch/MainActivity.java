@@ -109,9 +109,11 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
         super.onCreate(savedInstanceState);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            String process = getProcessName();
-            String packageName = getPackageName();
-            if (!packageName.equals(process)) WebView.setDataDirectorySuffix(process);
+            try {
+                String process = getProcessName();
+                String packageName = getPackageName();
+                if (!packageName.equals(process)) WebView.setDataDirectorySuffix(process);
+            } catch (IllegalStateException ignore){}
         }
 
         elapsedTimeSaved = this.getSharedPreferences("pxbr_extract", MODE_PRIVATE);
