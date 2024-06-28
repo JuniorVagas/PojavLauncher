@@ -52,4 +52,19 @@
         app:layout_constraintStart_toStartOf="@+id/login_menu"
         app:layout_constraintTop_toBottomOf="@+id/button_microsoft_authentication" />
 
+    <TextView
+        android:id="@+id/login_problem_textview"
+        android:layout_width="@dimen/_220sdp"
+        android:layout_height="wrap_content"
+
+        android:textColor="#fff"
+        android:textStyle="bold"
+        android:textSize="@dimen/_12ssp"
+        android:gravity="center"
+        android:fontFamily="@font/montserrat_bold"
+        android:text="@string/login_problem"
+
+        android:layout_marginTop="@dimen/_20sdp"
+        />
+
 </LinearLayout>

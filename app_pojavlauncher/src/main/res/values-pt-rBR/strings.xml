@@ -350,4 +350,9 @@
     <string name="exists_username">Nome de usuário já registrado</string>
     <string name="mcl_setting_renderer_vulkan_zink_standard">Zink Alternativo (Caso o outro não funcione)</string>
     <string name="microsoft_login_retry_later_2">Não foi possível autenticar, tente novamente mais tarde.</string>
+    <string name="login_problem"><u>Estou com problemas para me conectar</u></string>
+    <string name="discord_support_title">Suporte</string>
+    <string name="discord_support_message">Você sera redirecionado ao nosso Discord, onde possuímos nosso sistema de suporte.</string>
+    <string name="login_problem_title">Problema de login</string>
+    <string name="login_problem_message">O login por conta <b>Microsoft</b> apenas funciona se você possuir conta original do <b>Minecraft Java Edition</b>, disponível apenas para computadores.\n\nConta do Minecraft da Play Store <b>NÃO</b> funciona para esse tipo de login.\nNesse caso opte por usar o botão <b>Continuar sem Logar</b> e registrar algum nome de usuário de sua preferência.</string>
 </resources>

@@ -32,9 +32,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -65,7 +63,6 @@ import net.kdt.pojavlaunch.value.MinecraftAccount;
 import net.kdt.pojavlaunch.value.MinecraftLibraryArtifact;
 import net.kdt.pojavlaunch.value.OptionalModsSettings;
 import net.kdt.pojavlaunch.value.launcherprofiles.LauncherProfiles;
-import net.kdt.pojavlaunch.value.launcherprofiles.MinecraftProfile;
 
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.io.IOUtils;
@@ -1146,5 +1143,14 @@ public final class Tools {
     public static void releaseRenderersCache() {
         sCompatibleRenderers = null;
         System.gc();
+    }
+
+    public static void showDiscordSupport(Activity act){
+        AlertDialog.Builder discordSupport = new AlertDialog.Builder(act);
+        discordSupport.setTitle(R.string.discord_support_title);
+        discordSupport.setMessage(R.string.discord_support_message);
+        discordSupport.setPositiveButton(android.R.string.ok, (dialog, v) -> Tools.openURL(act, "https://discord.gg/pxbr"));
+        discordSupport.setOnCancelListener((dialog) -> Tools.openURL(act, "https://discord.gg/pxbr"));
+        discordSupport.create().show();
     }
 }

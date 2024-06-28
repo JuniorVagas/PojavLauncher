@@ -399,4 +399,9 @@
     <string name="preference_disable_loading_screen_desc">This disables the loading animation while the game starts</string>
     <string name="small_username">Username must be longer than 3 characters</string>
     <string name="exists_username">Username already registered</string>
+    <string name="login_problem"><u>I\'m having trouble logging in</u></string>
+    <string name="discord_support_title">Support</string>
+    <string name="discord_support_message">You will be redirected to our Discord, where we have our support system.</string>
+    <string name="login_problem_title">Login problem</string>
+    <string name="login_problem_message">Logging in with a <b>Microsoft</b> account only works if you have an original <b>Minecraft Java Edition account</b>, which is only available for computers.\n\nMinecraft account from the Play Store does <b>NOT</b> work for this type of login.\nIn this case, choose to use the <b>Local Account</b> button and register a username of your choice.</string>
 </resources>
