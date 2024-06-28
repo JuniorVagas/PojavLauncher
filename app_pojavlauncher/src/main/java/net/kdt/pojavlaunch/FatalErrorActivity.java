@@ -1,5 +1,6 @@
 package net.kdt.pojavlaunch;
 
+import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -28,27 +29,15 @@ public class FatalErrorActivity extends AppCompatActivity {
 			"Crash stack trace saved to " + strSavePath + "." :
 			"Storage permission is required to save crash stack trace!";
 
-		String bootstrapActivityClassName = getString(R.string.main_activity_class_name);
-		Class<?> activityClass = LauncherActivity.class;
-		try {
-			activityClass = Class.forName(bootstrapActivityClassName);
-		}catch (Throwable th) {
-			th.printStackTrace();
-		}
-		Class<?> finalActivityClass = activityClass;
-		new AlertDialog.Builder(this)
+		AlertDialog.Builder fatalDialog = new AlertDialog.Builder(this)
 			.setTitle(R.string.error_fatal)
-			.setMessage(errHeader + "\n\n" + stackTrace)
-			.setPositiveButton(android.R.string.ok, (p1, p2) -> finish())
-			.setNegativeButton(R.string.global_restart, (p1, p2) -> startActivity(new Intent(FatalErrorActivity.this, finalActivityClass)))
-			.setNeutralButton(android.R.string.copy, (p1, p2) -> {
-				ClipboardManager mgr = (ClipboardManager) FatalErrorActivity.this.getSystemService(CLIPBOARD_SERVICE);
-				mgr.setPrimaryClip(ClipData.newPlainText("error", stackTrace));
+			.setMessage(throwable != null ? throwable.getLocalizedMessage() : "")
+			.setNeutralButton(R.string.discord_support_title, (dialogInterface, i) -> Tools.showDiscordSupport(this))
+			.setCancelable(false);
 
-				finish();
-			})
-			.setCancelable(false)
-			.show();
+		if(storageAllow) fatalDialog.setPositiveButton(R.string.main_share_logs, (dialogInterface, which)-> Tools.shareCrashLog(this));
+
+		fatalDialog.create().show();
 	}
 
 	public static void showError(Context ctx, String savePath, boolean storageAllow, Throwable th) {

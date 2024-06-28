@@ -126,7 +126,7 @@
     <string name="customctrl_addsubbutton">Adicionar sub-botão</string>
     <string name="customctrl_selectdefault">Selecionar controle padrão</string>
     <string name="customctrl_export">Exportar controles</string>
-    <string name="main_share_logs">Compartilhar arquivo de registro</string>
+    <string name="main_share_logs">Compartilhar registro</string>
     <string name="main_install_jar_file">Executar um arquivo .jar</string>
     <string name="main_play">Jogar</string>
     <string name="autoram_info_msg">Memória definida para %d MB</string>

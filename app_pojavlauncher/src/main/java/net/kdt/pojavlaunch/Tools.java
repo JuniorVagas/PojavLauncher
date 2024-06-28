@@ -591,18 +591,8 @@ public final class Tools {
                             }
                         }
                     })
-                    .setNegativeButton(showMore ? R.string.error_show_less : R.string.error_show_more, (p1, p2) -> showError(ctx, titleId, rolledMessage, e, exitIfOk, !showMore))
-                    .setNeutralButton(android.R.string.copy, (p1, p2) -> {
-                        ClipboardManager mgr = (ClipboardManager) ctx.getSystemService(Context.CLIPBOARD_SERVICE);
-                        mgr.setPrimaryClip(ClipData.newPlainText("error", printToString(e)));
-                        if(exitIfOk) {
-                            if (ctx instanceof MainActivity) {
-                                MainActivity.fullyExit();
-                            } else {
-                                ((Activity) ctx).finish();
-                            }
-                        }
-                    })
+                    .setNegativeButton(R.string.main_share_logs, (dialogInterface, which)-> shareCrashLog(ctx))
+                    .setNeutralButton(R.string.discord_support_title, (dialogInterface, i) -> Tools.showDiscordSupport((Activity) ctx))
                     .setCancelable(!exitIfOk);
             try {
                 builder.show();
@@ -1049,7 +1039,15 @@ public final class Tools {
 
     /** Triggers the share intent chooser, with the latestlog file attached to it */
     public static void shareLog(Context context){
-        Uri contentUri = DocumentsContract.buildDocumentUri(context.getString(R.string.storageProviderAuthorities), Tools.DIR_GAME_HOME + "/latestlog.txt");
+        shareBothLogs(context, "latestlog.txt");
+    }
+
+    public static void shareCrashLog(Context context){
+        shareBothLogs(context, "latestcrash.txt");
+    }
+
+    private static void shareBothLogs(Context ctx, String log){
+        Uri contentUri = DocumentsContract.buildDocumentUri(ctx.getString(R.string.storageProviderAuthorities), Tools.DIR_GAME_HOME + "/" + log);
 
         Intent shareIntent = new Intent();
         shareIntent.setAction(Intent.ACTION_SEND);
@@ -1058,8 +1056,8 @@ public final class Tools {
         shareIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         shareIntent.setType("text/plain");
 
-        Intent sendIntent = Intent.createChooser(shareIntent, "latestlog.txt");
-        context.startActivity(sendIntent);
+        Intent sendIntent = Intent.createChooser(shareIntent, log);
+        ctx.startActivity(sendIntent);
     }
 
     /** Mesure the textview height, given its current parameters */

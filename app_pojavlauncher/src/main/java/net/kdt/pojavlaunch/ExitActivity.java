@@ -29,6 +29,7 @@ public class ExitActivity extends AppCompatActivity {
         new AlertDialog.Builder(this)
                 .setMessage(getString(R.string.mcn_exit_title,code))
                 .setPositiveButton(R.string.main_share_logs, (dialog, which) -> shareLog(this))
+                .setNeutralButton(R.string.discord_support_title, (dialogInterface, i) -> Tools.showDiscordSupport(this))
                 .setOnDismissListener(dialog -> ExitActivity.this.finish())
                 .show();
     }
