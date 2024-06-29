@@ -104,4 +104,8 @@ public class ProgressKeeper {
     public static boolean hasOngoingTasks() {
         return getTaskCount() > 0;
     }
+
+    public static synchronized boolean containsTask(String key){
+        return sProgressStates.containsKey(key);
+    }
 }
