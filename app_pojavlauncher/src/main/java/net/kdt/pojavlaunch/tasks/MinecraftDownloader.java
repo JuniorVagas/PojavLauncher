@@ -58,7 +58,7 @@ public class MinecraftDownloader {
 
     private static final ThreadLocal<byte[]> sThreadLocalDownloadBuffer = new ThreadLocal<>();
     private static Thread downloaderThread;
-    private static boolean mInterruptDownload = false;
+    private static boolean mInterruptDownload;
 
     /**
      * Start the game version download process on the global executor service.
@@ -71,6 +71,7 @@ public class MinecraftDownloader {
                       @NonNull String realVersion, // this was there for a reason
                       @NonNull AsyncMinecraftDownloader.DoneListener listener) {
         Logger.appendToLog("MinecraftDownloader: iniciando");
+        mInterruptDownload = false;
         downloaderThread = new Thread(() -> {
             try {
                 Logger.appendToLog("MinecraftDownloader: iniciando donwload");
@@ -85,7 +86,6 @@ public class MinecraftDownloader {
                 }
             } finally {
                 Logger.appendToLog("MinecraftDownloader: limpando progresso");
-                mInterruptDownload = false;
                 ProgressLayout.clearProgress(ProgressLayout.DOWNLOAD_MINECRAFT);
             }
         });
@@ -124,7 +124,7 @@ public class MinecraftDownloader {
         mDownloaderThreadException = new AtomicReference<>(null);
 
         if(!downloadAndProcessMetadata(activity, verInfo, versionName)) {
-            throw new RuntimeException(activity.getString(R.string.exception_failed_to_unpack_jre17));
+            throw new RuntimeException("Cant download/process Metadata");
         }
 
         ArrayBlockingQueue<Runnable> taskQueue =
@@ -149,11 +149,13 @@ public class MinecraftDownloader {
             }
             if(mInterruptDownload) {
                 Logger.appendToLog("MinecraftDownloader: download do jogo cancelado");
+                ProgressLayout.clearProgress(ProgressLayout.DOWNLOAD_MINECRAFT);
                 throw new InterruptedException("Download was cancelled.");
             }
             Exception thrownException = mDownloaderThreadException.get();
             if(thrownException != null) {
                 Logger.appendToLog("MinecraftDownloader: erro de download");
+                ProgressLayout.clearProgress(ProgressLayout.DOWNLOAD_MINECRAFT);
                 throw thrownException;
             } else {
                 ensureJarFileCopy();
@@ -261,12 +263,12 @@ public class MinecraftDownloader {
             downloadModpackFiles(verInfo, new File(config.getGameDirectory()));
         } catch (DownloaderException e) {
             Logger.appendToLog("MinecraftDownloader: erro ao baixar modpack");
-            ProgressKeeper.submitProgress(ProgressLayout.DOWNLOAD_MINECRAFT, -1, -1);
+            ProgressLayout.clearProgress(ProgressLayout.DOWNLOAD_MINECRAFT);
             throw e;
         } catch (Exception e) {
             Logger.appendToLog("MinecraftDownloader: erro ao baixar modpack");
             e.printStackTrace();
-            ProgressKeeper.submitProgress(ProgressLayout.DOWNLOAD_MINECRAFT, -1, -1);
+            ProgressLayout.clearProgress(ProgressLayout.DOWNLOAD_MINECRAFT);
             if(!Tools.DOWNLOADED.exists()) throw new DownloaderException(e);
         }
 
@@ -336,10 +338,14 @@ public class MinecraftDownloader {
                 long d = downloadProgress.get();
                 ProgressLayout.setProgress(ProgressLayout.DOWNLOAD_MINECRAFT, (int)(((double)d / downloadSize)*100), R.string.mcl_launch_downloading_progress, "mods", d/BYTE_TO_MB, downloadSize/BYTE_TO_MB);
             }
-            if(!interrupt.get()) throw new IOException("Failed to download a mod file");
+            if(!interrupt.get()) {
+                ProgressLayout.clearProgress(ProgressLayout.DOWNLOAD_MINECRAFT);
+                throw new IOException("Failed to download a mod file");
+            }
             executor.shutdownNow();
         }catch (InterruptedException ignored) {
             executor.shutdownNow();
+            ProgressLayout.clearProgress(ProgressLayout.DOWNLOAD_MINECRAFT);
             throw new DownloaderException();
         }
     }

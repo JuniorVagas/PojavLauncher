@@ -10,7 +10,7 @@ import java.lang.ref.WeakReference;
 public class ContextExecutor {
     private static WeakReference<Application> sApplication;
     private static WeakReference<Activity> sActivity;
-    private static boolean sUseActivity = true, sCancelInitialization = false;
+    private static boolean sUseActivity = true;
 
 
     /**
@@ -23,7 +23,6 @@ public class ContextExecutor {
     }
 
     private static void executeOnUiThread(ContextExecutorTask contextExecutorTask) {
-        if(sCancelInitialization) return;
         Activity activity = Tools.getWeakReference(sActivity);
         if(activity != null && sUseActivity) {
             contextExecutorTask.executeWithActivity(activity);
@@ -37,10 +36,6 @@ public class ContextExecutor {
         }else {
             throw new RuntimeException("ContextExecutor.execute() called before Application.onCreate!");
         }
-    }
-
-    public static void setCancelInitialization(Boolean cancel){
-        sCancelInitialization = cancel;
     }
 
     /**
