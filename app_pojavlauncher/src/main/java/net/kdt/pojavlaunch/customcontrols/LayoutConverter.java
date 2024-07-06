@@ -21,12 +21,15 @@ public class LayoutConverter {
         try {
             JSONObject layoutJobj = convertToJSONObject(jsonLayoutData);
             if(layoutJobj == null) {
+                CustomControls customControls;
                 try {
-                    CustomControls customControls = Tools.GLOBAL_GSON.fromJson(jsonLayoutData, CustomControls.class);
-                    if(customControls != null) return customControls;
+                    customControls = Tools.GLOBAL_GSON.fromJson(jsonLayoutData, CustomControls.class);
                 } catch (JsonSyntaxException e) {
-                    throw new JsonSyntaxException("Failed to load controls");
+                    throw new JsonSyntaxException("Failed to load controls", e);
                 }
+
+                if(customControls != null) return customControls;
+                else throw new JsonSyntaxException("Failed to load controls");
             }
 
             if(layoutJobj.has("isJoystickEnabled")){
