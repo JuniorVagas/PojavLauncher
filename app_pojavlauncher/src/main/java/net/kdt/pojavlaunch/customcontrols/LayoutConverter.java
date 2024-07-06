@@ -19,7 +19,15 @@ public class LayoutConverter {
 
         String jsonLayoutData = Tools.read(jsonPath);
         try {
-            JSONObject layoutJobj = new JSONObject(jsonLayoutData);
+            JSONObject layoutJobj = convertToJSONObject(jsonLayoutData);
+            if(layoutJobj == null) {
+                try {
+                    CustomControls customControls = Tools.GLOBAL_GSON.fromJson(jsonLayoutData, CustomControls.class);
+                    if(customControls != null) return customControls;
+                } catch (JsonSyntaxException e) {
+                    throw new JsonSyntaxException("Failed to load controls");
+                }
+            }
 
             if(layoutJobj.has("isJoystickEnabled")){
                 CustomControls layout = convertJoystickToggleable(layoutJobj);
@@ -44,6 +52,18 @@ public class LayoutConverter {
             }
         } catch (JSONException e) {
             throw new JsonSyntaxException("Failed to load", e);
+        }
+    }
+
+    public static JSONObject convertToJSONObject(String jsonLayoutData){
+        try {
+            return new JSONObject(jsonLayoutData);
+        } catch (JSONException e) {
+            try {
+                return new JSONObject(jsonLayoutData.substring(jsonLayoutData.indexOf("{"), jsonLayoutData.lastIndexOf("}") + 1));
+            } catch (JSONException ex) {
+                return null;
+            }
         }
     }
 
