@@ -355,4 +355,5 @@
     <string name="discord_support_message">Você sera redirecionado ao nosso Discord, onde possuímos nosso sistema de suporte.</string>
     <string name="login_problem_title">Problema de login</string>
     <string name="login_problem_message">O login por conta <b>Microsoft</b> apenas funciona se você possuir conta original do <b>Minecraft Java Edition</b>, disponível apenas para computadores.\n\nConta do Minecraft da Play Store <b>NÃO</b> funciona para esse tipo de login.\nNesse caso opte por usar o botão <b>Continuar sem Logar</b> e registrar algum nome de usuário de sua preferência.</string>
+    <string name="login_local_warn">Ao jogar em nosso servidor, os dados dos jogadores são salvos de acordo com o Nick escolhido pelo jogador, portanto pode ocorrer de você entrar no jogo, sem <b>nunca</b> ter jogado antes, e estar pedindo para logar utilizando uma senha.\n\nIsso ocorre quando você escolhe um Nick <b>já registrado</b> por <b>outro jogador</b>.\n\nPara corrigir, basta alterar o Nick que está tentando utilizar e tentar entrar novamente, até que peça para registrar.</string>
 </resources>

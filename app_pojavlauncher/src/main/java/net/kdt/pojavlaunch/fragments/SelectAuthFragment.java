@@ -27,7 +27,14 @@ public class SelectAuthFragment extends Fragment {
         TextView loginProblem = view.findViewById(R.id.login_problem_textview);
 
         mMicrosoftButton.setOnClickListener(v -> Tools.swapFragment(requireActivity(), MicrosoftLoginFragment.class, MicrosoftLoginFragment.TAG, null));
-        mLocalButton.setOnClickListener(v -> Tools.swapFragment(requireActivity(), LocalLoginFragment.class, LocalLoginFragment.TAG, null));
+        mLocalButton.setOnClickListener(v -> {
+            AlertDialog.Builder loginSolve = new AlertDialog.Builder(requireActivity());
+            loginSolve.setTitle(R.string.universal_warn);
+            loginSolve.setMessage(R.string.login_local_warn);
+            loginSolve.setPositiveButton(android.R.string.ok, (dialogInterface, i) -> Tools.swapFragment(requireActivity(), LocalLoginFragment.class, LocalLoginFragment.TAG, null));
+            loginSolve.setNeutralButton(R.string.discord_support_title, (dialogInterface, i) -> Tools.showDiscordSupport(requireActivity()));
+            loginSolve.create().show();
+        });
         loginProblem.setOnClickListener(v -> {
             AlertDialog.Builder loginSolve = new AlertDialog.Builder(requireActivity());
             loginSolve.setTitle(R.string.login_problem_title);
