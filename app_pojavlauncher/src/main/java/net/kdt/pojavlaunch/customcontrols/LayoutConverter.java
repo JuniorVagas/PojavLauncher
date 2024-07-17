@@ -23,7 +23,7 @@ public class LayoutConverter {
             if(layoutJobj == null) {
                 CustomControls customControls;
                 try {
-                    customControls = Tools.GLOBAL_GSON.fromJson(jsonLayoutData, CustomControls.class);
+                    customControls = Tools.GLOBAL_GSON.fromJson(jsonFixer(jsonLayoutData), CustomControls.class);
                 } catch (JsonSyntaxException e) {
                     throw new JsonSyntaxException("Failed to load controls", e);
                 }
@@ -58,15 +58,15 @@ public class LayoutConverter {
         }
     }
 
-    public static JSONObject convertToJSONObject(String jsonLayoutData){
+    private static String jsonFixer(String jsonString){
+        return jsonString.substring(jsonString.indexOf("{"), jsonString.lastIndexOf("}") + 1);
+    }
+
+    private static JSONObject convertToJSONObject(String jsonLayoutData){
         try {
-            return new JSONObject(jsonLayoutData);
+            return new JSONObject(jsonFixer(jsonLayoutData));
         } catch (JSONException e) {
-            try {
-                return new JSONObject(jsonLayoutData.substring(jsonLayoutData.indexOf("{"), jsonLayoutData.lastIndexOf("}") + 1));
-            } catch (JSONException ex) {
-                return null;
-            }
+            return null;
         }
     }
 
