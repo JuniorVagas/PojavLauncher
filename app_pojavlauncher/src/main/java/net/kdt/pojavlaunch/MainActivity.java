@@ -37,6 +37,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.AdapterView;
@@ -671,10 +672,10 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
                     }
                 });
                 mWebView.getSettings().setJavaScriptEnabled(true);
-                mWebView.clearCache(true);
                 mWebView.loadUrl("file:///android_asset/loading.html");
                 mWebView.getSettings().setUseWideViewPort(true);
                 mWebView.getSettings().setLoadWithOverviewMode(true);
+                mWebView.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
 
                 ((ConstraintLayout) findViewById(R.id.mainOverlayView)).addView(mWebView);
             }
