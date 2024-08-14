@@ -228,11 +228,6 @@ public class LauncherActivity extends BaseActivity {
     }
 
     @Override
-    public boolean setFullscreen() {
-        return false;
-    }
-
-    @Override
     protected void onStart() {
         super.onStart();
         getSupportFragmentManager().registerFragmentLifecycleCallbacks(mFragmentCallbackListener, true);
