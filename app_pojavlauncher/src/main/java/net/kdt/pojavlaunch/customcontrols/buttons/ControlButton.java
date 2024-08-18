@@ -5,6 +5,7 @@ import static org.lwjgl.glfw.CallbackBridge.sendKeyPress;
 import static org.lwjgl.glfw.CallbackBridge.sendMouseButton;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -24,6 +25,8 @@ import net.kdt.pojavlaunch.customcontrols.handleview.EditControlPopup;
 import net.kdt.pojavlaunch.prefs.LauncherPreferences;
 
 import org.lwjgl.glfw.CallbackBridge;
+
+import br.com.pixelmonbrasil.store.StoreActivity;
 
 @SuppressLint({"ViewConstructor", "AppCompatCustomView"})
 public class ControlButton extends TextView implements ControlInterface {
@@ -235,6 +238,13 @@ public class ControlButton extends TextView implements ControlInterface {
                 break;
             case ControlData.SPECIALBTN_MENU:
                 mControlLayout.notifyAppMenu();
+                break;
+            case ControlData.SPECIALBTN_STORE:
+                if(isDown) {
+                    Intent intent = new Intent(getContext(), StoreActivity.class);
+                    intent.putExtra("openInLandscape", true);
+                    getContext().startActivity(intent);
+                }
                 break;
         }
     }

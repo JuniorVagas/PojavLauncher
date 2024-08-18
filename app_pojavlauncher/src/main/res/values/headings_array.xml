@@ -28,6 +28,7 @@
     </string-array>
 
     <string-array name="menu_ingame">
+        <item>@string/store</item>
         <item>@string/control_forceclose</item>
         <item>@string/control_viewout</item>
         <item>@string/control_customkey</item>
@@ -50,5 +51,4 @@
         <item>default</item>
         <item>bmclapi</item>
     </string-array>
-
 </resources>

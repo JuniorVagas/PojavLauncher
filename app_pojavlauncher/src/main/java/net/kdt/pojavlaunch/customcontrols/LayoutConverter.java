@@ -1,5 +1,7 @@
 package net.kdt.pojavlaunch.customcontrols;
 
+import android.content.Context;
+
 import com.google.gson.JsonSyntaxException;
 
 import net.kdt.pojavlaunch.LwjglGlfwKeycode;
@@ -15,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LayoutConverter {
-    public static CustomControls loadAndConvertIfNecessary(String jsonPath) throws IOException, JsonSyntaxException {
+    public static CustomControls loadAndConvertIfNecessary(String jsonPath, Context ctx) throws IOException, JsonSyntaxException {
 
         String jsonLayoutData = Tools.read(jsonPath);
         try {
@@ -47,8 +49,10 @@ public class LayoutConverter {
                 layout.save(jsonPath);
                 return layout;
             }else if (layoutJobj.getInt("version") >= 3 && layoutJobj.getInt("version") <= 5) {
-                return LayoutConverter.convertV3_4Layout(layoutJobj);
+                return LayoutConverter.convertV3_4Layout(layoutJobj, ctx);
             } else if (layoutJobj.getInt("version") == 6 || layoutJobj.getInt("version") == 7) {
+                return convertToV8(layoutJobj, ctx);
+            } else if (layoutJobj.getInt("version") == 8) {
                 return Tools.GLOBAL_GSON.fromJson(jsonLayoutData, CustomControls.class);
             } else {
                 return null;
@@ -56,6 +60,13 @@ public class LayoutConverter {
         } catch (JSONException e) {
             throw new JsonSyntaxException("Failed to load", e);
         }
+    }
+
+    public static CustomControls convertToV8(JSONObject oldLayoutJson, Context ctx) {
+        CustomControls layout = Tools.GLOBAL_GSON.fromJson(oldLayoutJson.toString(), CustomControls.class);
+        layout.mControlDataList.add(ControlData.getStoreSpecialButton(ctx));
+        layout.version = 8;
+        return layout;
     }
 
     private static String jsonFixer(String jsonString){
@@ -97,10 +108,11 @@ public class LayoutConverter {
     /**
      * Normalize the layout to v6 from v3/4: The stroke width is no longer dependant on the button size
      */
-    public static CustomControls convertV3_4Layout(JSONObject oldLayoutJson) {
+    public static CustomControls convertV3_4Layout(JSONObject oldLayoutJson, Context ctx) {
         CustomControls layout = Tools.GLOBAL_GSON.fromJson(oldLayoutJson.toString(), CustomControls.class);
         convertStrokeWidth(layout);
-        layout.version = 6;
+        layout.mControlDataList.add(ControlData.getStoreSpecialButton(ctx));
+        layout.version = 8;
         return layout;
     }
 

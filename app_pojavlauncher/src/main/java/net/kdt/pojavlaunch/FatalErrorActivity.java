@@ -33,7 +33,7 @@ public class FatalErrorActivity extends AppCompatActivity {
 			.setTitle(R.string.error_fatal)
 			.setMessage(throwable != null ? throwable.getLocalizedMessage() : "")
 			.setNeutralButton(R.string.discord_support_title, (dialogInterface, i) -> Tools.showDiscordSupport(this))
-			.setCancelable(false);
+			.setCancelable(true);
 
 		if(storageAllow) fatalDialog.setPositiveButton(R.string.main_share_logs, (dialogInterface, which)-> Tools.shareCrashLog(this));
 

@@ -2,10 +2,12 @@ package net.kdt.pojavlaunch.customcontrols;
 
 import static net.kdt.pojavlaunch.LwjglGlfwKeycode.GLFW_KEY_UNKNOWN;
 
+import android.content.Context;
 import android.util.ArrayMap;
 
 import androidx.annotation.Keep;
 
+import net.kdt.pojavlaunch.R;
 import net.kdt.pojavlaunch.Tools;
 import net.kdt.pojavlaunch.prefs.LauncherPreferences;
 import net.kdt.pojavlaunch.utils.JSONUtils;
@@ -32,6 +34,7 @@ public class ControlData {
     public static final int SPECIALBTN_SCROLLUP = -7;
     public static final int SPECIALBTN_SCROLLDOWN = -8;
     public static final int SPECIALBTN_MENU = -9;
+    public static final int SPECIALBTN_STORE = -10;
 
     private static ControlData[] SPECIAL_BUTTONS;
     private static List<String> SPECIAL_BUTTON_NAME_ARRAY;
@@ -165,11 +168,16 @@ public class ControlData {
                     new ControlData("MID", new int[]{SPECIALBTN_MOUSEMID}, "${margin}", "${margin}"),
                     new ControlData("SCROLLUP", new int[]{SPECIALBTN_SCROLLUP}, "${margin}", "${margin}"),
                     new ControlData("SCROLLDOWN", new int[]{SPECIALBTN_SCROLLDOWN}, "${margin}", "${margin}"),
-                    new ControlData("MENU", new int[]{SPECIALBTN_MENU}, "${margin}", "${margin}")
+                    new ControlData("MENU", new int[]{SPECIALBTN_MENU}, "${margin}", "${margin}"),
+                    new ControlData("STORE", new int[]{SPECIALBTN_STORE}, "${screen_width} - ${width}", "0.001853565 * ${screen_height} + ${margin}", false)
             };
         }
 
         return SPECIAL_BUTTONS;
+    }
+
+    public static ControlData getStoreSpecialButton(Context ctx) {
+        return new ControlData(ctx.getString(R.string.store), new int[]{SPECIALBTN_STORE}, "${screen_width} - ${width}", "(${height} * 2) + ${margin}", false);
     }
 
     public static List<String> buildSpecialButtonArray() {

@@ -79,6 +79,8 @@ import org.lwjgl.glfw.CallbackBridge;
 import java.io.File;
 import java.io.IOException;
 
+import br.com.pixelmonbrasil.store.StoreActivity;
+
 public class MainActivity extends BaseActivity implements ControlButtonMenuListener, EditorExitable, ServiceConnection, Logger.splashListener {
     public static volatile ClipboardManager GLOBAL_CLIPBOARD;
     public static final String INTENT_MINECRAFT_VERSION = "intent_version";
@@ -214,12 +216,17 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
                     android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.menu_ingame));
             gameActionClickListener = (parent, view, position, id) -> {
                 switch(position) {
-                    case 0: dialogForceClose(MainActivity.this); break;
-                    case 1: openLogOutput(); break;
-                    case 2: dialogSendCustomKey(); break;
-                    case 3: adjustMouseSpeedLive(); break;
-                    case 4: adjustGyroSensitivityLive(); break;
-                    case 5: openCustomControls(); break;
+                    case 0:
+                        Intent intent = new Intent(this, StoreActivity.class);
+                        intent.putExtra("openInLandscape", true);
+                        startActivity(intent);
+                        break;
+                    case 1: dialogForceClose(MainActivity.this); break;
+                    case 2: openLogOutput(); break;
+                    case 3: dialogSendCustomKey(); break;
+                    case 4: adjustMouseSpeedLive(); break;
+                    case 5: adjustGyroSensitivityLive(); break;
+                    case 6: openCustomControls(); break;
                 }
                 drawerLayout.closeDrawers();
             };
