@@ -217,9 +217,12 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
             gameActionClickListener = (parent, view, position, id) -> {
                 switch(position) {
                     case 0:
-                        Intent intent = new Intent(this, StoreActivity.class);
-                        intent.putExtra("openInLandscape", true);
-                        startActivity(intent);
+                        if(PojavProfile.getCurrentProfileContent(this, null) != null) {
+                            Intent intent = new Intent(this, StoreActivity.class);
+                            intent.putExtra("openInLandscape", true);
+                            intent.putExtra("playerName", PojavProfile.getCurrentProfileContent(this, null).username);
+                            startActivity(intent);
+                        }
                         break;
                     case 1: dialogForceClose(MainActivity.this); break;
                     case 2: openLogOutput(); break;

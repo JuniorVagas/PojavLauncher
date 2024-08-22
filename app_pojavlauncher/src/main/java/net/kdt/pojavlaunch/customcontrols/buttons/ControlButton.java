@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import net.kdt.pojavlaunch.LwjglGlfwKeycode;
 import net.kdt.pojavlaunch.MainActivity;
+import net.kdt.pojavlaunch.PojavProfile;
 import net.kdt.pojavlaunch.R;
 import net.kdt.pojavlaunch.customcontrols.ControlData;
 import net.kdt.pojavlaunch.customcontrols.ControlLayout;
@@ -241,9 +242,12 @@ public class ControlButton extends TextView implements ControlInterface {
                 break;
             case ControlData.SPECIALBTN_STORE:
                 if(isDown) {
-                    Intent intent = new Intent(getContext(), StoreActivity.class);
-                    intent.putExtra("openInLandscape", true);
-                    getContext().startActivity(intent);
+                    if(PojavProfile.getCurrentProfileContent(getContext(), null) != null) {
+                        Intent intent = new Intent(getContext(), StoreActivity.class);
+                        intent.putExtra("openInLandscape", true);
+                        intent.putExtra("playerName", PojavProfile.getCurrentProfileContent(getContext(), null).username);
+                        getContext().startActivity(intent);
+                    }
                 }
                 break;
         }
