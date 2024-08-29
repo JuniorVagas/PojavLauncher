@@ -26,10 +26,12 @@ import net.kdt.pojavlaunch.utils.FileUtils;
 public class PojavApplication extends Application {
 	public static final String CRASH_REPORT_TAG = "PojavCrashReport";
 	public static final ExecutorService sExecutorService = new ThreadPoolExecutor(4, 4, 500, TimeUnit.MILLISECONDS,  new LinkedBlockingQueue<>());
+	private static Context mContext;
 	
 	@Override
 	public void onCreate() {
 		ContextExecutor.setApplication(this);
+		mContext = this;
 		Thread.setDefaultUncaughtExceptionHandler((thread, th) -> {
 			boolean storagePermAllowed = (Build.VERSION.SDK_INT < 23 || Build.VERSION.SDK_INT >= 29 ||
 					ActivityCompat.checkSelfPermission(PojavApplication.this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) && Tools.checkStorageRoot(PojavApplication.this);
@@ -94,4 +96,8 @@ public class PojavApplication extends Application {
         super.onConfigurationChanged(newConfig);
         LocaleUtils.setLocale(this);
     }
+
+	public static Context getContext(){
+		return mContext;
+	}
 }

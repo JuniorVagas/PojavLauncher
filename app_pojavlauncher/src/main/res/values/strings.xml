@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <!-- App name part -->
     <string name="app_short_name">Pixelmon Brasil</string>
 
@@ -184,7 +184,7 @@
     <string name="multirt_config_setdefault">Set default</string>
     <string name="multirt_config_setdefault_already">Default</string>
     <string name="multirt_config_removeerror_last">You must have at least one Java Runtime installed.</string>
-    <string name="multirt_nocompatiblert">Can\'t find any compartible Java Runtime. This version requires Java %d or newer.</string>
+    <string name="multirt_nocompatiblert">Can\'t find any compatible Java Runtime. This version requires Java %d or newer.</string>
     <string name="multirt_nojava8rt">Can\'t find Java 8. In order to use this option, you need to install Java 8.</string>
     <string name="multirt_delete_runtime">Delete runtime</string>
     <string name="pvc_gameDirectory">Game directory</string>
@@ -407,4 +407,98 @@
     <string name="universal_warn">Warn</string>
     <string name="login_local_warn">When playing on our server, player data is saved according to the Nick chosen by the player. Therefore, it may happen that you enter the game without <b>ever</b> having played before, and it asks you to log in using a password.\n\nThis happens when you choose a Nick that is <b>already registered</b> by <b>another player</b>.\n\nTo fix this, simply change the Nick you are trying to use and try to enter again until it asks you to register.</string>
     <string name="store">Store</string>
+    <string name="execute_jar_failed_to_read_file">Failed to read the .jar file</string>
+    <string name="execute_jar_incompatible_runtime">Execute .jar feature is not compatible with Java %d</string>
+    <string name="controller_button_a">A</string>
+    <string name="controller_button_b">B</string>
+    <string name="controller_button_x">X</string>
+    <string name="controller_button_y">Y</string>
+    <string name="controller_button_start">Start</string>
+    <string name="controller_button_select">Select</string>
+    <string name="controller_button_trigger_left">Left Trigger</string>
+    <string name="controller_button_trigger_right">Right Trigger</string>
+    <string name="controller_button_shoulder_left">Left Shoulder</string>
+    <string name="controller_button_shoulder_right">Right Shoulder</string>
+    <string name="controller_direction_forward">Stick Up</string>
+    <string name="controller_direction_backward">Stick Down</string>
+    <string name="controller_direction_left">Stick Left</string>
+    <string name="controller_direction_right">Stick Right</string>
+    <string name="controller_stick_press_l">Left Thumbstick (click)</string>
+    <string name="controller_stick_press_r">Right Thumbstick (click)</string>
+    <string name="controller_dpad_up">D-Pad Up</string>
+    <string name="controller_dpad_down">D-Pad Down</string>
+    <string name="controller_dpad_left">D-Pad Left</string>
+    <string name="controller_dpad_right">D-Pad Right</string>
+    <string name="controller_remapper_exit_part1">Hold</string>
+    <string name="controller_remapper_exit_part2">to exit</string>
+    <string name="controller_remapper_operating_mode">Current mode</string>
+    <string name="customctrl_visibility_title">Visibility</string>
+    <string name="customctrl_visibility_ingame">In-game</string>
+    <string name="customctrl_visibility_in_menus">In menus</string>
+    <string name="controller_remapper_expand_entry">Expand to change keycodes</string>
+    <string name="preference_remap_controller_title">Change controller key bindings</string>
+    <string name="preference_remap_controller_description">Allows you to modify the keyboard keys bound to each controller button</string>
+    <string name="keycode_string_unspecified">Unspecified</string>
+    <string name="keycode_string_mouse_right">Mouse Right</string>
+    <string name="keycode_string_mouse_middle">Mouse Middle</string>
+    <string name="keycode_string_mouse_left">Mouse Left</string>
+    <string name="keycode_string_scroll_up">Scroll Up</string>
+    <string name="keycode_string_scroll_down">Scroll Down</string>
+    <string name="keycode_string_unknown">Unknown</string>
+    <string name="keycode_string_home">Home</string>
+    <string name="keycode_string_back">Back</string>
+    <string name="keycode_string_pound">£</string>
+    <string name="keycode_string_dpad_up">↑</string>
+    <string name="keycode_string_dpad_down">↓</string>
+    <string name="keycode_string_dpad_left">←</string>
+    <string name="keycode_string_dpad_right">→</string>
+    <string name="keycode_string_comma">,</string>
+    <string name="keycode_string_period">.</string>
+    <string name="keycode_string_alt_left">Alt Left</string>
+    <string name="keycode_string_alt_right">Alt Right</string>
+    <string name="keycode_string_shift_left">Shift Left</string>
+    <string name="keycode_string_shift_right">Shift Right</string>
+    <string name="keycode_string_plus">+</string>
+    <string name="keycode_string_at">2</string>
+    <string name="keycode_string_page_up">Page Up</string>
+    <string name="keycode_string_page_down">Page Down</string>
+    <string name="keycode_string_escape">Esc</string>
+    <string name="keycode_string_ctrl_left">Ctrl Left</string>
+    <string name="keycode_string_ctrl_right">Ctrl Right</string>
+    <string name="keycode_string_tab">Tab ⇆</string>
+    <string name="keycode_string_space">Space</string>
+    <string name="keycode_string_enter">Enter</string>
+    <string name="keycode_string_del">Delete</string>
+    <string name="keycode_string_grave">ˋ</string>
+    <string name="keycode_string_minus">-</string>
+    <string name="keycode_string_equals">=</string>
+    <string name="keycode_string_bracket_left">[</string>
+    <string name="keycode_string_bracket_right">]</string>
+    <string name="keycode_string_backslash">\\</string>
+    <string name="keycode_string_semicolon">;</string>
+    <string name="keycode_string_apostrophe">\'</string>
+    <string name="keycode_string_slash">/</string>
+    <string name="keycode_string_caps_lock">Capslock</string>
+    <string name="keycode_string_break">Break</string>
+    <string name="keycode_string_end">End</string>
+    <string name="keycode_string_insert">Insert</string>
+    <string name="keycode_string_num_lock">Num-Lock</string>
+    <string name="keycode_string_num_0">Num 0</string>
+    <string name="keycode_string_num_1">Num 1</string>
+    <string name="keycode_string_num_2">Num 2</string>
+    <string name="keycode_string_num_3">Num 3</string>
+    <string name="keycode_string_num_4">Num 4</string>
+    <string name="keycode_string_num_5">Num 5</string>
+    <string name="keycode_string_num_6">Num 6</string>
+    <string name="keycode_string_num_7">Num 7</string>
+    <string name="keycode_string_num_8">Num 8</string>
+    <string name="keycode_string_num_9">Num 9</string>
+    <string name="keycode_string_num_divide">Num /</string>
+    <string name="keycode_string_num_multiply">Num *</string>
+    <string name="keycode_string_num_subtract">Num -</string>
+    <string name="keycode_string_num_add">Num +</string>
+    <string name="keycode_string_num_dot">Num .</string>
+    <string name="keycode_string_num_comma">Num ,</string>
+    <string name="keycode_string_num_enter">Num Enter</string>
+    <string name="keycode_string_num_equals">Num =</string>
 </resources>

@@ -587,7 +587,7 @@ public final class Tools {
             // Write to file, since some devices may not able to show error
             FileUtils.ensureParentDirectory(crashFile);
             PrintStream crashStream = new PrintStream(crashFile);
-            crashStream.append("PojavLauncher crash report\n");
+            crashStream.append("Pixelmon Brasil crash report\n");
             crashStream.append(" - Time: ").append(DateFormat.getDateTimeInstance().format(new Date())).append("\n");
             crashStream.append(" - Device: ").append(Build.PRODUCT).append(" ").append(Build.MODEL).append("\n");
             crashStream.append(" - Android version: ").append(Build.VERSION.RELEASE).append("\n");

@@ -170,6 +170,182 @@ public class EfficientAndroidLWJGLKeycode {
             androidKeyNameArray = new String[sAndroidKeycodes.length];
             for(int i=0; i < androidKeyNameArray.length; ++i){
                 androidKeyNameArray[i] = KeyEvent.keyCodeToString(sAndroidKeycodes[i]).replace("KEYCODE_", "");
+
+                switch (androidKeyNameArray[i]) {
+                    case "UNKNOWN":
+                        androidKeyNameArray[i] = PojavApplication.getContext().getString(R.string.keycode_string_unknown);
+                        break;
+                    case "HOME":
+                    case "MOVE_HOME":
+                        androidKeyNameArray[i] = PojavApplication.getContext().getString(R.string.keycode_string_home);
+                        break;
+                    case "BACK":
+                        androidKeyNameArray[i] = PojavApplication.getContext().getString(R.string.keycode_string_back);
+                        break;
+                    case "POUND":
+                        androidKeyNameArray[i] = PojavApplication.getContext().getString(R.string.keycode_string_pound);
+                        break;
+                    case "DPAD_UP":
+                        androidKeyNameArray[i] = PojavApplication.getContext().getString(R.string.keycode_string_dpad_up);
+                        break;
+                    case "DPAD_DOWN":
+                        androidKeyNameArray[i] = PojavApplication.getContext().getString(R.string.keycode_string_dpad_down);
+                        break;
+                    case "DPAD_LEFT":
+                        androidKeyNameArray[i] = PojavApplication.getContext().getString(R.string.keycode_string_dpad_left);
+                        break;
+                    case "DPAD_RIGHT":
+                        androidKeyNameArray[i] = PojavApplication.getContext().getString(R.string.keycode_string_dpad_right);
+                        break;
+                    case "COMMA":
+                        androidKeyNameArray[i] = PojavApplication.getContext().getString(R.string.keycode_string_comma);
+                        break;
+                    case "PERIOD":
+                        androidKeyNameArray[i] = PojavApplication.getContext().getString(R.string.keycode_string_period);
+                        break;
+                    case "ALT_LEFT":
+                        androidKeyNameArray[i] = PojavApplication.getContext().getString(R.string.keycode_string_alt_left);
+                        break;
+                    case "ALT_RIGHT":
+                        androidKeyNameArray[i] = PojavApplication.getContext().getString(R.string.keycode_string_alt_right);
+                        break;
+                    case "SHIFT_LEFT":
+                        androidKeyNameArray[i] = PojavApplication.getContext().getString(R.string.keycode_string_shift_left);
+                        break;
+                    case "SHIFT_RIGHT":
+                        androidKeyNameArray[i] = PojavApplication.getContext().getString(R.string.keycode_string_shift_right);
+                        break;
+                    case "TAB":
+                        androidKeyNameArray[i] = PojavApplication.getContext().getString(R.string.keycode_string_tab);
+                        break;
+                    case "SPACE":
+                        androidKeyNameArray[i] = PojavApplication.getContext().getString(R.string.keycode_string_space);
+                        break;
+                    case "ENTER":
+                        androidKeyNameArray[i] = PojavApplication.getContext().getString(R.string.keycode_string_enter);
+                        break;
+                    case "DEL":
+                        androidKeyNameArray[i] = PojavApplication.getContext().getString(R.string.keycode_string_del);
+                        break;
+                    case "GRAVE":
+                        androidKeyNameArray[i] = PojavApplication.getContext().getString(R.string.keycode_string_grave);
+                        break;
+                    case "MINUS":
+                        androidKeyNameArray[i] = PojavApplication.getContext().getString(R.string.keycode_string_minus);
+                        break;
+                    case "EQUALS":
+                        androidKeyNameArray[i] = PojavApplication.getContext().getString(R.string.keycode_string_equals);
+                        break;
+                    case "LEFT_BRACKET":
+                        androidKeyNameArray[i] = PojavApplication.getContext().getString(R.string.keycode_string_bracket_left);
+                        break;
+                    case "RIGHT_BRACKET":
+                        androidKeyNameArray[i] = PojavApplication.getContext().getString(R.string.keycode_string_bracket_right);
+                        break;
+                    case "BACKSLASH":
+                        androidKeyNameArray[i] = PojavApplication.getContext().getString(R.string.keycode_string_backslash);
+                        break;
+                    case "SEMICOLON":
+                        androidKeyNameArray[i] = PojavApplication.getContext().getString(R.string.keycode_string_semicolon);
+                        break;
+                    case "APOSTROPHE":
+                        androidKeyNameArray[i] = PojavApplication.getContext().getString(R.string.keycode_string_apostrophe);
+                        break;
+                    case "SLASH":
+                        androidKeyNameArray[i] = PojavApplication.getContext().getString(R.string.keycode_string_slash);
+                        break;
+                    case "AT":
+                        androidKeyNameArray[i] = PojavApplication.getContext().getString(R.string.keycode_string_at);
+                        break;
+                    case "PLUS":
+                        androidKeyNameArray[i] = PojavApplication.getContext().getString(R.string.keycode_string_plus);
+                        break;
+                    case "PAGE_UP":
+                        androidKeyNameArray[i] = PojavApplication.getContext().getString(R.string.keycode_string_page_up);
+                        break;
+                    case "PAGE_DOWN":
+                        androidKeyNameArray[i] = PojavApplication.getContext().getString(R.string.keycode_string_page_down);
+                        break;
+                    case "ESCAPE":
+                        androidKeyNameArray[i] = PojavApplication.getContext().getString(R.string.keycode_string_escape);
+                        break;
+                    case "CTRL_LEFT":
+                        androidKeyNameArray[i] = PojavApplication.getContext().getString(R.string.keycode_string_ctrl_left);
+                        break;
+                    case "CTRL_RIGHT":
+                        androidKeyNameArray[i] = PojavApplication.getContext().getString(R.string.keycode_string_ctrl_right);
+                        break;
+                    case "CAPS_LOCK":
+                        androidKeyNameArray[i] = PojavApplication.getContext().getString(R.string.keycode_string_caps_lock);
+                        break;
+                    case "BREAK":
+                        androidKeyNameArray[i] = PojavApplication.getContext().getString(R.string.keycode_string_break);
+                        break;
+                    case "MOVE_END":
+                        androidKeyNameArray[i] = PojavApplication.getContext().getString(R.string.keycode_string_end);
+                        break;
+                    case "INSERT":
+                        androidKeyNameArray[i] = PojavApplication.getContext().getString(R.string.keycode_string_insert);
+                        break;
+                    case "NUM_LOCK":
+                        androidKeyNameArray[i] = PojavApplication.getContext().getString(R.string.keycode_string_num_lock);
+                        break;
+                    case "NUMPAD_0":
+                        androidKeyNameArray[i] = PojavApplication.getContext().getString(R.string.keycode_string_num_0);
+                        break;
+                    case "NUMPAD_1":
+                        androidKeyNameArray[i] = PojavApplication.getContext().getString(R.string.keycode_string_num_1);
+                        break;
+                    case "NUMPAD_2":
+                        androidKeyNameArray[i] = PojavApplication.getContext().getString(R.string.keycode_string_num_2);
+                        break;
+                    case "NUMPAD_3":
+                        androidKeyNameArray[i] = PojavApplication.getContext().getString(R.string.keycode_string_num_3);
+                        break;
+                    case "NUMPAD_4":
+                        androidKeyNameArray[i] = PojavApplication.getContext().getString(R.string.keycode_string_num_4);
+                        break;
+                    case "NUMPAD_5":
+                        androidKeyNameArray[i] = PojavApplication.getContext().getString(R.string.keycode_string_num_5);
+                        break;
+                    case "NUMPAD_6":
+                        androidKeyNameArray[i] = PojavApplication.getContext().getString(R.string.keycode_string_num_6);
+                        break;
+                    case "NUMPAD_7":
+                        androidKeyNameArray[i] = PojavApplication.getContext().getString(R.string.keycode_string_num_7);
+                        break;
+                    case "NUMPAD_8":
+                        androidKeyNameArray[i] = PojavApplication.getContext().getString(R.string.keycode_string_num_8);
+                        break;
+                    case "NUMPAD_9":
+                        androidKeyNameArray[i] = PojavApplication.getContext().getString(R.string.keycode_string_num_9);
+                        break;
+                    case "NUMPAD_DIVIDE":
+                        androidKeyNameArray[i] = PojavApplication.getContext().getString(R.string.keycode_string_num_divide);
+                        break;
+                    case "NUMPAD_MULTIPLY":
+                        androidKeyNameArray[i] = PojavApplication.getContext().getString(R.string.keycode_string_num_multiply);
+                        break;
+                    case "NUMPAD_SUBTRACT":
+                        androidKeyNameArray[i] = PojavApplication.getContext().getString(R.string.keycode_string_num_subtract);
+                        break;
+                    case "NUMPAD_ADD":
+                        androidKeyNameArray[i] = PojavApplication.getContext().getString(R.string.keycode_string_num_add);
+                        break;
+                    case "NUMPAD_DOT":
+                        androidKeyNameArray[i] = PojavApplication.getContext().getString(R.string.keycode_string_num_dot);
+                        break;
+                    case "NUMPAD_COMMA":
+                        androidKeyNameArray[i] = PojavApplication.getContext().getString(R.string.keycode_string_num_comma);
+                        break;
+                    case "NUMPAD_ENTER":
+                        androidKeyNameArray[i] = PojavApplication.getContext().getString(R.string.keycode_string_num_enter);
+                        break;
+                    case "NUMPAD_EQUALS":
+                        androidKeyNameArray[i] = PojavApplication.getContext().getString(R.string.keycode_string_num_equals);
+                        break;
+                }
+
             }
         }
         return androidKeyNameArray;
@@ -198,7 +374,7 @@ public class EfficientAndroidLWJGLKeycode {
         sendKeyPress(getValueByIndex(index));
     }
 
-    public static int getValueByIndex(int index) {
+    public static short getValueByIndex(int index) {
         return sLwjglKeycodes[index];
     }
 
