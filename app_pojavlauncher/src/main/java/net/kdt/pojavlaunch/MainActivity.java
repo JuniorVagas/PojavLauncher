@@ -664,7 +664,7 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
         });
     }
 
-    @SuppressLint("SetJavaScriptEnabled")
+    @SuppressLint({"SetJavaScriptEnabled", "ClickableViewAccessibility"})
     @Override
     public void onGameLoadingClass(){
         runOnUiThread(() -> {
@@ -687,6 +687,8 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
                 mWebView.getSettings().setUseWideViewPort(true);
                 mWebView.getSettings().setLoadWithOverviewMode(true);
                 mWebView.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
+
+                mWebView.setOnTouchListener((v, event) -> true);
 
                 ((FrameLayout) findViewById(R.id.content_frame)).addView(mWebView);
             }
