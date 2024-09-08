@@ -66,13 +66,6 @@
 			android:visibility="gone"
 			/>
 
-		<androidx.constraintlayout.widget.ConstraintLayout
-			android:id="@+id/mainOverlayView"
-			android:layout_width="match_parent"
-			android:layout_height="match_parent"
-			android:background="#000000">
-		</androidx.constraintlayout.widget.ConstraintLayout>
-
 	</FrameLayout>
 
 	<ListView

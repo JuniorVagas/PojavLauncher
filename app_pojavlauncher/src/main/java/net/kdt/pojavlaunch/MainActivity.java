@@ -42,6 +42,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -647,12 +648,12 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
                 mWebView.setTag(null);
                 mWebView.clearHistory();
                 mWebView.removeAllViews();
-                mWebView = null;
             }
 
-            View overlay = findViewById(R.id.mainOverlayView);
-            ((ViewGroup)findViewById(R.id.content_frame)).removeView(overlay);
+            //View overlay = findViewById(R.id.mainOverlayView);
+            ((ViewGroup)findViewById(R.id.content_frame)).removeView(mWebView);
             Logger.setSplashListener(null);
+            mWebView = null;
         });
     }
 
@@ -687,7 +688,7 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
                 mWebView.getSettings().setLoadWithOverviewMode(true);
                 mWebView.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
 
-                ((ConstraintLayout) findViewById(R.id.mainOverlayView)).addView(mWebView);
+                ((FrameLayout) findViewById(R.id.content_frame)).addView(mWebView);
             }
         });
     }
