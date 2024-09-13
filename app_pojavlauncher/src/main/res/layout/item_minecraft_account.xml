@@ -10,6 +10,8 @@
     android:paddingStart="@dimen/_8sdp"
     app:drawableStartSize="@dimen/_30sdp"
 
+    android:fontFamily="@font/montserrat"
+
     tools:text="HELLO THERE"
     tools:drawableStart="@mipmap/ic_launcher"
 

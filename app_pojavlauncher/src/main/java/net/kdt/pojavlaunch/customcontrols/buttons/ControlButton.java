@@ -16,6 +16,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.core.content.res.ResourcesCompat;
+
 import net.kdt.pojavlaunch.LwjglGlfwKeycode;
 import net.kdt.pojavlaunch.MainActivity;
 import net.kdt.pojavlaunch.PojavProfile;
@@ -50,6 +52,7 @@ public class ControlButton extends TextView implements ControlInterface {
         setPadding(4, 4, 4, 4);
         setTextSize(14); // Nullify the default size setting
         setOutlineProvider(null); // Disable shadow casting, removing one drawing pass
+        setTypeface(ResourcesCompat.getFont(getContext(), R.font.montserrat));
 
         //setOnLongClickListener(this);
 
