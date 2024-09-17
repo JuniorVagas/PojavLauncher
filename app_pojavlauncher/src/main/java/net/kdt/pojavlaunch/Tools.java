@@ -592,7 +592,7 @@ public final class Tools {
             crashStream.append(" - Device: ").append(Build.PRODUCT).append(" ").append(Build.MODEL).append("\n");
             crashStream.append(" - Android version: ").append(Build.VERSION.RELEASE).append("\n");
             crashStream.append(" - Crash stack trace:\n");
-            crashStream.append(" - Launcher version: 2.1.2\n");
+            crashStream.append(" - Launcher version: 2.2.0\n");
             crashStream.append(Log.getStackTraceString(e));
             crashStream.close();
         } catch (Throwable throwable) {}
