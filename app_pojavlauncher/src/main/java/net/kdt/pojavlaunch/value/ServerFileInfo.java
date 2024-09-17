@@ -20,6 +20,7 @@ public class ServerFileInfo implements Runnable {
     public boolean optional = false;
     public boolean performance = false;
     public boolean enabled = true;
+    public boolean nonDownloadable = false;
 
     public void setDownloaderData(File path, Tools.DownloaderFeedback monitor, AtomicBoolean interrupt) {
         this.destinationPath = path;

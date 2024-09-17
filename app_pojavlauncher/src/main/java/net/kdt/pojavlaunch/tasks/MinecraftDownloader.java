@@ -309,15 +309,16 @@ public class MinecraftDownloader {
             ArrayList<String> modsThatExist = new ArrayList<>(version.custom_mods.size());
             Arrays.sort(version.custom_mods.values().toArray(new ServerFileInfo[0]), comparator);
             for(ServerFileInfo serverFileInfo : version.custom_mods.values()) {
-                {
-                    String path = serverFileInfo.path;
-                    int slashIndex = path.lastIndexOf('/');
-                    if(slashIndex != -1) modsThatExist.add(path.substring(slashIndex+1));
-                    else modsThatExist.add(path);
+                String path = serverFileInfo.path;
+                int slashIndex = path.lastIndexOf('/');
+                if(slashIndex != -1) modsThatExist.add(path.substring(slashIndex+1));
+                else modsThatExist.add(path);
+
+                if(!serverFileInfo.nonDownloadable) {
+                    downloadSize += serverFileInfo.size;
+                    serverFileInfo.setDownloaderData(destination, new AtomicMonitor(downloadProgress), interrupt);
+                    executor.execute(serverFileInfo);
                 }
-                downloadSize += serverFileInfo.size;
-                serverFileInfo.setDownloaderData(destination, new AtomicMonitor(downloadProgress), interrupt);
-                executor.execute(serverFileInfo);
             }
             File modsFolder = new File(destination, "modstore");
             if(modsFolder.isDirectory()) {
