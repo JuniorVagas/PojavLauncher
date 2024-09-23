@@ -68,7 +68,7 @@ public class LocalLoginFragment extends Fragment {
                 String text = mUsernameEditText.getText().toString();
 
                 if(text.isEmpty() || text.length() < 3) mUsernameEditText.setError(getText(R.string.small_username));
-                else if(new File(Tools.DIR_ACCOUNT_NEW + "/" + text + ".json").exists()) mUsernameEditText.setError(getText(R.string.exists_username));
+                //else if(new File(Tools.DIR_ACCOUNT_NEW + "/" + text + ".json").exists()) mUsernameEditText.setError(getText(R.string.exists_username));
                 else mUsernameEditText.setError(null);
             }
         });

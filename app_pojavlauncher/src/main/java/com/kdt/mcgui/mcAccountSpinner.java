@@ -94,9 +94,9 @@ public class mcAccountSpinner extends AppCompatSpinner implements AdapterView.On
 
         // Check if the account being added is not one that is already existing
         // Like login twice on the same mc account...
-        for(String mcAccountName : mAccountList){
-            if(mcAccountName.equals(account.username)) return;
-        }
+        //for(String mcAccountName : mAccountList){
+        //    if(mcAccountName.equals(account.username)) return;
+        //}
 
         mSelectecAccount = account;
         invalidate();
