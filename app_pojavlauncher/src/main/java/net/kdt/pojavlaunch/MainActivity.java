@@ -650,8 +650,16 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
                 mWebView.removeAllViews();
             }
 
-            //View overlay = findViewById(R.id.mainOverlayView);
-            ((ViewGroup)findViewById(R.id.content_frame)).removeView(mWebView);
+            // remove any WebView instance
+            ViewGroup contentFrame = findViewById(R.id.content_frame);
+            for (int i = 0; i < contentFrame.getChildCount(); i++) {
+                View child = contentFrame.getChildAt(i);
+                if (child instanceof WebView) {
+                    contentFrame.removeView(child);
+                    i--;
+                }
+            }
+
             Logger.setSplashListener(null);
             mWebView = null;
         });
@@ -659,7 +667,7 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
 
     public void setupText() {
         runOnUiThread(()->{
-            mWebView.evaluateJavascript("document.getElementById('loadingText').textContent = 'Carregando 0%';" +
+            if(mWebView != null) mWebView.evaluateJavascript("document.getElementById('loadingText').textContent = 'Carregando 0%';" +
                     "document.getElementById('desc').textContent = 'Isso pode demorar alguns minutos';", null);
         });
     }
@@ -670,6 +678,7 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
         runOnUiThread(() -> {
             if(LauncherPreferences.PREF_DISABLE_LOADING_SCREEN){
                 onSplashEvent();
+                startCounter();
             } else {
                 mWebView = new WebView(this);
                 mWebView.setLayoutParams(new ConstraintLayout.LayoutParams(
@@ -698,27 +707,31 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
     @Override
     public void onStarting() {
         runOnUiThread(()->{
-            mWebView.evaluateJavascript("document.getElementById('loadingText').textContent = 'Carregando 25%';", null);
+            if(mWebView != null) mWebView.evaluateJavascript("document.getElementById('loadingText').textContent = 'Carregando 25%';", null);
         });
     }
     @Override
     public void onMiddle() {
         runOnUiThread(()->{
-            mWebView.evaluateJavascript("document.getElementById('loadingText').textContent = 'Carregando 50%';", null);
+            if(mWebView != null) mWebView.evaluateJavascript("document.getElementById('loadingText').textContent = 'Carregando 50%';", null);
         });
     }
     @Override
     public void onComplete() {
         runOnUiThread(()->{
-            mWebView.evaluateJavascript("document.getElementById('loadingText').textContent = 'Carregando 75%';", null);
+            if(mWebView != null) mWebView.evaluateJavascript("document.getElementById('loadingText').textContent = 'Carregando 75%';", null);
         });
     }
     @Override
     public void onFullComplete() {
         runOnUiThread(()->{
-            mWebView.evaluateJavascript("document.getElementById('loadingText').textContent = 'Carregando 100%';", null);
-        });
+            if(mWebView != null) mWebView.evaluateJavascript("document.getElementById('loadingText').textContent = 'Carregando 100%';", null);
 
+            startCounter();
+        });
+    }
+
+    private void startCounter(){
         new Thread(() -> {
             while(CONTINUE_ELAPSED_TIME){
                 try {
